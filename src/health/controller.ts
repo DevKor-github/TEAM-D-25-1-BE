@@ -12,9 +12,9 @@ export class HealthController {
       database: true,
     };
 
+    // Check database connection
     try {
       const healthCheck = await this.prismaService.$queryRaw`SELECT 1 AS ok`;
-
       if (healthCheck[0]['ok'] !== 1) detail.database = false;
     } catch (error) {
       detail.database = false;
