@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: blueming2580
+      POSTGRES_DB: db1
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  svc:
+    image: groom-svc
+    restart: always
+    environment:
+      CONFIG_PATH: /app/config.yaml
+      DATABASE_URL: postgresql://admin:blueming2580@postgres:5432/db1
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./config.yaml:/app/config.yaml
+
+volumes:
+  pgdata:
