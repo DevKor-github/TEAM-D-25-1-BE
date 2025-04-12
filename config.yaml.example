@@ -1,0 +1,4 @@
+jwt:
+  secret: 'secret'
+  accessTokenExpiredIn: 3600
+  refreshTokenExpiredIn: 604800
