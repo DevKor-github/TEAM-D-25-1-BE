@@ -29,24 +29,22 @@ model User {
   socialProvider   String?
   socialId         String?
   createdAt        DateTime           @default(now())
-  friendships      Friend[] @relation("UserFriendships")
   savedRestaurants SavedRestaurant[]
 }
 
 model Friend {
+  id         Int          @id @default(autoincrement())
   userId     Int
   friendId   Int
   status     FriendStatus @default(PENDING)
   createdAt  DateTime     @default(now())
 
-  user       User @relation("UserFriendships", fields: [userId], references: [id])
-  friend     User @relation("UserFriendships", fields: [friendId], references: [id])
-
-  @@id([
+  @@unique([
     userId, 
     friendId
   ])
-  @@index([status])
+  @@index([userId])
+  @@index([friendId])
 }
 
 model Restaurant {
@@ -69,9 +67,9 @@ model SavedRestaurant {
   description         String?
   review              String?
   keywords            String[]
-  recommendationCount Int        @default(0)
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
+  recommendedByUsers  Int[]
 
   @@unique([
     userId,
