@@ -42,7 +42,10 @@ model Friend {
   user       User @relation("UserFriendships", fields: [userId], references: [id])
   friend     User @relation("UserFriendships", fields: [friendId], references: [id])
 
-  @@id([userId, friendId])
+  @@id([
+    userId, 
+    friendId
+  ])
   @@index([status])
 }
 
@@ -68,5 +71,7 @@ model SavedRestaurant {
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
 
-  @@unique([userId, restaurantId])
+  @@unique([
+    userId,
+    restaurantId])
 }
