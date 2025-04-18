@@ -24,25 +24,26 @@ model User {
   id        Int      @id @default(autoincrement())
   email            String             @unique
   username         String             @unique
+  nickname         String?
   password         String?
   socialProvider   String?
   socialId         String?
   createdAt        DateTime           @default(now())
-  friendsSent      Friend[]           @relation("sentFriendRequests")
-  friendsReceived  Friend[]           @relation("receivedFriendRequests")
+  friendships      Friend[] @relation("UserFriendships")
   savedRestaurants SavedRestaurant[]
 }
 
 model Friend {
-  id            Int          @id @default(autoincrement())
-  requester     User         @relation("sentFriendRequests", fields: [requesterId], references: [id])
-  requesterId   Int
-  addressee     User         @relation("receivedFriendRequests", fields: [addresseeId], references: [id])
-  addresseeId   Int
-  status        FriendStatus @default(PENDING)
-  createdAt     DateTime     @default(now())
+  userId     Int
+  friendId   Int
+  status     FriendStatus @default(PENDING)
+  createdAt  DateTime     @default(now())
 
-  @@unique([requesterId, addresseeId])
+  user       User @relation("UserFriendships", fields: [userId], references: [id])
+  friend     User @relation("UserFriendships", fields: [friendId], references: [id])
+
+  @@id([userId, friendId])
+  @@index([status])
 }
 
 model Restaurant {
@@ -55,16 +56,17 @@ model Restaurant {
 }
 
 model SavedRestaurant {
-  id            Int        @id @default(autoincrement())
-  user          User       @relation(fields: [userId], references: [id])
-  userId        Int
-  restaurant    Restaurant @relation(fields: [restaurantId], references: [id])
-  restaurantId  Int
-  description   String?
-  review        String?
-  keywords      String[]
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  id                  Int        @id @default(autoincrement())
+  user                User       @relation(fields: [userId], references: [id])
+  userId              Int
+  restaurant          Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId        Int
+  description         String?
+  review              String?
+  keywords            String[]
+  recommendationCount Int        @default(0)
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
 
   @@unique([userId, restaurantId])
 }
