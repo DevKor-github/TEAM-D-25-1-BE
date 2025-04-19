@@ -14,9 +14,65 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum FriendStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
 model User {
   id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
+  email            String             @unique
+  username         String             @unique
+  nickname         String?
+  password         String?
+  socialProvider   String?
+  socialId         String?
+  createdAt        DateTime           @default(now())
+  savedRestaurants SavedRestaurant[]
+}
+
+model Friend {
+  id         Int          @id @default(autoincrement())
+  userId     Int
+  friendId   Int
+  status     FriendStatus @default(PENDING)
+  createdAt  DateTime     @default(now())
+
+  @@unique([
+    userId, 
+    friendId
+  ])
+  @@index([userId])
+  @@index([friendId])
+}
+
+model Restaurant {
+  id        Int               @id @default(autoincrement())
+  placeId   String            @unique //지도 API 식별자 저장용
+  name      String
+  address   String
+  latitude  Decimal           @db.Decimal(9,6)
+  longitude Decimal           @db.Decimal(9,6)
+  photoUrl  String?
+  savedBy   SavedRestaurant[]
+}
+
+model SavedRestaurant {
+  id                  Int        @id @default(autoincrement())
+  user                User       @relation(fields: [userId], references: [id])
+  userId              Int
+  restaurant          Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId        Int
+  description         String?
+  review              String?
+  keywords            String[]
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  recommendedByUsers  Int[]
+
+  @@unique([
+    userId,
+    restaurantId
+  ])
 }
