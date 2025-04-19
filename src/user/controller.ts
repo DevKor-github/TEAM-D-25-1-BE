@@ -1,15 +1,26 @@
-import { Controller, Get, HttpStatus, Res } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import {
+  Controller,
+  DefaultValuePipe,
+  Get,
+  HttpStatus,
+  ParseIntPipe,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { Response } from 'express';
+import { UserService } from './service';
 
 @Controller('users/me')
 export class UserController {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly userService: UserService) {}
 
-  @Get('places')
-  async check(@Res() res: Response) {
-    return res.json({
-      message: 'Hello World',
-    });
+  @Get('restaurants')
+  async check(
+    @Query('per_page', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Res() res: Response,
+  ) {
+    const result = await this.userService.getRestaurantList(perPage, page);
+    return res.status(HttpStatus.OK).json(result);
   }
 }

@@ -51,7 +51,7 @@ model Restaurant {
   address   String
   latitude  Decimal           @db.Decimal(9,6)
   longitude Decimal           @db.Decimal(9,6)
-  photoUrl  String?
+  createdAt DateTime          @default(now())
   // savedBy   SavedRestaurant[]
 }
 
