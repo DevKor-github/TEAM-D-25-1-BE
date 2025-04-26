@@ -40,7 +40,7 @@ jobs:
           tags: ghcr.io/juwoong/groo-develop:latest
 
       - name: Discord Notification
-        uses: juwoong/action-discord-webhook@v1.0.0
+        uses: juwoong/action-discord-webhook@v1.0.1
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           short_sha: ${{ steps.docker_build.outputs.short_sha }}
