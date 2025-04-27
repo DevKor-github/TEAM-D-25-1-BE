@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { HealthModule } from './health/module';
 import { ConfigModule } from '@nestjs/config';
 import getConfig from './config';
+import { UserModule } from './user/module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import getConfig from './config';
     }),
     PrismaModule,
     HealthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -29,7 +29,7 @@ model User {
   socialProvider   String?
   socialId         String?
   createdAt        DateTime           @default(now())
-  savedRestaurants SavedRestaurant[]
+  // savedRestaurants SavedRestaurant[]
 }
 
 model Friend {
@@ -39,10 +39,7 @@ model Friend {
   status     FriendStatus @default(PENDING)
   createdAt  DateTime     @default(now())
 
-  @@unique([
-    userId, 
-    friendId
-  ])
+  @@unique([userId, friendId]) // unique constraint must be in one line
   @@index([userId])
   @@index([friendId])
 }
@@ -54,15 +51,15 @@ model Restaurant {
   address   String
   latitude  Decimal           @db.Decimal(9,6)
   longitude Decimal           @db.Decimal(9,6)
-  photoUrl  String?
-  savedBy   SavedRestaurant[]
+  createdAt DateTime          @default(now())
+  // savedBy   SavedRestaurant[]
 }
 
 model SavedRestaurant {
   id                  Int        @id @default(autoincrement())
-  user                User       @relation(fields: [userId], references: [id])
+  // user                User       @relation(fields: [userId], references: [id])
   userId              Int
-  restaurant          Restaurant @relation(fields: [restaurantId], references: [id])
+  // restaurant          Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId        Int
   description         String?
   review              String?
@@ -71,8 +68,7 @@ model SavedRestaurant {
   updatedAt           DateTime   @updatedAt
   recommendedByUsers  Int[]
 
-  @@unique([
-    userId,
-    restaurantId
-  ])
+  @@unique([userId,restaurantId]) // unique constraint must be in one line
+  @@index([userId])
+  @@index([restaurantId])
 }
