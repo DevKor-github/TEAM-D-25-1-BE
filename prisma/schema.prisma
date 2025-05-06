@@ -9,7 +9,7 @@ generator client {
   binaryTargets   = ["native"]
 }
 
-datasource db {
+datasource db { 
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
@@ -21,6 +21,11 @@ enum FollowerStatus {
   BANNED
 }
 
+enum SocialProvider {
+  KAKAO
+  GOOGLE
+  APPLE
+}
 
 model User {
   // id        Int      @id @default(autoincrement())
@@ -33,7 +38,25 @@ model User {
   socialId         String?
   isPrivate        Boolean            @default(false)
   createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  firebaseUid      String             @unique
   // savedRestaurants SavedRestaurant[]
+  socialLogin      SocialLogin[]
+}
+
+model SocialLogin {
+  id               Int     @id      @default(autoincrement())
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String     @unique
+  provider         SocialProvider
+  providerUserId   String
+  profile          String?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([userId])
+  @@unique([provider, providerUserId])
 }
 
 model Follower {
@@ -47,7 +70,7 @@ model Follower {
 }
 
 model Restaurant {
-  id        Int               @id @default(autoincrement())
+  id        String            @id @default(uuid())
   placeId   String            @unique //지도 API 식별자 저장용
   name      String
   address   String
@@ -58,9 +81,9 @@ model Restaurant {
 }
 
 model SavedRestaurant {
-  id                  Int        @id @default(autoincrement())
-  // user                User       @relation(fields: [userId], references: [id])
-  userId              Int
+  //id                  Int        @id @default(autoincrement())
+  //user                User       @relation(fields: [userId], references: [id])
+  userId              String
   // restaurant          Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId        Int
   description         String?
@@ -68,9 +91,7 @@ model SavedRestaurant {
   keywords            String[]
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
-  recommendedByUsers  Int[]
+  recommendedByUsers  String[]
 
-  @@unique([userId,restaurantId]) // unique constraint must be in one line
-  @@index([userId])
-  @@index([restaurantId])
+  @@id([userId,restaurantId])
 }
