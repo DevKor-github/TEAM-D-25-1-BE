@@ -20,15 +20,22 @@ enum FriendStatus {
   REJECTED
 }
 
+enum LoginMethodType {
+  EMAIL
+  GOOGLE
+  APPLE
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email            String             @unique
   username         String             @unique
   nickname         String?
   password         String?
-  socialProvider   String?
+  loginMethod      LoginMethodType
   socialId         String?
   createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
   // savedRestaurants SavedRestaurant[]
 }
 
@@ -49,11 +56,14 @@ model Restaurant {
   placeId   String            @unique //지도 API 식별자 저장용
   name      String
   address   String
+  metadata  Json 
   latitude  Decimal           @db.Decimal(9,6)
   longitude Decimal           @db.Decimal(9,6)
   createdAt DateTime          @default(now())
   // savedBy   SavedRestaurant[]
 }
+
+// TODO: add tag table to search restaurant using query
 
 model SavedRestaurant {
   id                  Int        @id @default(autoincrement())
