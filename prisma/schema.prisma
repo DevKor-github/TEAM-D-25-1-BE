@@ -14,7 +14,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum FriendStatus {
+enum FollowerStatus {
   PENDING
   ACCEPTED
   REJECTED
@@ -36,14 +36,14 @@ model User {
   // savedRestaurants SavedRestaurant[]
 }
 
-model Friend {
+model Follower {
   userId     String @db.Uuid 
-  follwerId  String @db.Uuid
-  status     FriendStatus @default(PENDING)
+  followerId  String @db.Uuid
+  status     FollowerStatus @default(PENDING)
   createdAt  DateTime     @default(now())
 
-  @@id([userId, follwerId])
-  @@index([follwerId]) 
+  @@id([userId, followerId])
+  @@index([followerId]) 
 }
 
 model Restaurant {

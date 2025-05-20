@@ -4,7 +4,7 @@ import {
   CreateUserParam,
   UpdateUserParam,
   UserParam,
-} from '@/user/params/user.param';
+} from '@/user/params/user';
 import { User } from '@prisma/client';
 import { v7 as uuidv7 } from 'uuid';
 
