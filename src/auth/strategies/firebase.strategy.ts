@@ -4,10 +4,13 @@ import { Strategy } from 'passport-http-bearer';
 import * as admin from 'firebase-admin';
 
 @Injectable()
-export class FirebaseAuthStrategy extends PassportStrategy(Strategy, 'firebase-auth') {
+export class FirebaseAuthStrategy extends PassportStrategy(
+  Strategy,
+  'firebase-auth',
+) {
   constructor(
     @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App,
-  ){
+  ) {
     super();
   }
 
@@ -22,4 +25,4 @@ export class FirebaseAuthStrategy extends PassportStrategy(Strategy, 'firebase-a
       throw new UnauthorizedException('인증에 실패했습니다.');
     }
   }
-} 
+}

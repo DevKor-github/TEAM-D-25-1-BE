@@ -1,13 +1,16 @@
-import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
-import { PassportStrategy } from "@nestjs/passport";
-import { Strategy } from "passport-http-bearer";
-import * as admin from "firebase-admin";
-import { AuthGuard } from "@nestjs/passport";
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { Strategy } from 'passport-http-bearer';
+import * as admin from 'firebase-admin';
+import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
-export class AppleStrategy extends PassportStrategy(Strategy, 'firebase-apple') {
+export class AppleStrategy extends PassportStrategy(
+  Strategy,
+  'firebase-apple',
+) {
   constructor(
-    @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App
+    @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App,
   ) {
     super();
   }
@@ -15,12 +18,15 @@ export class AppleStrategy extends PassportStrategy(Strategy, 'firebase-apple') 
   async validate(token: string) {
     try {
       const decodedToken = await this.firebaseApp.auth().verifyIdToken(token);
-      if (!decodedToken.firebase || decodedToken.firebase.sign_in_provider !== "apple.com") {
-        throw new UnauthorizedException("Firebase provider is not apple");
+      if (
+        !decodedToken.firebase ||
+        decodedToken.firebase.sign_in_provider !== 'apple.com'
+      ) {
+        throw new UnauthorizedException('Firebase provider is not apple');
       }
       return decodedToken;
     } catch (error) {
-      throw new UnauthorizedException("Invalid token provided");
+      throw new UnauthorizedException('Invalid token provided');
     }
   }
 }
