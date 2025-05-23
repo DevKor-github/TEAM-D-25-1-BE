@@ -1,11 +1,11 @@
-import { 
-  BadRequestException, 
-  Injectable, 
-  InternalServerErrorException, 
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
   UnauthorizedException,
   HttpException,
   HttpStatus,
-  Inject
+  Inject,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { FirebaseInformation } from './interfaces/firbase-info.interface';
@@ -17,17 +17,17 @@ import { RegisterDto } from './dto/register.dto';
 export class AuthService {
   constructor(
     private readonly prismaService: PrismaService,
-    @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App
-  ){}
-  async validateUser(decoded: FirebaseInformation){
+    @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App,
+  ) {}
+  async validateUser(decoded: FirebaseInformation) {
     const user = await this.prismaService.user.findUnique({
-      where: { firebaseUid: decoded.uid }
+      where: { firebaseUid: decoded.uid },
     });
 
-    if(!user){
-      throw new UnauthorizedException("가입되지 않은 회원")
+    if (!user) {
+      throw new UnauthorizedException('가입되지 않은 회원');
     }
-    return user
+    return user;
   }
 
   async register(registerDto: RegisterDto): Promise<any> {
@@ -37,7 +37,7 @@ export class AuthService {
         password: registerDto.password,
         displayName: registerDto.nickname,
       });
-      
+
       const user = await this.prismaService.user.create({
         data: {
           firebaseUid: firebaseUser.uid,
@@ -49,9 +49,8 @@ export class AuthService {
       });
 
       return { uid: user.firebaseUid, email: user.email };
-
     } catch (error: any) {
-      console.error("Error in AuthService.register:", error);
+      console.error('Error in AuthService.register:', error);
 
       const errorMessage = error.message || '알 수 없는 회원가입 오류';
 
@@ -59,7 +58,10 @@ export class AuthService {
     }
   }
 
-  async completeOnboarding(userId: string, onboardingData: OnboardingInfoDto): Promise<any> {
+  async completeOnboarding(
+    userId: string,
+    onboardingData: OnboardingInfoDto,
+  ): Promise<any> {
     try {
       const updatedUser = await this.prismaService.user.update({
         where: { id: userId },
@@ -72,8 +74,8 @@ export class AuthService {
     } catch (error) {
       throw new HttpException(
         `온보딩 실패: ${error.message || '알 수 없는 오류'}`,
-        HttpStatus.BAD_REQUEST
+        HttpStatus.BAD_REQUEST,
       );
     }
   }
-} 
+}
