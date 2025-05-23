@@ -28,8 +28,7 @@ enum SocialProvider {
 }
 
 model User {
-  // id        Int      @id @default(autoincrement())
-  id String @id @db.Uuid
+  id               String             @id @default(uuid())
   email            String             @unique
   username         String             @unique
   nickname         String?
@@ -42,12 +41,13 @@ model User {
   firebaseUid      String             @unique
   // savedRestaurants SavedRestaurant[]
   socialLogin      SocialLogin[]
+  isOnboarded      Boolean
 }
 
 model SocialLogin {
-  id               Int     @id      @default(autoincrement())
+  id               String  @id      @default(uuid())
   user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId           String     @unique
+  userId           String  @unique
   provider         SocialProvider
   providerUserId   String
   profile          String?
