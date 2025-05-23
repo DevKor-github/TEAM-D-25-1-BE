@@ -59,14 +59,16 @@ model SocialLogin {
   @@unique([provider, providerUserId])
 }
 
-model Follower {
-  userId     String @db.Uuid 
-  followerId  String @db.Uuid
-  status     FollowerStatus @default(PENDING)
+model Friend {
+  id         String       @id @default(uuid())
+  userId     String
+  friendId   String
+  status     FriendStatus @default(PENDING)
   createdAt  DateTime     @default(now())
 
-  @@id([userId, followerId])
-  @@index([followerId]) 
+  @@unique([userId, friendId])
+  @@index([userId])
+  @@index([friendId])
 }
 
 model Restaurant {
