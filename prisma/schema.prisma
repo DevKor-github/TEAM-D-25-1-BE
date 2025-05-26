@@ -14,34 +14,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum FriendStatus {
+enum FollowerStatus {
   PENDING
   ACCEPTED
   REJECTED
+  BANNED
 }
 
+
 model User {
-  id        Int      @id @default(autoincrement())
+  // id        Int      @id @default(autoincrement())
+  id String @id @db.Uuid
   email            String             @unique
   username         String             @unique
   nickname         String?
   password         String?
   socialProvider   String?
   socialId         String?
+  isPrivate        Boolean            @default(false)
   createdAt        DateTime           @default(now())
   // savedRestaurants SavedRestaurant[]
 }
 
-model Friend {
-  id         Int          @id @default(autoincrement())
-  userId     Int
-  friendId   Int
-  status     FriendStatus @default(PENDING)
+model Follower {
+  userId     String @db.Uuid 
+  followerId  String @db.Uuid
+  status     FollowerStatus @default(PENDING)
   createdAt  DateTime     @default(now())
 
-  @@unique([userId, friendId]) // unique constraint must be in one line
-  @@index([userId])
-  @@index([friendId])
+  @@id([userId, followerId])
+  @@index([followerId]) 
 }
 
 model Restaurant {
