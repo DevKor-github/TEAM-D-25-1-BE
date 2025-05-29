@@ -3,7 +3,7 @@ import { TreeController } from './controller';
 import { TreeService } from './service';
 import { TreeRepository } from './repository';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { AuthModule } from "../auth/module";
+import { AuthModule } from '../auth/module';
 
 @Module({
   imports: [AuthModule],
