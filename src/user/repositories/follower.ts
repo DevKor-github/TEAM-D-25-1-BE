@@ -88,15 +88,6 @@ export class FollowerRepository {
     });
   }
 
-  async getPendingFollowers(userId: string) {
-    return this.prisma.follower.findMany({
-      where: {
-        userId,
-        status: FollowerStatus.PENDING,
-      },
-    });
-  }
-
   async getAcceptedFollowers(userId: string) {
     return this.prisma.follower.findMany({
       where: {
