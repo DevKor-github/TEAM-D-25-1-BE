@@ -4,7 +4,7 @@ import { UserController } from './controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { UserRepository } from './repository';
 import { GetFollowingListUseCase } from './usecases/getFollowingList';
-import { FollowerRepository } from './repositories/follwer';
+import { FollowerRepository } from './repositories/follower';
 
 @Module({
   imports: [PrismaModule],

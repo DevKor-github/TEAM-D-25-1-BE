@@ -4,6 +4,7 @@ import {
   UpdateFollowerParams,
   GetFollowerParams,
   GetFollowersListParams,
+  GetFollowingListParams,
 } from '@/user/params/follower';
 
 export class FollowerRepository {
@@ -52,10 +53,23 @@ export class FollowerRepository {
     });
   }
 
+  // 나를 팔로우 하는 사람
   async getFollowersList(params: GetFollowersListParams) {
     return this.prisma.follower.findMany({
       where: {
         userId: params.userId,
+        ...(params.status && { status: params.status }),
+      },
+      skip: (params.page - 1) * params.perPage,
+      take: params.perPage,
+    });
+  }
+
+  // 내가 팔로우 하는 사람
+  async getFollowingList(params: GetFollowingListParams) {
+    return this.prisma.follower.findMany({
+      where: {
+        followerId: params.userId,
         ...(params.status && { status: params.status }),
       },
       skip: (params.page - 1) * params.perPage,

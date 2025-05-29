@@ -152,3 +152,54 @@ export class FollowingListResponse {
   @Type(() => FollowingUserResponse)
   items: FollowingUserResponse[];
 }
+
+export class FollowerUserResponse {
+  @IsString()
+  @IsNotEmpty()
+  id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
+  @IsString()
+  nickname?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  socialProvider?: string;
+
+  @IsString()
+  socialId?: string;
+
+  @IsBoolean()
+  isPrivate: boolean;
+
+  @IsDate()
+  @IsNotEmpty()
+  createdAt: Date;
+
+  static from(user: any): FollowerUserResponse {
+    const response = new FollowerUserResponse();
+    response.id = user.id;
+    response.username = user.username;
+    response.nickname = user.nickname;
+    response.email = user.email;
+    response.socialProvider = user.socialProvider;
+    response.socialId = user.socialId;
+    response.isPrivate = user.isPrivate;
+    response.createdAt = user.createdAt;
+    return response;
+  }
+}
+
+export class FollowerListResponse {
+  @IsArray()
+  @IsNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => FollowerUserResponse)
+  items: FollowerUserResponse[];
+}

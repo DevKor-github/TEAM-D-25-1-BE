@@ -3,10 +3,10 @@ import { FollowerRepository } from '@/user/repositories/follower';
 import { FollowerStatus } from '@prisma/client';
 import { UserRepository } from '@/user/repositories/user';
 import { UserParam } from '../params/user';
-import { FollowingListResponse, FollowingUserResponse } from '../dto';
+import { FollowerListResponse, FollowerUserResponse } from '../dto';
 
 @Injectable()
-export class GetFollowingListUseCase {
+export class GetFollowerUseCase {
   constructor(
     private readonly followerRepository: FollowerRepository,
     private readonly userRepository: UserRepository,
@@ -16,18 +16,15 @@ export class GetFollowingListUseCase {
     userId: string,
     perPage: number = 20,
     page: number = 1,
-  ): Promise<FollowingListResponse> {
-    const followingList = await this.followerRepository.getFollowingList({
+  ): Promise<FollowerListResponse> {
+    const followerList = await this.followerRepository.getFollowersList({
       userId,
       status: FollowerStatus.ACCEPTED,
       page,
       perPage,
     });
 
-    // ensure following instance order
-    const userIds: string[] = followingList.map(
-      (following) => following.followerId,
-    );
+    const userIds: string[] = followerList.map((follower) => follower.userId);
     const users: UserParam[] = await this.userRepository.findByIds(userIds);
     const userMaps = users.reduce(
       (acc, user) => {
@@ -37,13 +34,13 @@ export class GetFollowingListUseCase {
       {} as Record<string, UserParam>,
     );
 
-    const followingUsers = followingList.map((following) => {
-      const user = userMaps[following.followerId];
-      return FollowingUserResponse.from(user);
+    const followerUsers = followerList.map((follower) => {
+      const user = userMaps[follower.userId];
+      return FollowerUserResponse.from(user);
     });
 
     return {
-      items: followingUsers,
+      items: followerUsers,
     };
   }
 }
