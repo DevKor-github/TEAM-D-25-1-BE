@@ -1,7 +1,17 @@
-import { Controller, Get, HttpStatus, Query, Res, Post, Param, Body, UseGuards } from "@nestjs/common";
+import { 
+    Controller, 
+    Get, 
+    HttpStatus, 
+    Query, 
+    Res, 
+    Post, 
+    Param, 
+    Body, 
+    UseGuards
+} from "@nestjs/common";
 import { TreeService } from "./service";
 import { Response } from "express";
-import { Coordinate, RestaurantId, TreeIdDto, WaterTreeDto, PlantTreeDto } from "./dto";
+import { Coordinate, PlantTreeDto } from "./dto";
 import { User } from "../decorators/user.decorator";
 import { FirebaseAuthGuard } from '../auth/guards/firebase-auth.guard';
 

@@ -1,4 +1,11 @@
-import { IsLatitude, IsLongitude, IsUUID, IsNumber } from "class-validator";
+import { 
+    IsLatitude, 
+    IsLongitude, 
+    IsUUID, 
+    IsNumber,
+    IsString,
+    IsBoolean
+} from "class-validator";
 
 export class UpdateTreeDto{
 
