@@ -3,10 +3,17 @@ import { UserService } from './service';
 import { UserController } from './controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { UserRepository } from './repository';
+import { GetFollowingListUseCase } from './usecases/getFollowingList';
+import { FollowerRepository } from './repositories/follwer';
 
 @Module({
   imports: [PrismaModule],
   controllers: [UserController],
-  providers: [UserService, UserRepository],
+  providers: [
+    UserService,
+    UserRepository,
+    GetFollowingListUseCase,
+    FollowerRepository,
+  ],
 })
 export class UserModule {}

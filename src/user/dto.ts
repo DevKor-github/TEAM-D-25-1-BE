@@ -8,6 +8,7 @@ import {
   IsNumberString,
   IsString,
   ValidateNested,
+  IsBoolean,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -99,4 +100,55 @@ export class RestaurantListResponse {
   @IsNumber()
   @IsNotEmpty()
   totalPages: number;
+}
+
+export class FollowingUserResponse {
+  @IsString()
+  @IsNotEmpty()
+  id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
+  @IsString()
+  nickname?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  socialProvider?: string;
+
+  @IsString()
+  socialId?: string;
+
+  @IsBoolean()
+  isPrivate: boolean;
+
+  @IsDate()
+  @IsNotEmpty()
+  createdAt: Date;
+
+  static from(user: any): FollowingUserResponse {
+    const response = new FollowingUserResponse();
+    response.id = user.id;
+    response.username = user.username;
+    response.nickname = user.nickname;
+    response.email = user.email;
+    response.socialProvider = user.socialProvider;
+    response.socialId = user.socialId;
+    response.isPrivate = user.isPrivate;
+    response.createdAt = user.createdAt;
+    return response;
+  }
+}
+
+export class FollowingListResponse {
+  @IsArray()
+  @IsNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => FollowingUserResponse)
+  items: FollowingUserResponse[];
 }

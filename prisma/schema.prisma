@@ -33,6 +33,7 @@ model User {
   socialId         String?
   isPrivate        Boolean            @default(false)
   createdAt        DateTime           @default(now())
+  profileImageUrl  String? 
   // savedRestaurants SavedRestaurant[]
 }
 

@@ -58,6 +58,8 @@ export class FollowerRepository {
         userId: params.userId,
         ...(params.status && { status: params.status }),
       },
+      skip: (params.page - 1) * params.perPage,
+      take: params.perPage,
     });
   }
 

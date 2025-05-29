@@ -18,4 +18,6 @@ export interface GetFollowerParams {
 export interface GetFollowersListParams {
   userId: string;
   status?: FollowerStatus;
+  page?: number;
+  perPage?: number;
 }
