@@ -39,7 +39,7 @@ model User {
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
   firebaseUid      String             @unique
-  // savedRestaurants SavedRestaurant[]
+  savedRestaurants SavedRestaurant[]
   socialLogin      SocialLogin[]
   isOnboarded      Boolean
 }
@@ -77,21 +77,23 @@ model Restaurant {
   latitude  Decimal           @db.Decimal(9,6)
   longitude Decimal           @db.Decimal(9,6)
   createdAt DateTime          @default(now())
-  // savedBy   SavedRestaurant[]
+  savedBy   SavedRestaurant[]
 }
 
 model SavedRestaurant {
-  //id                  Int        @id @default(autoincrement())
-  //user                User       @relation(fields: [userId], references: [id])
+  user                User       @relation(fields: [userId], references: [id])
   userId              String
-  // restaurant          Restaurant @relation(fields: [restaurantId], references: [id])
-  restaurantId        Int
+
+  restaurant          Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId        String
+
   description         String?
   review              String?
   keywords            String[]
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
   recommendedByUsers  String[]
+  treeType            Int
 
-  @@id([userId,restaurantId])
+  @@id([userId,restaurantId]) 
 }
