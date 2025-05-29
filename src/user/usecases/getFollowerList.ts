@@ -6,7 +6,7 @@ import { UserParam } from '../params/user';
 import { FollowerListResponse, FollowerUserResponse } from '../dto';
 
 @Injectable()
-export class GetFollowerUseCase {
+export class GetFollowerListUseCase {
   constructor(
     private readonly followerRepository: FollowerRepository,
     private readonly userRepository: UserRepository,

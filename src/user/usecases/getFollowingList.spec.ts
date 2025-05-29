@@ -1,26 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetFollowerUseCase } from './getFollower';
+import { GetFollowingListUseCase } from './getFollowingList';
 import { FollowerRepository } from '../repositories/follower';
 import { UserRepository } from '../repositories/user';
 import { FollowerStatus } from '@prisma/client';
 import { UserParam } from '../params/user';
-import { FollowerUserResponse } from '../dto';
+import { FollowingUserResponse } from '../dto';
 
-describe('GetFollowerUseCase', () => {
-  let useCase: GetFollowerUseCase;
+describe('GetFollowingListUseCase', () => {
+  let useCase: GetFollowingListUseCase;
   let followerRepository: jest.Mocked<FollowerRepository>;
   let userRepository: jest.Mocked<UserRepository>;
 
-  const mockFollowerList = [
+  const mockFollowingList = [
     {
       userId: 'user1',
-      followerId: 'follower1',
+      followerId: 'following1',
       status: FollowerStatus.ACCEPTED,
       createdAt: new Date(),
     },
     {
-      userId: 'user2',
-      followerId: 'follower2',
+      userId: 'user1',
+      followerId: 'following2',
       status: FollowerStatus.ACCEPTED,
       createdAt: new Date(),
     },
@@ -28,19 +28,19 @@ describe('GetFollowerUseCase', () => {
 
   const mockUsers: UserParam[] = [
     {
-      id: 'user1',
-      email: 'user1@example.com',
-      username: 'user1',
-      nickname: 'User 1',
+      id: 'following1',
+      email: 'following1@example.com',
+      username: 'following1',
+      nickname: 'Following 1',
       isPrivate: false,
       createdAt: new Date(),
       profileImageUrl: 'profile1.jpg',
     },
     {
-      id: 'user2',
-      email: 'user2@example.com',
-      username: 'user2',
-      nickname: 'User 2',
+      id: 'following2',
+      email: 'following2@example.com',
+      username: 'following2',
+      nickname: 'Following 2',
       isPrivate: false,
       createdAt: new Date(),
       profileImageUrl: 'profile2.jpg',
@@ -50,11 +50,11 @@ describe('GetFollowerUseCase', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        GetFollowerUseCase,
+        GetFollowingListUseCase,
         {
           provide: FollowerRepository,
           useValue: {
-            getFollowersList: jest.fn(),
+            getFollowingList: jest.fn(),
           },
         },
         {
@@ -66,7 +66,7 @@ describe('GetFollowerUseCase', () => {
       ],
     }).compile();
 
-    useCase = module.get<GetFollowerUseCase>(GetFollowerUseCase);
+    useCase = module.get<GetFollowingListUseCase>(GetFollowingListUseCase);
     followerRepository = module.get(FollowerRepository);
     userRepository = module.get(UserRepository);
   });
@@ -76,37 +76,40 @@ describe('GetFollowerUseCase', () => {
   });
 
   describe('execute', () => {
-    it('should return follower list successfully', async () => {
+    it('should return following list successfully', async () => {
       // Arrange
-      const userId = 'testUser';
+      const userId = 'user1';
       const perPage = 20;
       const page = 1;
 
-      followerRepository.getFollowersList.mockResolvedValue(mockFollowerList);
+      followerRepository.getFollowingList.mockResolvedValue(mockFollowingList);
       userRepository.findByIds.mockResolvedValue(mockUsers);
 
       // Act
       const result = await useCase.execute(userId, perPage, page);
 
       // Assert
-      expect(followerRepository.getFollowersList).toHaveBeenCalledWith({
+      expect(followerRepository.getFollowingList).toHaveBeenCalledWith({
         userId,
         status: FollowerStatus.ACCEPTED,
         page,
         perPage,
       });
 
-      expect(userRepository.findByIds).toHaveBeenCalledWith(['user1', 'user2']);
+      expect(userRepository.findByIds).toHaveBeenCalledWith([
+        'following1',
+        'following2',
+      ]);
 
       expect(result.items).toHaveLength(2);
-      expect(result.items[0]).toBeInstanceOf(FollowerUserResponse);
-      expect(result.items[1]).toBeInstanceOf(FollowerUserResponse);
+      expect(result.items[0]).toBeInstanceOf(FollowingUserResponse);
+      expect(result.items[1]).toBeInstanceOf(FollowingUserResponse);
     });
 
-    it('should handle empty follower list', async () => {
+    it('should handle empty following list', async () => {
       // Arrange
-      const userId = 'testUser';
-      followerRepository.getFollowersList.mockResolvedValue([]);
+      const userId = 'user1';
+      followerRepository.getFollowingList.mockResolvedValue([]);
       userRepository.findByIds.mockResolvedValue([]);
 
       // Act
