@@ -6,7 +6,7 @@ import { HealthModule } from './health/module';
 import { ConfigModule } from '@nestjs/config';
 import getConfig from './config';
 import { UserModule } from './user/module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/module';
 
 @Module({
   imports: [
