@@ -1,14 +1,14 @@
-import { Module } from "@nestjs/common";
-import { PassportModule } from "@nestjs/passport";
-import * as admin from "firebase-admin"
-import { FirebaseAuthStrategy } from "./strategies/firebase.strategy";
-import { GoogleStrategy } from "./strategies/google.strategy";
-import { AppleStrategy } from "./strategies/apple.strategy"; 
-import { FirebaseAuthGuard } from "./guards/firebase-auth.guard";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
+import * as admin from 'firebase-admin';
+import { FirebaseAuthStrategy } from './strategies/firebase.strategy';
+import { GoogleStrategy } from './strategies/google.strategy';
+import { AppleStrategy } from './strategies/apple.strategy';
+import { FirebaseAuthGuard } from './guards/firebase-auth.guard';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthController } from './controller';
-import { AuthService } from "./service";
-import { PrismaModule } from "../prisma/prisma.module";
+import { AuthService } from './service';
+import { PrismaModule } from '../prisma/prisma.module';
 
 const serviceAccount = require('../../firebase-adminsdk.json');
 
@@ -48,5 +48,4 @@ const serviceAccount = require('../../firebase-adminsdk.json');
   exports: [FirebaseAuthGuard],
   controllers: [AuthController],
 })
-
-export class AuthModule{}
+export class AuthModule {}
