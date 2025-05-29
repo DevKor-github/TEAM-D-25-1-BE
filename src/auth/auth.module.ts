@@ -41,7 +41,7 @@ import { AuthController } from './controller';
             useClass: FirebaseAuthGuard
         }
     ],
-    exports: [],
+    exports: [FirebaseAuthGuard],
     controllers: [AuthController]
 })
 
