@@ -379,3 +379,6 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,webstorm+all,macos,windows,node
 
 config.yaml
+
+# Firebase admin sdk
+firebase-adminsdk.json
