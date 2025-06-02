@@ -23,6 +23,11 @@ export class FirebaseAuthGuard extends AuthGuard([
         '온보딩을 완료해야 서비스를 이용할 수 있습니다.',
       );
     }
+    if (!user.isOnboarded) {
+      throw new ForbiddenException(
+        '온보딩을 완료해야 서비스를 이용할 수 있습니다.',
+      );
+    }
     return user;
   }
 }
