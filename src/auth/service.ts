@@ -4,17 +4,20 @@ import {
   InternalServerErrorException, 
   UnauthorizedException,
   HttpException,
-  HttpStatus
+  HttpStatus,
+  Inject
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { FirebaseInformation } from './interfaces/firbase-info.interface';
 import * as admin from 'firebase-admin';
 import { OnboardingInfoDto } from './dto/onboarding.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly prismaService: PrismaService
+    private readonly prismaService: PrismaService,
+    @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App
   ){}
   async validateUser(decoded: FirebaseInformation){
     const user = await this.prismaService.user.findUnique({
@@ -27,14 +30,14 @@ export class AuthService {
     return user
   }
 
-  async register(registerDto: any): Promise<any> {
+  async register(registerDto: RegisterDto): Promise<any> {
     try {
-      const firebaseUser = await admin.auth().createUser({
+      const firebaseUser = await this.firebaseApp.auth().createUser({
         email: registerDto.email,
         password: registerDto.password,
         displayName: registerDto.nickname,
       });
-
+      
       const user = await this.prismaService.user.create({
         data: {
           firebaseUid: firebaseUser.uid,
