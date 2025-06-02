@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-http-bearer";
 import * as admin from "firebase-admin";
@@ -6,18 +6,15 @@ import { AuthGuard } from "@nestjs/passport";
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'firebase-google') {
-  constructor() {
+  constructor(
+    @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App
+  ) {
     super();
-    if (!admin.apps.length) {
-      admin.initializeApp({
-        credential: admin.credential.applicationDefault(),
-      });
-    }
   }
 
   async validate(token: string) {
     try {
-      const decodedToken = await admin.auth().verifyIdToken(token);
+      const decodedToken = await this.firebaseApp.auth().verifyIdToken(token);
       if (!decodedToken.firebase || decodedToken.firebase.sign_in_provider !== "google.com") {
         throw new UnauthorizedException("Firebase provider is not google");
       }
