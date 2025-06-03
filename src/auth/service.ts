@@ -30,7 +30,9 @@ export class AuthService {
     return user;
   }
 
-  async register(registerDto: RegisterDto): Promise<any> {
+  async register(
+    registerDto: RegisterDto,
+  ): Promise<{ customToken: string; user: any }> {
     try {
       const firebaseUser = await this.firebaseApp.auth().createUser({
         email: registerDto.email,
@@ -48,7 +50,12 @@ export class AuthService {
         },
       });
 
-      return { uid: user.firebaseUid, email: user.email };
+      return {
+        customToken: await this.firebaseApp
+          .auth()
+          .createCustomToken(user.firebaseUid),
+        user,
+      };
     } catch (error: any) {
       console.error('Error in AuthService.register:', error);
 
