@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe, HttpStatus, UnauthorizedException } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AuthService } from './service';
 import { FirebaseAuthGuard } from './guards/firebase-auth.guard';
 import { User } from 'src/decorators/user.decorator';
