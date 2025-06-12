@@ -14,11 +14,11 @@ import { ApiProperty } from '@nestjs/swagger';
 export class RestaurantResponse {
   @ApiProperty({
     description: '레스토랑 ID',
-    example: 1,
+    example: '123e4567-e89b-12d3-a456-426614174000',
   })
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  id: number;
+  id: string;
 
   @ApiProperty({
     description: 'Google Places API 식별자',

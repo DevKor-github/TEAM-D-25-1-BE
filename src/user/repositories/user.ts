@@ -19,6 +19,7 @@ export class UserRepository {
       data: {
         ...param,
         id,
+        isOnboarded: false,
       },
     });
     return this.mapToUserParam(user);

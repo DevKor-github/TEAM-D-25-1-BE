@@ -35,7 +35,7 @@ export default function getConfig() {
   const YAML_CONFIG_FILENAME = process.env.CONFIG_PATH;
   const yamlContent = yaml.load(
     readFileSync(
-      YAML_CONFIG_FILENAME || join(__dirname, 'config.yaml'),
+      YAML_CONFIG_FILENAME || join(process.cwd(), 'config.yaml'),
       'utf-8',
     ),
   );
