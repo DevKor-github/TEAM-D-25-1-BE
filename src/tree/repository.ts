@@ -1,101 +1,149 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Restaurant, SavedRestaurant, User, Friend } from '@prisma/client';
+import { Restaurant, SavedRestaurant, User } from '@prisma/client';
 import { Coordinate, PlantTreeDto } from './dto';
 
 @Injectable()
 export class TreeRepository {
-    constructor(
-        private readonly prisma: PrismaService,
-    ){}
+  constructor(private readonly prisma: PrismaService) {}
 
-    async getTreesByLocation(location: Coordinate): Promise<(Restaurant & { savedBy: SavedRestaurant[] })[]>{
-        console.log('Getting restaurants by location from DB:', location);
-        // TODO: Prisma 기반?
-        return [];
+  async getTreesByLocation(
+    location: Coordinate,
+  ): Promise<(Restaurant & { savedBy: SavedRestaurant[] })[]> {
+    console.log('Getting restaurants by location from DB:', location);
+    // TODO: Prisma 기반?
+    return [];
+  }
+
+  async getTreeById(
+    restaurantId: string,
+    userId: string,
+  ): Promise<
+    (SavedRestaurant & { user: User; restaurant: Restaurant }) | null
+  > {
+    console.log(
+      'Getting tree (SavedRestaurant) for restaurant:',
+      restaurantId,
+      'by user:',
+      userId,
+    );
+    const tree = await this.prisma.savedRestaurant.findUnique({
+      where: {
+        userId_restaurantId: { userId: userId, restaurantId: restaurantId },
+      },
+      include: {
+        user: true,
+        restaurant: true,
+      },
+    });
+    return tree;
+  }
+
+  async waterTree(
+    restaurantId: string,
+    userId: string,
+  ): Promise<SavedRestaurant | null> {
+    console.log(
+      'Watering tree (SavedRestaurant) for restaurant:',
+      restaurantId,
+      'by user:',
+      userId,
+    );
+
+    const savedRestaurant = await this.prisma.savedRestaurant.findUnique({
+      where: {
+        userId_restaurantId: { userId: userId, restaurantId: restaurantId },
+      },
+      select: { recommendedByUsers: true },
+    });
+
+    if (!savedRestaurant) {
+      return null;
     }
 
-    async getTreeById(restaurantId: string, userId: string): Promise<(SavedRestaurant & { user: User, restaurant: Restaurant }) | null>{
-        console.log('Getting tree (SavedRestaurant) for restaurant:', restaurantId, 'by user:', userId);
-        const tree = await this.prisma.savedRestaurant.findUnique({
-            where: { userId_restaurantId: { userId: userId, restaurantId: restaurantId } },
-            include: {
-                user: true,
-                restaurant: true,
-            },
-        });
-        return tree;
+    if ((savedRestaurant.recommendedByUsers as string[]).includes(userId)) {
+      console.log('User already watered this tree.');
+      return this.prisma.savedRestaurant.findUnique({
+        where: {
+          userId_restaurantId: { userId: userId, restaurantId: restaurantId },
+        },
+      });
     }
 
-    async waterTree(restaurantId: string, userId: string): Promise<SavedRestaurant | null>{
-        console.log('Watering tree (SavedRestaurant) for restaurant:', restaurantId, 'by user:', userId);
+    const updatedSavedTree = await this.prisma.savedRestaurant.update({
+      where: {
+        userId_restaurantId: { userId: userId, restaurantId: restaurantId },
+      },
+      data: {
+        recommendedByUsers: { push: userId },
+      },
+    });
 
-        const savedRestaurant = await this.prisma.savedRestaurant.findUnique({
-            where: { userId_restaurantId: { userId: userId, restaurantId: restaurantId } },
-            select: { recommendedByUsers: true },
-        });
+    return updatedSavedTree;
+  }
 
-        if (!savedRestaurant) {
-            return null;
-        }
+  async plantTree(
+    plantTreeDto: PlantTreeDto,
+    userId: string,
+  ): Promise<SavedRestaurant> {
+    console.log('Planting tree in DB:', plantTreeDto, 'by user:', userId);
 
-        if ((savedRestaurant.recommendedByUsers as string[]).includes(userId)) {
-             console.log('User already watered this tree.');
-             return this.prisma.savedRestaurant.findUnique({ where: { userId_restaurantId: { userId: userId, restaurantId: restaurantId } } });
-         }
+    const treeTypeInt = plantTreeDto.treeTypeId;
 
-        const updatedSavedTree = await this.prisma.savedRestaurant.update({
-             where: { userId_restaurantId: { userId: userId, restaurantId: restaurantId } },
-             data: {
-                 recommendedByUsers: { push: userId },
-             },
-         });
-
-        return updatedSavedTree;
+    if (
+      typeof treeTypeInt !== 'number' ||
+      treeTypeInt < 0 ||
+      treeTypeInt > 3 ||
+      !Number.isInteger(treeTypeInt)
+    ) {
+      throw new Error(`Invalid treeType value: ${plantTreeDto.treeTypeId}`);
     }
 
-    async plantTree(plantTreeDto: PlantTreeDto, userId: string): Promise<SavedRestaurant>{
-        console.log('Planting tree in DB:', plantTreeDto, 'by user:', userId);
+    const plantedTree = await this.prisma.savedRestaurant.create({
+      data: {
+        userId: userId,
+        restaurantId: plantTreeDto.restaurantId,
+        treeType: treeTypeInt,
+        description: '',
+        review: '',
+        keywords: [],
+        recommendedByUsers: [],
+      },
+    });
 
-        const treeTypeInt = plantTreeDto.treeTypeId;
+    return plantedTree;
+  }
 
-        if (typeof treeTypeInt !== 'number' || treeTypeInt < 0 || treeTypeInt > 3 || !Number.isInteger(treeTypeInt)) { 
-            throw new Error(`Invalid treeType value: ${plantTreeDto.treeTypeId}`);
-        }
+  async getRecommendations(): Promise<SavedRestaurant[]> {
+    console.log('Getting recommendations from DB');
+    return [];
+  }
 
-        const plantedTree = await this.prisma.savedRestaurant.create({
-             data: {
-                 userId: userId,
-                 restaurantId: plantTreeDto.restaurantId,
-                 treeType: treeTypeInt,
-                 description: '',
-                 review: '',
-                 keywords: [],
-                 recommendedByUsers: [],
-             },
-         });
+  // TODO: refactor this to use followers instead of friends
+  async getAllFriendsTree(
+    userId: string,
+    restaurantId: string,
+  ): Promise<SavedRestaurant[]> {
+    console.log(
+      'Getting all friends trees for user:',
+      userId,
+      'at restaurant:',
+      restaurantId,
+    );
 
-        return plantedTree;
-    }
+    const followers = await this.prisma.follower.findMany({
+      where: { userId: userId },
+      select: { followerId: true },
+    });
+    const followerUserId = followers.map((f) => f.followerId);
 
-    async getRecommendations(): Promise<SavedRestaurant[]>{
-        console.log('Getting recommendations from DB');
-        return [];
-    }
-
-    async getAllFriendsTree(userId: string, restaurantId: string): Promise<SavedRestaurant[]>{
-        console.log('Getting all friends trees for user:', userId, 'at restaurant:', restaurantId);
-        
-        const friends = await this.prisma.friend.findMany({ where: { userId: userId }, select: { friendId: true } });
-        const friendUserIds = friends.map(f => f.friendId);
-
-        const friendsTrees = await this.prisma.savedRestaurant.findMany({
-             where: {
-                userId: { in: friendUserIds },
-                restaurantId: restaurantId,
-             },
-             include: { user: true, restaurant: true }
-        });
-        return friendsTrees;
-    }
+    const followerTrees = await this.prisma.savedRestaurant.findMany({
+      where: {
+        userId: { in: followerUserId },
+        restaurantId: restaurantId,
+      },
+      include: { user: true, restaurant: true },
+    });
+    return followerTrees;
+  }
 }

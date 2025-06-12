@@ -38,7 +38,7 @@ model User {
   isPrivate        Boolean            @default(false)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
-  firebaseUid      String             @unique
+  firebaseUid      String?             @unique
   savedRestaurants SavedRestaurant[]
   socialLogin      SocialLogin[]
   isOnboarded      Boolean
@@ -59,17 +59,6 @@ model SocialLogin {
   @@unique([provider, providerUserId])
 }
 
-model Friend {
-  id         String       @id @default(uuid())
-  userId     String
-  friendId   String
-  status     FriendStatus @default(PENDING)
-  createdAt  DateTime     @default(now())
-
-  @@unique([userId, friendId])
-  @@index([userId])
-  @@index([friendId])
-}
 
 model Restaurant {
   id        String            @id @default(uuid())
@@ -98,4 +87,15 @@ model SavedRestaurant {
   treeType            Int
 
   @@id([userId,restaurantId]) 
+}
+
+
+model Follower {
+  userId     String @db.Uuid 
+  followerId  String @db.Uuid
+  status     FollowerStatus @default(PENDING)
+  createdAt  DateTime     @default(now())
+
+  @@id([userId, followerId])
+  @@index([followerId]) 
 }
