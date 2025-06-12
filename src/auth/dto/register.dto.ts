@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { AuthUserResponse } from './authUser.dto';
 
 export class RegisterRequest {
   @ApiProperty({
@@ -25,4 +26,19 @@ export class RegisterRequest {
   @IsNotEmpty()
   @IsString()
   nickname: string;
+}
+
+// { customToken: string; user: any }
+export class RegisterResponse {
+  @ApiProperty({
+    description: '토큰',
+    example: 'token123',
+  })
+  customToken: string;
+
+  @ApiProperty({
+    description: '사용자',
+    type: AuthUserResponse,
+  })
+  user: AuthUserResponse;
 }

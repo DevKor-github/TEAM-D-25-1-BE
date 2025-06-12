@@ -13,7 +13,7 @@ import { User } from '../decorators/user.decorator';
 import { AuthService } from './service';
 import { OnboardingInfoRequest } from './dto/onboarding.dto';
 import { FirebaseAuthGuard } from './guards/firebase-auth.guard';
-import { RegisterRequest } from './dto/register.dto';
+import { RegisterRequest, RegisterResponse } from './dto/register.dto';
 import { SocialLoginDto } from './dto/social-login.dto';
 import { ApiResponse } from '@nestjs/swagger';
 import { AuthUserResponse } from './dto/authUser.dto';
@@ -65,6 +65,11 @@ export class AuthController {
     }
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Register user',
+    type: RegisterResponse,
+  })
   @Post('register')
   @UsePipes(ValidationPipe)
   async register(
@@ -72,7 +77,11 @@ export class AuthController {
   ): Promise<{ customToken: string; user: any }> {
     try {
       const result = await this.authService.register(registerData);
-      return result;
+
+      return {
+        customToken: result.customToken,
+        user: this.mapToUserResponse(result.user),
+      };
     } catch (error: any) {
       throw new BadRequestException(
         `회원가입 처리 중 오류 발생: ${error.message || '알 수 없는 오류'}`,
