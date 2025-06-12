@@ -10,9 +10,10 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { FirebaseInformation } from './interfaces/firbase-info.interface';
 import * as admin from 'firebase-admin';
-import { OnboardingInfoDto } from './dto/onboarding.dto';
-import { RegisterDto } from './dto/register.dto';
+import { OnboardingInfoRequest } from './dto/onboarding.dto';
+import { RegisterRequest } from './dto/register.dto';
 import { SocialLoginDto } from './dto/social-login.dto';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -32,7 +33,7 @@ export class AuthService {
   }
 
   async register(
-    registerDto: RegisterDto,
+    registerDto: RegisterRequest,
   ): Promise<{ customToken: string; user: any }> {
     try {
       const firebaseUser = await this.firebaseApp.auth().createUser({
@@ -68,8 +69,8 @@ export class AuthService {
 
   async completeOnboarding(
     userId: string,
-    onboardingData: OnboardingInfoDto,
-  ): Promise<any> {
+    onboardingData: OnboardingInfoRequest,
+  ): Promise<User> {
     try {
       const updatedUser = await this.prismaService.user.update({
         where: { id: userId },
