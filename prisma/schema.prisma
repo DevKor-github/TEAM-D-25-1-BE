@@ -36,12 +36,14 @@ model User {
   socialProvider   String?
   socialId         String?
   isPrivate        Boolean            @default(false)
+  status           String             @default("ACTIVE")
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
   firebaseUid      String?             @unique
   savedRestaurants SavedRestaurant[]
   socialLogin      SocialLogin[]
   isOnboarded      Boolean
+  profileImageUrl  String? 
 }
 
 model SocialLogin {

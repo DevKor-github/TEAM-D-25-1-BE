@@ -1,10 +1,10 @@
+import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { Restaurant } from '@prisma/client';
 
 @Injectable()
-export class UserRepository {
-  constructor(private readonly prisma: PrismaService) {}
+export class RestaurantRepository {
+  constructor(private prisma: PrismaService) {}
 
   async getAllRestaurants(
     perPage: number = 1,

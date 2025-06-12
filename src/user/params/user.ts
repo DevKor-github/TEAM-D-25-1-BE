@@ -99,4 +99,5 @@ export class UserParam {
 
   @IsDate()
   createdAt: Date;
+  profileImageUrl?: string;
 }

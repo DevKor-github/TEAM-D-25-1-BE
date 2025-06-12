@@ -8,6 +8,7 @@ import {
   IsNumberString,
   IsString,
   ValidateNested,
+  IsBoolean,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -99,4 +100,184 @@ export class RestaurantListResponse {
   @IsNumber()
   @IsNotEmpty()
   totalPages: number;
+}
+
+export class FollowingUserResponse {
+  @ApiProperty({
+    description: '사용자 ID',
+    example: 'bcccf5db-63b0-4bfb-a761-9328cba32e58',
+  })
+  @IsString()
+  @IsNotEmpty()
+  id: string;
+
+  @ApiProperty({
+    description: '사용자 이름',
+    example: 'johndoe',
+  })
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
+  @ApiProperty({
+    description: '사용자 닉네임',
+    example: 'John Doe',
+    required: false,
+  })
+  @IsString()
+  nickname?: string;
+
+  @ApiProperty({
+    description: '이메일 주소',
+    example: 'john@example.com',
+  })
+  @IsString()
+  @IsNotEmpty()
+  email: string;
+
+  @ApiProperty({
+    description: '소셜 로그인 제공자',
+    example: 'google',
+    required: false,
+  })
+  @IsString()
+  socialProvider?: string;
+
+  @ApiProperty({
+    description: '소셜 로그인 ID',
+    example: '123456789',
+    required: false,
+  })
+  @IsString()
+  socialId?: string;
+
+  @ApiProperty({
+    description: '프라이빗 계정 여부',
+    example: false,
+  })
+  @IsBoolean()
+  isPrivate: boolean;
+
+  @ApiProperty({
+    description: '계정 생성일',
+    example: '2024-03-20T00:00:00.000Z',
+  })
+  @IsDate()
+  @IsNotEmpty()
+  createdAt: Date;
+
+  static from(user: any): FollowingUserResponse {
+    const response = new FollowingUserResponse();
+    response.id = user.id;
+    response.username = user.username;
+    response.nickname = user.nickname;
+    response.email = user.email;
+    response.socialProvider = user.socialProvider;
+    response.socialId = user.socialId;
+    response.isPrivate = user.isPrivate;
+    response.createdAt = user.createdAt;
+    return response;
+  }
+}
+
+export class FollowingListResponse {
+  @ApiProperty({
+    description: '팔로잉 사용자 목록',
+    type: [FollowingUserResponse],
+  })
+  @IsArray()
+  @IsNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => FollowingUserResponse)
+  items: FollowingUserResponse[];
+}
+
+export class FollowerUserResponse {
+  @ApiProperty({
+    description: '사용자 ID',
+    example: 'user123',
+  })
+  @IsString()
+  @IsNotEmpty()
+  id: string;
+
+  @ApiProperty({
+    description: '사용자 이름',
+    example: 'johndoe',
+  })
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
+  @ApiProperty({
+    description: '사용자 닉네임',
+    example: 'John Doe',
+    required: false,
+  })
+  @IsString()
+  nickname?: string;
+
+  @ApiProperty({
+    description: '이메일 주소',
+    example: 'john@example.com',
+  })
+  @IsString()
+  @IsNotEmpty()
+  email: string;
+
+  @ApiProperty({
+    description: '소셜 로그인 제공자',
+    example: 'google',
+    required: false,
+  })
+  @IsString()
+  socialProvider?: string;
+
+  @ApiProperty({
+    description: '소셜 로그인 ID',
+    example: '123456789',
+    required: false,
+  })
+  @IsString()
+  socialId?: string;
+
+  @ApiProperty({
+    description: '프라이빗 계정 여부',
+    example: false,
+  })
+  @IsBoolean()
+  isPrivate: boolean;
+
+  @ApiProperty({
+    description: '계정 생성일',
+    example: '2024-03-20T00:00:00.000Z',
+  })
+  @IsDate()
+  @IsNotEmpty()
+  createdAt: Date;
+
+  static from(user: any): FollowerUserResponse {
+    const response = new FollowerUserResponse();
+    response.id = user.id;
+    response.username = user.username;
+    response.nickname = user.nickname;
+    response.email = user.email;
+    response.socialProvider = user.socialProvider;
+    response.socialId = user.socialId;
+    response.isPrivate = user.isPrivate;
+    response.createdAt = user.createdAt;
+    return response;
+  }
+}
+
+export class FollowerListResponse {
+  @ApiProperty({
+    description: '팔로워 사용자 목록',
+    type: [FollowerUserResponse],
+  })
+  @IsArray()
+  @IsNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => FollowerUserResponse)
+  items: FollowerUserResponse[];
 }
