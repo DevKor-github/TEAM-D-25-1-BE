@@ -89,6 +89,11 @@ export class AuthController {
     }
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Social login',
+    type: RegisterResponse,
+  })
   @Post('social-login')
   @UseGuards(FirebaseAuthGuard)
   @UsePipes(new ValidationPipe({ whitelist: true }))
@@ -97,14 +102,17 @@ export class AuthController {
     @Body() socialLoginData: SocialLoginDto,
   ): Promise<{ customToken: string; user: any }> {
     const firebaseUid = user.uid;
-    const provider = socialLoginData.provider;
+    // const provider = socialLoginData.provider;
 
     try {
       const result = await this.authService.socialLogin(
         firebaseUid,
         socialLoginData,
       );
-      return result;
+      return {
+        customToken: result.customToken,
+        user: this.mapToUserResponse(result.user),
+      };
     } catch (error: any) {
       throw new BadRequestException(
         `소셜 로그인 처리 중 오류 발생: ${error.message || '알 수 없는 오류'}`,
