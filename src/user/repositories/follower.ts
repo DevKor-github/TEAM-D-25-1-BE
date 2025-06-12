@@ -6,13 +6,12 @@ import {
   GetFollowersListParams,
   GetFollowingListParams,
 } from '@/user/params/follower';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '@/prisma/prisma.service';
 
+@Injectable()
 export class FollowerRepository {
-  private prisma: PrismaClient;
-
-  constructor(prisma: PrismaClient) {
-    this.prisma = prisma;
-  }
+  constructor(private prisma: PrismaService) {}
 
   async createFollower(params: CreateFollowerParams) {
     return this.prisma.follower.create({

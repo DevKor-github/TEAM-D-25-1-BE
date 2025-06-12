@@ -11,7 +11,7 @@ import {
 import { Response } from 'express';
 import { UserService } from './service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { RestaurantListResponse } from './dto';
+import { FollowingListResponse, RestaurantListResponse } from './dto';
 import { GetFollowingListUseCase } from './usecases/getFollowingList';
 
 @ApiTags('User')
@@ -39,6 +39,11 @@ export class UserController {
   }
 
   @Get(':userId/following')
+  @ApiResponse({
+    status: 200,
+    description: 'Get following list',
+    type: FollowingListResponse,
+  })
   async getFollowingList(
     @Param('userId') userId: string,
     @Query('per_page', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
