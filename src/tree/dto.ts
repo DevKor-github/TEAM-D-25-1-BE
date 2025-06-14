@@ -4,7 +4,11 @@ import {
   IsUUID,
   IsNumber,
   IsString,
-  IsBoolean,
+  IsArray,
+  IsInt,
+  Min,
+  MaxLength,
+  Max,
 } from 'class-validator';
 
 export class UpdateTreeDto {}
@@ -39,10 +43,25 @@ export class WaterTreeDto {
 
 export class PlantTreeDto {
   @IsNumber()
+  @Min(0)
+  @Max(4)
+  // 0 ~ 4사이 정수로? (트리 타입 5개)
   treeTypeId: number;
 
   @IsUUID()
   restaurantId: string;
 
-  // 기타 심기 관련 정보 추가
+  // TODO: 데코레이터 추가해서 태그 범위 및 중복 검사
+  @IsArray()
+  @IsInt({each: true})
+  @Min(1, {each: true})
+  tagIds: number[];
+  
+  @IsString()
+  @MaxLength(50)
+  review: string;
+
+  @IsString()
+  @MaxLength(300)
+  description: string;
 }

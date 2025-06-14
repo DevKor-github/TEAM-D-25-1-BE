@@ -74,6 +74,11 @@ model Restaurant {
   savedBy   SavedRestaurant[]
 }
 
+model Tag {
+  id                Int     @id   @default(autoincrement())
+  name              String  @unique
+}
+
 model SavedRestaurant {
   user                User       @relation(fields: [userId], references: [id])
   userId              String
@@ -83,13 +88,22 @@ model SavedRestaurant {
 
   description         String?
   review              String?
-  keywords            String[]
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
   recommendedByUsers  String[]
   treeType            Int
 
-  @@id([userId,restaurantId]) 
+  @@id([userId,restaurantId])
+}
+
+model SavedRestaurantTag {
+  userId        String
+  restaurantId  String
+  tagId         Int
+
+  @@id([userId, restaurantId, tagId])
+  @@index([userId, tagId])
+  @@index([restaurantId])
 }
 
 

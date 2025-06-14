@@ -86,32 +86,32 @@ export class TreeRepository {
     plantTreeDto: PlantTreeDto,
     userId: string,
   ): Promise<SavedRestaurant> {
-    console.log('Planting tree in DB:', plantTreeDto, 'by user:', userId);
-
-    const treeTypeInt = plantTreeDto.treeTypeId;
-
-    if (
-      typeof treeTypeInt !== 'number' ||
-      treeTypeInt < 0 ||
-      treeTypeInt > 3 ||
-      !Number.isInteger(treeTypeInt)
-    ) {
-      throw new Error(`Invalid treeType value: ${plantTreeDto.treeTypeId}`);
-    }
+    const { 
+      restaurantId, 
+      treeTypeId, 
+      review, 
+      tagIds,
+      description 
+    } = plantTreeDto
 
     const plantedTree = await this.prisma.savedRestaurant.create({
       data: {
-        userId: userId,
-        restaurantId: plantTreeDto.restaurantId,
-        treeType: treeTypeInt,
-        description: '',
-        review: '',
-        keywords: [],
-        recommendedByUsers: [],
+        userId,
+        restaurantId,
+        treeType: treeTypeId,
+        description,
+        review
       },
     });
-    // TODO: apply NaverPlaceSearchAPI
-    return plantedTree;
+
+    if (tagIds.length > 0){
+      await this.prisma.savedRestaurantTag.createMany({
+        data: tagIds.map(tagId => ({ userId, restaurantId, tagId })),
+        skipDuplicates: true        
+      })
+    }
+
+    return { ...plantedTree, tagIds } as SavedRestaurant & { tagIds: number[]};
   }
 
   async getRecommendations(): Promise<SavedRestaurant[]> {

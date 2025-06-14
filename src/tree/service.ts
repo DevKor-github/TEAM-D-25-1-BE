@@ -48,10 +48,24 @@ export class TreeService{
         return result;
     }
 
-    async plantTree(plantTreeDto: PlantTreeDto, userId: string): Promise<SavedRestaurant> {
-        console.log('Planting tree:', plantTreeDto, 'by user:', userId);
-        const newTree = await this.treeRepository.plantTree(plantTreeDto, userId);
-        return newTree;
+    async plantTree(
+        plantTreeDto: PlantTreeDto,
+        userId: string
+    ): Promise<SavedRestaurant> {
+        const { tagIds, restaurantId } = plantTreeDto
+
+        const restaurant = await this.prisma.restaurant.findUnique({ 
+            where:  { id: restaurantId },
+            select: { id: true }
+        }); 
+        if (!restaurant) throw new BadRequestException(`Id: ${restaurantId}에 해당하는 식당을 찾을 수 없습니다.`)
+
+        if (new Set(tagIds).size !== tagIds.length) throw new BadRequestException('중복된 태그가 존재합니다')
+
+        const validTagsCount = await this.prisma.tag.count({ where: { id: { in: tagIds }}})
+        if (validTagsCount !== tagIds.length) throw new BadRequestException('사용할 수 없는 태그가 존재합니다.')
+
+        return this.treeRepository.plantTree(plantTreeDto, userId);
     }
 
     async getRecommendations(): Promise<SavedRestaurant[]> {
