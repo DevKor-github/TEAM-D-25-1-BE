@@ -4,30 +4,38 @@ import { TreeRepository } from './repository';
 import { Coordinate, PlantTreeDto } from './dto';
 import { SavedRestaurant, Restaurant, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { BadRequestException } from '@nestjs/common';
 
 describe('TreeService (unit)', () => {
   let service: TreeService;
   let repository: TreeRepository;
   let prisma: PrismaService;
 
-  const mockTreeRepository = {
-    getTreesByLocation: jest.fn(),
-    getTreeById: jest.fn(),
-    waterTree: jest.fn(),
-    plantTree: jest.fn(),
-    getRecommendations: jest.fn(),
-    getAllFriendsTree: jest.fn(),
-  };
+  let mockTreeRepository;
+  let mockPrismaService;
 
-  const mockPrismaService = {
-    // PrismaService에서 사용되는 메서드들을 여기에 Mock으로 정의합니다.
-    // 예: $connect: jest.fn(),
-    // 예: savedRestaurant: { findUnique: jest.fn(), create: jest.fn(), update: jest.fn(), findMany: jest.fn() },
-    // 예: restaurant: { findMany: jest.fn() },
-    // 예: friend: { findMany: jest.fn() },
-  };
+  beforeEach(async () => {
+    mockTreeRepository = {
+      getTreesByLocation: jest.fn(),
+      getTreeById: jest.fn(),
+      waterTree: jest.fn(),
+      plantTree: jest.fn(),
+      getRecommendations: jest.fn(),
+      getFollowersTree: jest.fn(),
+    };
 
-  beforeAll(async () => {
+    mockPrismaService = {
+      user: {
+        findUnique: jest.fn(),
+      },
+      restaurant: {
+        findUnique: jest.fn(),
+      },
+      tag: {
+        count: jest.fn(),
+      },
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         TreeService,
@@ -69,18 +77,103 @@ describe('TreeService (unit)', () => {
   });
 
   describe('waterTree', () => {
-    it('should call repository.waterTree with restaurantId and userId', async () => {
+    it('should throw BadRequestException if watered too recently', async () => {
       const restaurantId = 'test-restaurant-id';
       const userId = 'test-user-id';
+
+      const fourHoursAgo = new Date(Date.now() - 3 * 60 * 60 * 1000); // 3 hours ago
+
+      mockPrismaService.user.findUnique.mockResolvedValue({ lastWatered: fourHoursAgo });
+
+      await expect(service.waterTree(restaurantId, userId)).rejects.toThrow(
+        new BadRequestException({
+          message: '아직 물을 줄 수 없습니다.',
+          lastWatered: fourHoursAgo,
+        }),
+      );
+    });
+
+    it('should call repository.waterTree with restaurantId and userId on success', async () => {
+      const restaurantId = 'test-restaurant-id';
+      const userId = 'test-user-id';
+
+      const fiveHoursAgo = new Date(Date.now() - 5 * 60 * 60 * 1000); // 5 hours ago
+
+      mockPrismaService.user.findUnique.mockResolvedValue({ lastWatered: fiveHoursAgo });
+      mockTreeRepository.waterTree.mockResolvedValueOnce({ success: true });
+
       await service.waterTree(restaurantId, userId);
       expect(repository.waterTree).toHaveBeenCalledWith(restaurantId, userId);
     });
   });
 
   describe('plantTree', () => {
-    it('should call repository.plantTree with plantTreeDto and userId', async () => {
-      const plantTreeDto: PlantTreeDto = { treeTypeId: 1, restaurantId: 'test-restaurant-id' };
+    it('should throw BadRequestException if restaurant does not exist', async () => {
+      const plantTreeDto: PlantTreeDto = {
+        treeTypeId: 1,
+        restaurantId: 'non-existent-restaurant-id',
+        tagIds: [],
+        review: 'test-review',
+        description: 'test-description',
+      };
       const userId = 'test-user-id';
+
+      mockPrismaService.restaurant.findUnique.mockResolvedValue(null);
+
+      await expect(service.plantTree(plantTreeDto, userId)).rejects.toThrow(
+        new BadRequestException(`Id: ${plantTreeDto.restaurantId}에 해당하는 식당을 찾을 수 없습니다.`),
+      );
+    });
+
+    it('should throw BadRequestException if tagIds contain duplicates', async () => {
+      const plantTreeDto: PlantTreeDto = {
+        treeTypeId: 1,
+        restaurantId: 'test-restaurant-id',
+        tagIds: [1, 2, 2],
+        review: 'test-review',
+        description: 'test-description',
+      };
+      const userId = 'test-user-id';
+
+      mockPrismaService.restaurant.findUnique.mockResolvedValue({ id: plantTreeDto.restaurantId });
+
+      await expect(service.plantTree(plantTreeDto, userId)).rejects.toThrow(
+        new BadRequestException('중복된 태그가 존재합니다'),
+      );
+    });
+
+    it('should throw BadRequestException if tagIds contain invalid tags', async () => {
+      const plantTreeDto: PlantTreeDto = {
+        treeTypeId: 1,
+        restaurantId: 'test-restaurant-id',
+        tagIds: [1, 999], // 999 is an invalid tag
+        review: 'test-review',
+        description: 'test-description',
+      };
+      const userId = 'test-user-id';
+
+      mockPrismaService.restaurant.findUnique.mockResolvedValue({ id: plantTreeDto.restaurantId });
+      mockPrismaService.tag.count.mockResolvedValue(1); // Only 1 valid tag out of 2
+
+      await expect(service.plantTree(plantTreeDto, userId)).rejects.toThrow(
+        new BadRequestException('사용할 수 없는 태그가 존재합니다.'),
+      );
+    });
+
+    it('should call repository.plantTree with plantTreeDto and userId on success', async () => {
+      const plantTreeDto: PlantTreeDto = {
+        treeTypeId: 1,
+        restaurantId: 'test-restaurant-id',
+        tagIds: [1, 2],
+        review: 'test-review',
+        description: 'test-description',
+      };
+      const userId = 'test-user-id';
+
+      mockPrismaService.restaurant.findUnique.mockResolvedValue({ id: plantTreeDto.restaurantId });
+      mockPrismaService.tag.count.mockResolvedValue(plantTreeDto.tagIds.length);
+      mockTreeRepository.plantTree.mockResolvedValueOnce({ success: true });
+
       await service.plantTree(plantTreeDto, userId);
       expect(repository.plantTree).toHaveBeenCalledWith(plantTreeDto, userId);
     });
@@ -93,12 +186,12 @@ describe('TreeService (unit)', () => {
     });
   });
 
-  describe('getAllFriendsTree', () => {
-    it('should call repository.getAllFriendsTree with userId and restaurantId', async () => {
+  describe('getFollowersTree', () => {
+    it('should call repository.getFollowersTree with userId and restaurantId', async () => {
       const userId = 'test-user-id';
       const restaurantId = 'test-restaurant-id';
-      await service.getAllFriendsTree(userId, restaurantId);
-      expect(repository.getAllFriendsTree).toHaveBeenCalledWith(userId, restaurantId);
+      await service.getFollowersTree(userId, restaurantId);
+      expect(repository.getFollowersTree).toHaveBeenCalledWith(userId, restaurantId);
     });
   });
 });

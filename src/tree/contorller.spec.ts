@@ -15,7 +15,7 @@ describe('TreeController (unit)', () => {
     waterTree: jest.fn(),
     plantTree: jest.fn(),
     getRecommendations: jest.fn(),
-    getAllFriendsTree: jest.fn(),
+    getFollowersTree: jest.fn(),
   };
 
   const mockResponse = {
@@ -72,7 +72,13 @@ describe('TreeController (unit)', () => {
 
   describe('POST /tree', () => {
     it('should call plantTree service method with plantTreeDto and userId', async () => {
-      const plantTreeDto: PlantTreeDto = { treeTypeId: 1, restaurantId: 'test-restaurant-id' };
+      const plantTreeDto: PlantTreeDto = {
+        treeTypeId: 1,
+        restaurantId: 'test-restaurant-id',
+        tagIds: [],
+        review: 'test-review',
+        description: 'test-description',
+      };
       const userId = 'test-user-id';
       await controller.plantTree(plantTreeDto, userId, mockResponse as any);
       expect(service.plantTree).toHaveBeenCalledWith(plantTreeDto, userId);
@@ -86,12 +92,12 @@ describe('TreeController (unit)', () => {
     });
   });
 
-  describe('GET /tree/friends', () => {
-    it('should call getAllFriendsTree service method with userId and restaurantId', async () => {
+  describe('GET /tree/followers', () => {
+    it('should call getFollowersTree service method with userId and restaurantId', async () => {
       const userId = 'test-user-id';
       const restaurantId = 'test-restaurant-id';
-      await controller.getFriends(restaurantId, userId, mockResponse as any);
-      expect(service.getAllFriendsTree).toHaveBeenCalledWith(userId, restaurantId);
+      await controller.getFollowers(restaurantId, userId, mockResponse as any);
+      expect(service.getFollowersTree).toHaveBeenCalledWith(userId, restaurantId);
     });
   });
 });
