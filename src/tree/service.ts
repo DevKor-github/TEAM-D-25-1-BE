@@ -13,7 +13,7 @@ export class TreeService{
 
     async getAllFriendsTree(userId: string, restaurantId: string): Promise<SavedRestaurant[]>{
         console.log('Getting all friends trees for user:', userId, 'at restaurant:', restaurantId);
-        const friendsTrees = await this.treeRepository.getAllFriendsTree(userId, restaurantId);
+        const friendsTrees = await this.treeRepository.getFollowersTree(userId, restaurantId);
         return friendsTrees;
     }
 

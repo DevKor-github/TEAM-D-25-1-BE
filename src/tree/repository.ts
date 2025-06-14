@@ -119,8 +119,7 @@ export class TreeRepository {
     return [];
   }
 
-  // TODO: refactor this to use followers instead of friends
-  async getAllFriendsTree(
+  async getFollowersTree(
     userId: string,
     restaurantId: string,
   ): Promise<SavedRestaurant[]> {
