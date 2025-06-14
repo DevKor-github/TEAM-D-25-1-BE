@@ -43,7 +43,8 @@ model User {
   savedRestaurants SavedRestaurant[]
   socialLogin      SocialLogin[]
   isOnboarded      Boolean
-  profileImageUrl  String? 
+  profileImageUrl  String?
+  lastWatered      DateTime? 
 }
 
 model SocialLogin {
