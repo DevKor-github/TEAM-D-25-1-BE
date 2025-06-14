@@ -65,13 +65,13 @@ export class TreeController {
     return res.status(HttpStatus.OK).json(result);
   }
 
-  @Get('friends')
-  async getFriends(
+  @Get('followers')
+  async getFollowers(
     @Query('restaurantId') restaurantId: string,
     @User() userId: string,
     @Res() res: Response,
   ) {
-    const result = this.tree.getAllFriendsTree(userId, restaurantId);
+    const result = this.tree.getFollowersTree(userId, restaurantId);
     return res.status(HttpStatus.OK).json(result);
   }
 }
