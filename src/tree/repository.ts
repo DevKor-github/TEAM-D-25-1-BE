@@ -60,7 +60,7 @@ export class TreeRepository {
     if (!savedRestaurant) {
       return null;
     }
-
+    /*
     if ((savedRestaurant.recommendedByUsers as string[]).includes(userId)) {
       console.log('User already watered this tree.');
       return this.prisma.savedRestaurant.findUnique({
@@ -68,7 +68,7 @@ export class TreeRepository {
           userId_restaurantId: { userId: userId, restaurantId: restaurantId },
         },
       });
-    }
+    } */
 
     const updatedSavedTree = await this.prisma.savedRestaurant.update({
       where: {
@@ -110,7 +110,7 @@ export class TreeRepository {
         recommendedByUsers: [],
       },
     });
-
+    // TODO: apply NaverPlaceSearchAPI
     return plantedTree;
   }
 

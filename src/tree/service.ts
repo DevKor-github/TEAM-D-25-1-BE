@@ -1,12 +1,14 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { TreeRepository } from "./repository";
 import { Coordinate, PlantTreeDto } from './dto';
 import { SavedRestaurant, Restaurant, User } from '@prisma/client';
+import { PrismaService } from "@/prisma/prisma.service";
 
 @Injectable()
 export class TreeService{
     constructor(
         private readonly treeRepository: TreeRepository,
+        private readonly prisma: PrismaService,
     ){}
 
     async getAllFriendsTree(userId: string, restaurantId: string): Promise<SavedRestaurant[]>{
@@ -30,6 +32,18 @@ export class TreeService{
 
     async waterTree(restaurantId: string, userId: string): Promise<SavedRestaurant | null> {
         console.log('Watering tree:', restaurantId, 'by user:', userId);
+        const { lastWatered = new Date(0) } = await this.prisma.user.findUnique({
+            where: { id: userId },
+            select: { lastWatered: true }
+        })
+
+        if (Date.now() - lastWatered.getTime() < 4 * 60 * 60 * 1000){
+            throw new BadRequestException({
+                message: '아직 물을 줄 수 없습니다.',
+                lastWatered
+            })
+        }
+        
         const result = await this.treeRepository.waterTree(restaurantId, userId);
         return result;
     }
