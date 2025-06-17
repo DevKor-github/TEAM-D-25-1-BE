@@ -29,14 +29,13 @@ describe('AuthService (Refactor)', () => {
     },
   };
 
-
   beforeEach(async () => {
     jest.mock('firebase-admin', () => ({
-        apps: { length: 1 },
-        credential: {
-            applicationDefault: jest.fn(),
-        },
-        auth: jest.fn().mockReturnThis(),
+      apps: { length: 1 },
+      credential: {
+        applicationDefault: jest.fn(),
+      },
+      auth: jest.fn().mockReturnThis(),
     }));
 
     const mockFirebaseAuth = {
@@ -45,13 +44,12 @@ describe('AuthService (Refactor)', () => {
 
     jest.spyOn(admin, 'auth').mockReturnValue(mockFirebaseAuth as any);
 
-
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
         {
           provide: PrismaService,
-          useValue: mockPrismaService
+          useValue: mockPrismaService,
         },
       ],
     }).compile();
@@ -65,17 +63,28 @@ describe('AuthService (Refactor)', () => {
     mockPrismaService.user.update.mockReset();
 
     mockFirebaseAuth.createUser.mockImplementation((auth: any) => {
-        if (auth && auth.email === 'test@example.com') { // 성공 케이스
-          return Promise.resolve({ uid: 'uid-for-success', email: auth.email, displayName: auth.displayName } as admin.auth.UserRecord);
-        }
-        if (auth && auth.email === 'a@b.com') { // Firebase 실패 케이스
-            return Promise.reject(new Error('Firebase error'));
-        }
-        if (auth && auth.email === 'b@c.com') { // DB 실패 케이스 (Firebase는 성공해야 함)
-            return Promise.resolve({ uid: 'uid-for-db-fail', email: auth.email, displayName: auth.displayName } as admin.auth.UserRecord);
-        }
-        // 기본 실패 케이스
-        return Promise.reject(new Error('Unexpected Firebase createUser error'));
+      if (auth && auth.email === 'test@example.com') {
+        // 성공 케이스
+        return Promise.resolve({
+          uid: 'uid-for-success',
+          email: auth.email,
+          displayName: auth.displayName,
+        } as admin.auth.UserRecord);
+      }
+      if (auth && auth.email === 'a@b.com') {
+        // Firebase 실패 케이스
+        return Promise.reject(new Error('Firebase error'));
+      }
+      if (auth && auth.email === 'b@c.com') {
+        // DB 실패 케이스 (Firebase는 성공해야 함)
+        return Promise.resolve({
+          uid: 'uid-for-db-fail',
+          email: auth.email,
+          displayName: auth.displayName,
+        } as admin.auth.UserRecord);
+      }
+      // 기본 실패 케이스
+      return Promise.reject(new Error('Unexpected Firebase createUser error'));
     });
   });
 
@@ -95,11 +104,13 @@ describe('AuthService (Refactor)', () => {
       nickname: 'tester',
     });
 
-    expect(firebaseAuth.createUser).toHaveBeenCalledWith(expect.objectContaining({
-      email: 'test@example.com',
-      password: 'pass123',
-      displayName: 'tester',
-    }));
+    expect(firebaseAuth.createUser).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: 'test@example.com',
+        password: 'pass123',
+        displayName: 'tester',
+      }),
+    );
     expect(prisma.user.create).toHaveBeenCalledWith({
       data: {
         firebaseUid: 'uid-for-success',
@@ -109,36 +120,47 @@ describe('AuthService (Refactor)', () => {
         isOnboarded: false,
       },
     });
-    expect(result).toEqual({ uid: 'uid-for-success', email: 'test@example.com' });
+    expect(result).toEqual({
+      uid: 'uid-for-success',
+      email: 'test@example.com',
+    });
   });
 
   it('에러: Firebase createUser 실패', async () => {
     await expect(
-      service.register({ email:'a@b.com', password:'x', nickname:'n' }),
-    ).rejects.toThrow(
-      '회원가입 실패: Firebase error',
+      service.register({ email: 'a@b.com', password: 'x', nickname: 'n' }),
+    ).rejects.toThrow('회원가입 실패: Firebase error');
+    expect(firebaseAuth.createUser).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: 'a@b.com',
+        password: 'x',
+        displayName: 'n',
+      }),
     );
-    expect(firebaseAuth.createUser).toHaveBeenCalledWith(expect.objectContaining({
-        email:'a@b.com', password:'x', displayName:'n'
-    }));
   });
 
   it('에러: Prisma user.create 실패', async () => {
     jest.spyOn(prisma.user, 'create').mockRejectedValue(new Error('DB error'));
 
     await expect(
-      service.register({ email:'b@c.com', password:'y', nickname:'m' }),
-    ).rejects.toThrow(
-      '회원가입 실패: DB error',
+      service.register({ email: 'b@c.com', password: 'y', nickname: 'm' }),
+    ).rejects.toThrow('회원가입 실패: DB error');
+    expect(firebaseAuth.createUser).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: 'b@c.com',
+        password: 'y',
+        displayName: 'm',
+      }),
     );
-     expect(firebaseAuth.createUser).toHaveBeenCalledWith(expect.objectContaining({
-        email:'b@c.com', password:'y', displayName:'m'
-    }));
   });
 
   it('성공: 유효한 firebaseUid로 유저를 찾음', async () => {
     const fakeDecodedUser = { uid: 'valid-uid' };
-    const fakeUser = { id: 1, firebaseUid: 'valid-uid', email: 'user@example.com' };
+    const fakeUser = {
+      id: 1,
+      firebaseUid: 'valid-uid',
+      email: 'user@example.com',
+    };
     jest.spyOn(prisma.user, 'findUnique').mockResolvedValue(fakeUser as any);
 
     const result = await service.validateUser(fakeDecodedUser as any);
@@ -163,8 +185,12 @@ describe('AuthService (Refactor)', () => {
 
   it('성공: 유효한 온보딩 정보 입력 시 사용자 정보 업데이트 및 isOnboarded를 true로 설정', async () => {
     const userId = 'user-id-123';
-    const onboardingData = { nickname: 'new nickname' };
-    const fakeUpdatedUser = { id: userId, nickname: 'new nickname', isOnboarded: true };
+    const onboardingData = { username: 'new nickname' };
+    const fakeUpdatedUser = {
+      id: userId,
+      username: 'new nickname',
+      isOnboarded: true,
+    };
 
     jest.spyOn(prisma.user, 'update').mockResolvedValue(fakeUpdatedUser as any);
 
@@ -179,11 +205,15 @@ describe('AuthService (Refactor)', () => {
 
   it('에러: 존재하지 않는 사용자 ID로 온보딩 시도', async () => {
     const userId = 'non-existent-user';
-    const onboardingData = { nickname: 'new nickname' };
+    const onboardingData = { username: 'new nickname' };
 
-    jest.spyOn(prisma.user, 'update').mockRejectedValue(new Error('User not found'));
+    jest
+      .spyOn(prisma.user, 'update')
+      .mockRejectedValue(new Error('User not found'));
 
-    await expect(service.completeOnboarding(userId, onboardingData)).rejects.toThrow();
+    await expect(
+      service.completeOnboarding(userId, onboardingData),
+    ).rejects.toThrow();
 
     expect(prisma.user.update).toHaveBeenCalledWith({
       where: { id: userId },
@@ -193,5 +223,4 @@ describe('AuthService (Refactor)', () => {
 
   // 유효하지 않은 온보딩 데이터 (DTO 유효성)
   // TODO: DTO 유효성 검사 로직 구현 후 테스트 추가
-
 });
