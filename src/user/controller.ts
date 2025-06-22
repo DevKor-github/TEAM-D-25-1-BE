@@ -27,6 +27,7 @@ import { FollowUserUseCase } from './usecases/followUser';
 import { FirebaseAuthGuard } from '@/auth/guards/firebase-auth.guard';
 import { User } from '@/decorators/user.decorator';
 import { GetPendingFollowListUseCase } from './usecases/getPendingFollowList';
+import { GetFollowerListUseCase } from './usecases/getFollowerList';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -38,6 +39,7 @@ export class UserController {
     private readonly handleFollowUseCase: HandleFollowUseCase,
     private readonly followUserUseCase: FollowUserUseCase,
     private readonly getPendingFollowerListUseCase: GetPendingFollowListUseCase,
+    private readonly getFollowerListUseCase: GetFollowerListUseCase,
   ) {}
 
   @Get('me/restaurants')
@@ -131,6 +133,27 @@ export class UserController {
       page,
     );
 
-    return res.status(HttpStatus.OK).json(result);
+    return res.status(HttpStatus.OK).json(result); // TODO: Formatting
+  }
+
+  @Get('me/followers')
+  @UseGuards(FirebaseAuthGuard) // TODO: fix to jwt guard
+  @ApiResponse({
+    status: 200,
+    description: 'Get follower list',
+    type: FollowerListResponse,
+  })
+  async getFollowerList(
+    @User() user: any,
+    @Query('per_page', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Res() res: Response,
+  ) {
+    const result = await this.getFollowerListUseCase.execute(
+      user.id,
+      perPage,
+      page,
+    );
+    return res.status(HttpStatus.OK).json(result); // TODO: Formatting
   }
 }
