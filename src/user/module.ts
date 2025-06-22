@@ -6,6 +6,7 @@ import { UserRepository } from './repositories/user';
 import { GetFollowingListUseCase } from './usecases/getFollowingList';
 import { FollowerRepository } from './repositories/follower';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
+import { HandleFollowUseCase } from './usecases/handleFollow';
 
 @Module({
   imports: [PrismaModule],
@@ -16,6 +17,7 @@ import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
     FollowerRepository,
     GetFollowingListUseCase,
     RestaurantRepository,
+    HandleFollowUseCase,
   ],
 })
 export class UserModule {}

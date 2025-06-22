@@ -4,10 +4,10 @@ import { NotFoundException } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class AcceptFollowUseCase {
+export class HandleFollowUseCase {
   constructor(private readonly followerRepository: FollowerRepository) {}
 
-  async execute(userId: string, followerId: string) {
+  async execute(userId: string, followerId: string, status: FollowerStatus) {
     const follower = await this.followerRepository.getFollower({
       userId,
       followerId,
@@ -18,7 +18,7 @@ export class AcceptFollowUseCase {
     }
 
     return this.followerRepository.updateFollowerStatus(userId, followerId, {
-      status: FollowerStatus.ACCEPTED,
+      status,
     });
   }
 }

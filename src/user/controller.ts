@@ -7,12 +7,20 @@ import {
   Query,
   Res,
   Param,
+  Body,
+  Post,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UserService } from './service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { FollowingListResponse, RestaurantListResponse } from './dto';
+import {
+  FollowerResponse,
+  FollowingListResponse,
+  HandleFollowRequest,
+  RestaurantListResponse,
+} from './dto';
 import { GetFollowingListUseCase } from './usecases/getFollowingList';
+import { HandleFollowUseCase } from './usecases/handleFollow';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -21,6 +29,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly getFollowingListUseCase: GetFollowingListUseCase,
+    private readonly handleFollowUseCase: HandleFollowUseCase,
   ) {}
 
   @Get('me/restaurants')
@@ -55,6 +64,27 @@ export class UserController {
       perPage,
       page,
     );
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Post(':userId/following/:followerId')
+  @ApiResponse({
+    status: 200,
+    description: 'Accept or reject follow request',
+    type: FollowerResponse,
+  })
+  async handleFollow(
+    @Param('userId') userId: string,
+    @Param('followerId') followerId: string,
+    @Body() body: HandleFollowRequest,
+    @Res() res: Response,
+  ) {
+    const result = await this.handleFollowUseCase.execute(
+      userId,
+      followerId,
+      body.status,
+    );
+
     return res.status(HttpStatus.OK).json(result);
   }
 }

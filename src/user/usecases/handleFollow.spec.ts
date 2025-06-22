@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AcceptFollowUseCase } from './acceptFollow';
+import { HandleFollowUseCase } from './handleFollow';
 import { FollowerRepository } from '../repositories/follower';
 import { FollowerStatus } from '@prisma/client';
 import { NotFoundException } from '@nestjs/common';
 
-describe('AcceptFollowUseCase', () => {
-  let useCase: AcceptFollowUseCase;
+describe('HandleFollowUseCase', () => {
+  let useCase: HandleFollowUseCase;
   let followerRepository: jest.Mocked<FollowerRepository>;
 
   const mockPendingFollower = {
@@ -28,7 +28,7 @@ describe('AcceptFollowUseCase', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AcceptFollowUseCase,
+        HandleFollowUseCase,
         {
           provide: FollowerRepository,
           useValue: mockFollowerRepository,
@@ -36,7 +36,7 @@ describe('AcceptFollowUseCase', () => {
       ],
     }).compile();
 
-    useCase = module.get<AcceptFollowUseCase>(AcceptFollowUseCase);
+    useCase = module.get<HandleFollowUseCase>(HandleFollowUseCase);
     followerRepository = module.get(FollowerRepository);
   });
 
@@ -50,9 +50,9 @@ describe('AcceptFollowUseCase', () => {
       followerRepository.getFollower.mockResolvedValue(null);
 
       // Act & Assert
-      await expect(useCase.execute('user1', 'follower1')).rejects.toThrow(
-        NotFoundException,
-      );
+      await expect(
+        useCase.execute('user1', 'follower1', FollowerStatus.ACCEPTED),
+      ).rejects.toThrow(NotFoundException);
     });
 
     it('should throw NotFoundException when follower status is not pending', async () => {
@@ -63,9 +63,9 @@ describe('AcceptFollowUseCase', () => {
       });
 
       // Act & Assert
-      await expect(useCase.execute('user1', 'follower1')).rejects.toThrow(
-        NotFoundException,
-      );
+      await expect(
+        useCase.execute('user1', 'follower1', FollowerStatus.ACCEPTED),
+      ).rejects.toThrow(NotFoundException);
     });
 
     it('should successfully accept a pending follower', async () => {
@@ -76,7 +76,11 @@ describe('AcceptFollowUseCase', () => {
       );
 
       // Act
-      const result = await useCase.execute('user1', 'follower1');
+      const result = await useCase.execute(
+        'user1',
+        'follower1',
+        FollowerStatus.ACCEPTED,
+      );
 
       // Assert
       expect(result.status).toBe(FollowerStatus.ACCEPTED);
