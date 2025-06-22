@@ -9,11 +9,13 @@ import {
   Param,
   Body,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UserService } from './service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
+  FollowerListResponse,
   FollowerResponse,
   FollowingListResponse,
   HandleFollowRequest,
@@ -21,6 +23,10 @@ import {
 } from './dto';
 import { GetFollowingListUseCase } from './usecases/getFollowingList';
 import { HandleFollowUseCase } from './usecases/handleFollow';
+import { FollowUserUseCase } from './usecases/followUser';
+import { FirebaseAuthGuard } from '@/auth/guards/firebase-auth.guard';
+import { User } from '@/decorators/user.decorator';
+import { GetPendingFollowListUseCase } from './usecases/getPendingFollowList';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -30,6 +36,8 @@ export class UserController {
     private readonly userService: UserService,
     private readonly getFollowingListUseCase: GetFollowingListUseCase,
     private readonly handleFollowUseCase: HandleFollowUseCase,
+    private readonly followUserUseCase: FollowUserUseCase,
+    private readonly getPendingFollowerListUseCase: GetPendingFollowListUseCase,
   ) {}
 
   @Get('me/restaurants')
@@ -83,6 +91,44 @@ export class UserController {
       userId,
       followerId,
       body.status,
+    );
+
+    return res.status(HttpStatus.OK).json(result); // TODO: into FollowerResponse
+  }
+
+  @Post(':userId/follow')
+  @UseGuards(FirebaseAuthGuard) // TODO: fix to jwt guard
+  @ApiResponse({
+    status: 201,
+    description: 'Follow User',
+    type: FollowerResponse,
+  })
+  async handleFollowUser(
+    @Param('userId') userId: string,
+    @User() user: any,
+    @Res() res: Response,
+  ) {
+    const result = await this.followUserUseCase.execute(user.id, userId);
+    return res.status(HttpStatus.CREATED).json(result); // TODO: into FollowerResponse
+  }
+
+  @Get('me/followers/pending')
+  @UseGuards(FirebaseAuthGuard) // TODO: fix to jwt guard
+  @ApiResponse({
+    status: 200,
+    description: 'Get pending follower list',
+    type: FollowerListResponse,
+  })
+  async getPendingFollowerList(
+    @User() user: any,
+    @Query('per_page', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Res() res: Response,
+  ) {
+    const result = await this.getPendingFollowerListUseCase.execute(
+      user.id,
+      perPage,
+      page,
     );
 
     return res.status(HttpStatus.OK).json(result);
