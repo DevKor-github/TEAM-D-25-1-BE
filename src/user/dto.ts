@@ -1,4 +1,4 @@
-import { Restaurant } from '@prisma/client';
+import { Restaurant, FollowerStatus } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -9,6 +9,7 @@ import {
   IsString,
   ValidateNested,
   IsBoolean,
+  IsEnum,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -280,4 +281,46 @@ export class FollowerListResponse {
   @ValidateNested({ each: true })
   @Type(() => FollowerUserResponse)
   items: FollowerUserResponse[];
+}
+
+export class HandleFollowRequest {
+  @ApiProperty({
+    description: '수락 여부',
+    enum: FollowerStatus,
+  })
+  @IsEnum(FollowerStatus)
+  status: FollowerStatus;
+}
+
+export class FollowerResponse {
+  @ApiProperty({
+    description: '팔로우 받은 사용자 ID',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+  })
+  @IsString()
+  @IsNotEmpty()
+  userId: string;
+
+  @ApiProperty({
+    description: '팔로우 요청한 사용자 ID',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+  })
+  @IsString()
+  @IsNotEmpty()
+  followerId: string;
+
+  @ApiProperty({
+    description: '팔로우 상태',
+    enum: FollowerStatus,
+  })
+  @IsEnum(FollowerStatus)
+  status: FollowerStatus;
+
+  @ApiProperty({
+    description: '팔로우 생성일',
+    example: '2024-03-20T00:00:00.000Z',
+  })
+  @IsDate()
+  @IsNotEmpty()
+  createdAt: Date;
 }
