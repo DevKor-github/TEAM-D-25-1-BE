@@ -20,6 +20,16 @@ describe('HandleFollowUseCase', () => {
     status: FollowerStatus.ACCEPTED,
   };
 
+  const mockRejectedFollower = {
+    ...mockPendingFollower,
+    status: FollowerStatus.REJECTED,
+  };
+
+  const mockBannedFollower = {
+    ...mockPendingFollower,
+    status: FollowerStatus.BANNED,
+  };
+
   beforeEach(async () => {
     const mockFollowerRepository = {
       getFollower: jest.fn(),
@@ -89,6 +99,73 @@ describe('HandleFollowUseCase', () => {
         'follower1',
         { status: FollowerStatus.ACCEPTED },
       );
+    });
+
+    it('should successfully reject a pending follower', async () => {
+      // Arrange
+      followerRepository.getFollower.mockResolvedValue(mockPendingFollower);
+      followerRepository.updateFollowerStatus.mockResolvedValue(
+        mockRejectedFollower,
+      );
+
+      // Act
+      const result = await useCase.execute(
+        'user1',
+        'follower1',
+        FollowerStatus.REJECTED,
+      );
+
+      // Assert
+      expect(result.status).toBe(FollowerStatus.REJECTED);
+      expect(followerRepository.updateFollowerStatus).toHaveBeenCalledWith(
+        'user1',
+        'follower1',
+        { status: FollowerStatus.REJECTED },
+      );
+    });
+
+    it('should successfully ban a pending follower', async () => {
+      // Arrange
+      followerRepository.getFollower.mockResolvedValue(mockPendingFollower);
+      followerRepository.updateFollowerStatus.mockResolvedValue(
+        mockBannedFollower,
+      );
+
+      // Act
+      const result = await useCase.execute(
+        'user1',
+        'follower1',
+        FollowerStatus.BANNED,
+      );
+
+      // Assert
+      expect(result.status).toBe(FollowerStatus.BANNED);
+      expect(followerRepository.updateFollowerStatus).toHaveBeenCalledWith(
+        'user1',
+        'follower1',
+        { status: FollowerStatus.BANNED },
+      );
+    });
+
+    it('should throw NotFoundException when trying to update non-pending follower to any status', async () => {
+      // Arrange
+      const testCases = [
+        FollowerStatus.ACCEPTED,
+        FollowerStatus.REJECTED,
+        FollowerStatus.BANNED,
+      ];
+
+      for (const status of testCases) {
+        followerRepository.getFollower.mockResolvedValue({
+          ...mockPendingFollower,
+          status: FollowerStatus.REJECTED, // 이미 REJECTED 상태인 팔로워
+        });
+
+        // Act & Assert
+        await expect(
+          useCase.execute('user1', 'follower1', status),
+        ).rejects.toThrow(NotFoundException);
+      }
     });
   });
 });
