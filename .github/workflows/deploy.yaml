@@ -5,6 +5,7 @@ on:
     branches:
       - main # 또는 원하는 브랜치 이름
       - ci/*
+      - develop
   pull_request:
     branches:
       - main # 또는 원하는 브랜치 이름
