@@ -22,6 +22,27 @@ export class SearchUserTagRepository {
     });
   }
 
+  private async getListByQuery(
+    query: string,
+    page: number,
+    perPage: number,
+    select: { userId?: boolean } | undefined = undefined,
+  ) {
+    return await this.prisma.searchUserTag.findMany({
+      where: {
+        name: {
+          contains: query,
+        },
+      },
+      orderBy: {
+        name: 'asc',
+      },
+      skip: (page - 1) * perPage,
+      take: perPage,
+      select,
+    });
+  }
+
   async createBulk(params: CreateBulkSearchUserTagParams) {
     return await this.prisma.searchUserTag.createMany({
       data: params.names.map((name) => ({
@@ -32,14 +53,23 @@ export class SearchUserTagRepository {
     });
   }
 
-  async getList(query: string): Promise<SearchUserTag[]> {
-    return await this.prisma.searchUserTag.findMany({
-      where: {
-        name: {
-          contains: query,
-        },
-      },
+  async getList(
+    query: string,
+    page: number,
+    perPage: number,
+  ): Promise<SearchUserTag[]> {
+    return (await this.getListByQuery(query, page, perPage)) as SearchUserTag[];
+  }
+
+  async getIdList(
+    query: string,
+    page: number,
+    perPage: number,
+  ): Promise<string[]> {
+    const resp = await this.getListByQuery(query, page, perPage, {
+      userId: true,
     });
+    return resp.map((tag) => tag.userId);
   }
 
   async deleteByUserId(userId: string) {
