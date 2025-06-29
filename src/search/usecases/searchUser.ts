@@ -24,7 +24,7 @@ export class SearchUserUseCase {
     );
 
     // FIXME: UserParam => UserEntity
-    const users: UserParam[] = await this.userRepository.getIdList(userIds);
+    const users: UserParam[] = await this.userRepository.findByIdList(userIds);
 
     return users;
   }

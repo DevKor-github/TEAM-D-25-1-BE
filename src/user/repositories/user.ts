@@ -63,7 +63,7 @@ export class UserRepository {
     return users.map((user) => this.mapToUserParam(user));
   }
 
-  async getIdList(ids: string[]): Promise<UserParam[]> {
+  async findByIdList(ids: string[]): Promise<UserParam[]> {
     const users = await this.prisma.user.findMany({
       where: {
         id: {
