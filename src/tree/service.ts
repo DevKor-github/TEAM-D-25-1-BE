@@ -17,10 +17,13 @@ export class TreeService{
         return friendsTrees;
     }
 
-    async getTreesByLocation(location: Coordinate): Promise<(Restaurant & { savedBy: SavedRestaurant[] })[]> {
-        // TODO: Repository 이용 주변 나무들 불러오는 로직
+    async getTreesByLocation(
+        userId: string, 
+        zoom: number, 
+        location: Coordinate
+    ): Promise<Restaurant[]> {
         console.log('Getting trees by location:', location);
-        const result = await this.treeRepository.getTreesByLocation(location);
+        const result = await this.treeRepository.getTreesByLocation(userId, zoom, location);
         return result;
     }
 

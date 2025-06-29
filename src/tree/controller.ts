@@ -42,9 +42,11 @@ export class TreeController {
   })
   async getTreesByLocation(
     @Query() location: Coordinate,
+    @Query() zoom: number,
+    @User() userId: string,
     @Res() res: Response,
   ) {
-    const result = await this.tree.getTreesByLocation(location);
+    const result = await this.tree.getTreesByLocation(userId, zoom, location);
     return res.status(HttpStatus.OK).json(result);
   }
 

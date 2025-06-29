@@ -5,14 +5,64 @@ import { Coordinate, PlantTreeDto } from './dto';
 
 @Injectable()
 export class TreeRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly MIN_ZOOM_LEVEL = 15
+  ) {}
+
+  private zoomToRadius(zoom: number): number{
+    if (zoom >= 16) return 1;
+    if (zoom >= 15) return 2;
+    return 3;
+  }
 
   async getTreesByLocation(
+    userId: string,
+    zoom: number,
     location: Coordinate,
-  ): Promise<(Restaurant & { savedBy: SavedRestaurant[] })[]> {
-    console.log('Getting restaurants by location from DB:', location);
-    // TODO: Prisma 기반?
-    return [];
+  ): Promise<Restaurant[]> {
+    if (zoom < this.MIN_ZOOM_LEVEL) return [];
+
+    const following = await this.prisma.follower.findMany({
+      where: {
+        followerId: userId,
+        status: 'ACCEPTED'
+      },
+      select: { userId: true }
+    })
+
+    const followingIds = following.map((e) => e.userId)
+    const searchTargetIds = [...followingIds, userId]
+    const [ lat, lon ] = [parseFloat(location.lat), parseFloat(location.lon)]
+
+    const radius = this.zoomToRadius(zoom)
+    const latRadian = (Math.PI * lat) / 180;
+    const degLat = 110.574; // 위도 1도의 km
+    const degLon = 111.32 * Math.cos(latRadian);
+
+    const latMin = lat - radius / degLat;
+    const latMax = lat + radius / degLat;
+    const lonMin = lon - radius / degLon;
+    const lonMax = lon + radius / degLon;
+
+    const restaurants = await this.prisma.restaurant.findMany({
+      where: {
+        latitude: { gte: latMin, lte: latMax },
+        longitude: { gte: lonMin, lte: lonMax },
+      },
+      include: {
+        savedBy: {
+          where: {
+            userId: { in: searchTargetIds }
+          },
+          include: {
+            user: { select: { id: true }},
+          },
+        }
+      }
+    })
+
+    return restaurants;
   }
 
   async getTreeById(
