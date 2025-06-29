@@ -43,7 +43,7 @@ export class TreeController {
   async getTreesByLocation(
     @Query() location: Coordinate,
     @Query() zoom: number,
-    @User() userId: string,
+    @User('uid') userId: string,
     @Res() res: Response,
   ) {
     const result = await this.tree.getTreesByLocation(userId, zoom, location);
@@ -60,7 +60,7 @@ export class TreeController {
   })
   async getTreeById(
     @Param('treeId') treeId: string,
-    @User() userId: string,
+    @User('uid') userId: string,
     @Res() res: Response,
   ) {
     const result = await this.tree.getTreeById(treeId, userId);
@@ -77,7 +77,7 @@ export class TreeController {
   })
   async waterTree(
     @Param('treeId') treeId: string,
-    @User() userId: string,
+    @User('uid') userId: string,
     @Res() res: Response,
   ) {
     const result = await this.tree.waterTree(treeId, userId);
@@ -94,7 +94,7 @@ export class TreeController {
   })
   async plantTree(
     @Body() plantTreeDto: PlantTreeDto,
-    @User() userId: string,
+    @User('uid') userId: string,
     @Res() res: Response,
   ) {
     const result = await this.tree.plantTree(plantTreeDto, userId);
@@ -123,7 +123,7 @@ export class TreeController {
   })
   async getFollowers(
     @Query('restaurantId') restaurantId: string,
-    @User() userId: string,
+    @User('uid') userId: string,
     @Res() res: Response,
   ) {
     const result = this.tree.getFollowersTree(userId, restaurantId);
