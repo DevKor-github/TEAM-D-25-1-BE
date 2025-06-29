@@ -44,6 +44,7 @@ const serviceAccount = require('../../firebase-adminsdk.json');
     GoogleStrategy,
     AppleStrategy,
     FirebaseAuthGuard,
+    AuthService,
   ],
   exports: [FirebaseAuthGuard],
   controllers: [AuthController],
