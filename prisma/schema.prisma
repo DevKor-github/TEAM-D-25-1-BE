@@ -68,8 +68,8 @@ model Restaurant {
   placeId   String            @unique //지도 API 식별자 저장용
   name      String
   address   String
-  latitude  Decimal           @db.Decimal(9,6)
-  longitude Decimal           @db.Decimal(9,6)
+  latitude  Float
+  longitude Float
   createdAt DateTime          @default(now())
   savedBy   SavedRestaurant[]
 }
