@@ -5,10 +5,12 @@ import { SearchUserUseCase } from './usecases/searchUser';
 import { SearchUserTagRepository } from './repositories/searchUserTag';
 import { SearchRestaurantTagRepository } from './repositories/searchRestaurantTag';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
+import { SearchController } from './controller';
+import { UserRepository } from '@/user/repositories/user';
 
 @Module({
   imports: [],
-  controllers: [],
+  controllers: [SearchController],
   providers: [
     PrismaService,
     SearchRestaurantUseCase,
@@ -16,6 +18,7 @@ import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
     SearchRestaurantTagRepository,
     SearchUserTagRepository,
     RestaurantRepository,
+    UserRepository,
   ],
 })
 export class SearchModule {}
