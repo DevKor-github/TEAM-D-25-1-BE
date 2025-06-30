@@ -16,6 +16,7 @@ export class TreeRepository {
     return 3;
   }
 
+  // TODO: 범위 부분 Service단으로 빼기
   async getTreesByLocation(
     userId: string,
     zoom: number,
@@ -65,28 +66,42 @@ export class TreeRepository {
     return restaurants;
   }
 
-  async getTreeById(
+  async getTreesByRestaurantId(
     restaurantId: string,
-    userId: string,
-  ): Promise<
-    (SavedRestaurant & { user: User; restaurant: Restaurant }) | null
-  > {
-    console.log(
-      'Getting tree (SavedRestaurant) for restaurant:',
-      restaurantId,
-      'by user:',
-      userId,
-    );
-    const tree = await this.prisma.savedRestaurant.findUnique({
-      where: {
-        userId_restaurantId: { userId: userId, restaurantId: restaurantId },
+    targetUids: string[]
+  ): Promise<(SavedRestaurant & { user: User; restaurant: Restaurant })[]>{
+    return this.prisma.savedRestaurant.findMany({
+      where: { 
+        restaurantId: restaurantId, 
+        userId: { in: targetUids }
       },
       include: {
         user: true,
-        restaurant: true,
+        restaurant: true
       },
-    });
-    return tree;
+      orderBy: {
+        createdAt: 'desc'
+      }
+    })
+  }
+
+  async getTreeById(
+    ownerId: string,
+    restaurantId: string
+  ): Promise<(SavedRestaurant & { user: User; restaurant: Restaurant }) | null>{
+    const tree = await this.prisma.savedRestaurant.findUnique({
+      where:{
+        userId_restaurantId: {
+          userId: ownerId,
+          restaurantId: restaurantId
+        }
+      },
+      include: {
+        user: true,
+        restaurant: true
+      }
+    })
+    return tree
   }
 
   async waterTree(
@@ -169,6 +184,7 @@ export class TreeRepository {
     return [];
   }
 
+  // TODO: Service단으로 리팩토링
   async getFollowersTree(
     userId: string,
     restaurantId: string,

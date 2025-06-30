@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { TreeRepository } from "./repository";
 import { Coordinate, PlantTreeDto } from './dto';
 import { SavedRestaurant, Restaurant, User } from '@prisma/client';
@@ -27,10 +27,47 @@ export class TreeService{
         return result;
     }
 
-    async getTreeById(restaurantId: string, userId: string): Promise<(SavedRestaurant & { user: User, restaurant: Restaurant }) | null> {
-        console.log('Getting tree by ID:', restaurantId, 'by user:', userId);
-        const result = await this.treeRepository.getTreeById(restaurantId, userId);
-        return result;
+    async getTreeById(
+        treeId: string, 
+        userId: string
+    ): Promise<(SavedRestaurant & { user: User, restaurant: Restaurant }) | null> {
+        const parts = treeId.split('_')
+        if (parts.length !== 2) throw new BadRequestException('잘못된 형식의 treeId입니다.')
+        
+        const [ownerId, restaurantId] = parts
+
+        let isAllowed = false
+        if (ownerId === userId) isAllowed = true
+        else {
+            const relation = await this.prisma.follower.findUnique({
+                where: {
+                    userId_followerId: {
+                        userId: ownerId,
+                        followerId: userId
+                    },
+                    status: 'ACCEPTED'
+                }
+            })
+        }
+
+        if (!isAllowed) throw new ForbiddenException('이 나무에 접근할 수 없습니다.')
+        
+        const tree = await this.treeRepository.getTreeById(ownerId, restaurantId)
+        if (!tree) throw new NotFoundException('해당하는 나무를 찾을 수 없습니다.')
+
+        return tree
+    }
+
+    async getTreesByRestaurantId(restaurantId: string, userId: string): Promise<(SavedRestaurant & { user: User, restaurant: Restaurant })[]> {
+        const followings = await this.prisma.follower.findMany({
+            where: { followerId: userId, status: 'ACCEPTED' },
+            select: { userId: true }
+        })
+        const followingIds = followings.map(e => e.userId)
+
+        const targetUids = [...followingIds, userId]
+        
+        return this.treeRepository.getTreesByRestaurantId(restaurantId, targetUids);
     }
 
     async waterTree(restaurantId: string, userId: string): Promise<SavedRestaurant | null> {

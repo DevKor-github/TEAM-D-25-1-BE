@@ -52,7 +52,7 @@ export class TreeController {
 
   @Get(':treeId')
   @ApiOperation({ summary: '특정 나무 상세 조회' })
-  @ApiParam({ name: 'treeId', description: '나무 UUID', type: String, example: 'uuid-1234-...' })
+  @ApiParam({ name: 'treeId', description: '나무 UUID', type: String, example: 'uuid-1234-..._uuid-1234-...' })
   @ApiResponse({
     status: 200,
     description: '나무 상세 정보 반환',
@@ -64,6 +64,23 @@ export class TreeController {
     @Res() res: Response,
   ) {
     const result = await this.tree.getTreeById(treeId, userId);
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Get(':restaurantId')
+  @ApiOperation({ summary: '식당에 대한 나무 목록 반환' })
+  @ApiParam({ name: 'restaurantId', description: '식당 UUID', type: String, example: 'uuid-1234-...' })
+  @ApiResponse({
+    status: 200,
+    description: '나무들 상세 정보 반환',
+    type: TreeDetailResponse,
+  })
+  async getTreeByRestaurantId(
+    @Param('restaurantId') restaurantId: string,
+    @User('uid') userId: string,
+    @Res() res: Response,
+  ) {
+    const result = await this.tree.getTreesByRestaurantId(restaurantId, userId);
     return res.status(HttpStatus.OK).json(result);
   }
 
