@@ -103,7 +103,7 @@ model Follower {
 }
 
 model SearchRestaurantTag {
-  id String @id @default(uuid())
+  id String @id
   restaurantId String @db.Uuid
   name String // Info: varchar_pattern_ops
 
@@ -112,7 +112,7 @@ model SearchRestaurantTag {
 }
 
 model SearchUserTag {
-  id String @id @default(uuid())
+  id String @id 
   userId String @db.Uuid
   name String // Info: varchar_pattern_ops 
 

@@ -25,7 +25,7 @@ export class GetPendingFollowListUseCase {
     });
 
     const followerIds = pendingFollowers.map((follower) => follower.followerId);
-    const users = await this.userRepository.findByIds(followerIds);
+    const users = await this.userRepository.findByIdList(followerIds);
     const userMaps = users.reduce(
       (acc, user) => {
         acc[user.id] = user;

@@ -63,7 +63,7 @@ export class UserRepository {
     return users.map((user) => this.mapToUserParam(user));
   }
 
-  async findByIds(ids: string[]): Promise<UserParam[]> {
+  async findByIdList(ids: string[]): Promise<UserParam[]> {
     const users = await this.prisma.user.findMany({
       where: {
         id: {
@@ -72,7 +72,15 @@ export class UserRepository {
       },
     });
 
-    return users.map((user) => this.mapToUserParam(user));
+    const resultMap = users.reduce(
+      (acc, user) => {
+        acc[user.id] = this.mapToUserParam(user);
+        return acc;
+      },
+      {} as Record<string, UserParam>,
+    );
+
+    return ids.map((id) => resultMap[id]);
   }
 
   private mapToUserParam(user: User): UserParam {

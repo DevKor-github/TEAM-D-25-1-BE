@@ -28,7 +28,7 @@ export class GetFollowingListUseCase {
     const userIds: string[] = followingList.map(
       (following) => following.followerId,
     );
-    const users: UserParam[] = await this.userRepository.findByIds(userIds);
+    const users: UserParam[] = await this.userRepository.findByIdList(userIds);
     const userMaps = users.reduce(
       (acc, user) => {
         acc[user.id] = user;

@@ -83,7 +83,7 @@ describe('GetFollowingListUseCase', () => {
       const page = 1;
 
       followerRepository.getFollowingList.mockResolvedValue(mockFollowingList);
-      userRepository.findByIds.mockResolvedValue(mockUsers);
+      userRepository.findByIdList.mockResolvedValue(mockUsers);
 
       // Act
       const result = await useCase.execute(userId, perPage, page);
@@ -96,7 +96,7 @@ describe('GetFollowingListUseCase', () => {
         perPage,
       });
 
-      expect(userRepository.findByIds).toHaveBeenCalledWith([
+      expect(userRepository.findByIdList).toHaveBeenCalledWith([
         'following1',
         'following2',
       ]);
@@ -110,7 +110,7 @@ describe('GetFollowingListUseCase', () => {
       // Arrange
       const userId = 'user1';
       followerRepository.getFollowingList.mockResolvedValue([]);
-      userRepository.findByIds.mockResolvedValue([]);
+      userRepository.findByIdList.mockResolvedValue([]);
 
       // Act
       const result = await useCase.execute(userId);
