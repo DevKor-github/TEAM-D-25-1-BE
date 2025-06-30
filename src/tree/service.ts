@@ -1,8 +1,9 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { TreeRepository } from "./repository";
 import { Coordinate, PlantTreeDto } from './dto';
 import { SavedRestaurant, Restaurant, User } from '@prisma/client';
 import { PrismaService } from "@/prisma/prisma.service";
+import { TreeDetail } from "./types";
 
 @Injectable()
 export class TreeService{
@@ -30,10 +31,8 @@ export class TreeService{
     async getTreeById(
         treeId: string, 
         userId: string
-    ): Promise<(SavedRestaurant & { user: User, restaurant: Restaurant }) | null> {
+    ): Promise<TreeDetail | null> {
         const parts = treeId.split('_')
-        if (parts.length !== 2) throw new BadRequestException('잘못된 형식의 treeId입니다.')
-        
         const [ownerId, restaurantId] = parts
 
         let isAllowed = false
@@ -58,7 +57,10 @@ export class TreeService{
         return tree
     }
 
-    async getTreesByRestaurantId(restaurantId: string, userId: string): Promise<(SavedRestaurant & { user: User, restaurant: Restaurant })[]> {
+    async getTreesByRestaurantId(
+        restaurantId: string, 
+        userId: string
+    ): Promise<TreeDetail[]> {
         const followings = await this.prisma.follower.findMany({
             where: { followerId: userId, status: 'ACCEPTED' },
             select: { userId: true }
@@ -70,7 +72,10 @@ export class TreeService{
         return this.treeRepository.getTreesByRestaurantId(restaurantId, targetUids);
     }
 
-    async waterTree(restaurantId: string, userId: string): Promise<SavedRestaurant | null> {
+    async waterTree(
+        restaurantId: string, 
+        userId: string
+    ): Promise<SavedRestaurant | null> {
         console.log('Watering tree:', restaurantId, 'by user:', userId);
         const { lastWatered = new Date(0) } = await this.prisma.user.findUnique({
             where: { id: userId },
@@ -91,21 +96,36 @@ export class TreeService{
     async plantTree(
         plantTreeDto: PlantTreeDto,
         userId: string
-    ): Promise<SavedRestaurant> {
+    ): Promise<SavedRestaurant & { warnings?: string[] }> {
         const { tagIds, restaurantId } = plantTreeDto
+        const warnings: string[] = []
 
         const restaurant = await this.prisma.restaurant.findUnique({ 
             where:  { id: restaurantId },
             select: { id: true }
         }); 
-        if (!restaurant) throw new BadRequestException(`Id: ${restaurantId}에 해당하는 식당을 찾을 수 없습니다.`)
+        if (!restaurant) throw new NotFoundException(`Id: ${restaurantId}에 해당하는 식당을 찾을 수 없습니다.`)
 
-        if (new Set(tagIds).size !== tagIds.length) throw new BadRequestException('중복된 태그가 존재합니다')
+        const uniqueTagIds = [...new Set(tagIds)]
+        if (uniqueTagIds.length !== tagIds.length) warnings.push('중복된 태그가 있어 자동으로 제거하였습니다.')
 
-        const validTagsCount = await this.prisma.tag.count({ where: { id: { in: tagIds }}})
-        if (validTagsCount !== tagIds.length) throw new BadRequestException('사용할 수 없는 태그가 존재합니다.')
+        const validTags = await this.prisma.tag.findMany({
+            where: { id: { in: uniqueTagIds } },
+            select: { id: true }
+        })
+        const validTagIds = validTags.map(e => e.id)
 
-        return this.treeRepository.plantTree(plantTreeDto, userId);
+        if (validTagIds.length !== uniqueTagIds.length) warnings.push(`존재하지 않는 태그가 감지되어 자동으로 제거하였습니다.`)
+        
+        const processedDto: PlantTreeDto = {
+            ...plantTreeDto,
+            tagIds: validTagIds
+        }
+
+        const res: SavedRestaurant & { warnings?: string[] } = await this.treeRepository.plantTree(processedDto, userId);
+        if (warnings.length > 0) res.warnings = warnings
+        
+        return res
     }
 
     async getRecommendations(): Promise<SavedRestaurant[]> {

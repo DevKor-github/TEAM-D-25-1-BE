@@ -4,7 +4,7 @@ import { TreeRepository } from './repository';
 import { Coordinate, PlantTreeDto } from './dto';
 import { SavedRestaurant, Restaurant, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, NotFoundException } from '@nestjs/common';
 
 const mockUserId = 'a1b2c3d4-e5f6-7890-1234-567890abcdef';
 const mockOwnerId = 'owner-uuid-5678';
@@ -152,8 +152,11 @@ describe('TreeService (unit)', () => {
     it('lastWatered가 메서드 호출 시각으로부터 4시간 이내이면 BadRequestException을 던져야 함', async () => {
       const lastWatered = new Date(Date.now() - 3 * 60 * 60 * 1000);
       (prisma.user.findUnique as jest.Mock).mockResolvedValue({ lastWatered });
-
-      await expect(service.waterTree(mockRestaurantId, mockUserId)).rejects.toThrow(BadRequestException);
+      const expectedError = new BadRequestException({
+        message: '아직 물을 줄 수 없습니다.',
+        lastWatered,
+      });
+      await expect(service.waterTree(mockRestaurantId, mockUserId)).rejects.toThrow(expectedError);
     });
 
     it('물을 줄 수 있는 경우 repository.waterTree를 호출하고 결과를 반환해야 함', async () => {
@@ -195,12 +198,12 @@ describe('TreeService (unit)', () => {
         );
     });
     
-    it('유효하지 않은 태그가 있을 경우 BadRequestException을 던져야 함', async () => {
+    it('유효하지 않은 태그가 있을 경우 ConflictException을 던져야 함', async () => {
         (prisma.restaurant.findUnique as jest.Mock).mockResolvedValue(mockRestaurant);
         (prisma.tag.count as jest.Mock).mockResolvedValue(100000);
 
         await expect(service.plantTree(plantTreeDto, mockUserId)).rejects.toThrow(
-            new BadRequestException('사용할 수 없는 태그가 존재합니다.')
+            new ConflictException('사용할 수 없는 태그가 존재합니다.')
         );
     });
 

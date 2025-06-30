@@ -2,21 +2,63 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Restaurant, SavedRestaurant, User } from '@prisma/client';
 import { Coordinate, PlantTreeDto } from './dto';
+import { TreeDetail } from './types';
 
 @Injectable()
 export class TreeRepository {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly MIN_ZOOM_LEVEL = 15
+    private readonly MIN_ZOOM_LEVEL = 11
   ) {}
 
-  private zoomToRadius(zoom: number): number{
-    if (zoom >= 16) return 1;
-    if (zoom >= 15) return 2;
-    return 3;
+  public zoomToRadius(zoom: number): number{
+    switch(true){
+      case zoom >= 18:
+        return 0.3
+      case zoom >= 15:
+        return 0.7
+      case zoom >= 12:
+        return 2
+      case zoom >= 9:
+        return 5
+      case zoom >= 6:
+        return 20
+      default:
+        return 50
+    }
   }
 
-  // TODO: 범위 부분 Service단으로 빼기
+  public getBoundBox(
+    center: { lat: number; lon: number },
+    radiusKm: number
+  ){
+    const { lat, lon } = center
+    const KILOMETERS_PER_LATITUDE_DEGREE = 110.574
+    const latRadian = (Math.PI * lat) / 180
+    const KILOMETERS_PER_LONGITUDE_DEGREE = 111.32 * Math.cos(latRadian)
+
+    const latDelta = radiusKm / KILOMETERS_PER_LATITUDE_DEGREE
+    const lonDelta = radiusKm / KILOMETERS_PER_LONGITUDE_DEGREE
+
+    const latMin = lat - latDelta
+    const latMax = lat + latDelta
+    const lonMin = lon - lonDelta
+    const lonMax = lon + lonDelta
+
+    return { latMin, latMax, lonMin, lonMax }
+  }
+
+  private toTreeDetail(
+    prismaRes: SavedRestaurant & { user: User; restaurant: Restaurant },
+  ): TreeDetail {
+    const { user, restaurant, ...tree } = prismaRes
+    return {
+      user,
+      restaurant,
+      tree,
+    }
+  }
+
   async getTreesByLocation(
     userId: string,
     zoom: number,
@@ -34,43 +76,37 @@ export class TreeRepository {
 
     const followingIds = following.map((e) => e.userId)
     const searchTargetIds = [...followingIds, userId]
-    const [ lat, lon ] = [parseFloat(location.lat), parseFloat(location.lon)]
+    const lat = parseFloat(location.lat);
+    const lon = parseFloat(location.lon);
 
     const radius = this.zoomToRadius(zoom)
-    const latRadian = (Math.PI * lat) / 180;
-    const degLat = 110.574; // 위도 1도의 km
-    const degLon = 111.32 * Math.cos(latRadian);
+    const boundery = this.getBoundBox({ lat, lon }, radius)
 
-    const latMin = lat - radius / degLat;
-    const latMax = lat + radius / degLat;
-    const lonMin = lon - radius / degLon;
-    const lonMax = lon + radius / degLon;
-
-    const restaurants = await this.prisma.restaurant.findMany({
+    const res = await this.prisma.restaurant.findMany({
       where: {
-        latitude: { gte: latMin, lte: latMax },
-        longitude: { gte: lonMin, lte: lonMax },
+        latitude: { gte: boundery.latMin, lte: boundery.latMax },
+        longitude: { gte: boundery.lonMin, lte: boundery.lonMax },
       },
       include: {
         savedBy: {
           where: {
-            userId: { in: searchTargetIds }
+            userId: { in: searchTargetIds },
           },
           include: {
-            user: { select: { id: true }},
-          },
+            user: { select: { id: true } },
+          }
         }
       }
     })
 
-    return restaurants;
+    return res
   }
 
   async getTreesByRestaurantId(
     restaurantId: string,
     targetUids: string[]
-  ): Promise<(SavedRestaurant & { user: User; restaurant: Restaurant })[]>{
-    return this.prisma.savedRestaurant.findMany({
+  ): Promise<TreeDetail[]>{
+    const res = await this.prisma.savedRestaurant.findMany({
       where: { 
         restaurantId: restaurantId, 
         userId: { in: targetUids }
@@ -83,13 +119,15 @@ export class TreeRepository {
         createdAt: 'desc'
       }
     })
+
+    return res.map(this.toTreeDetail)
   }
 
   async getTreeById(
     ownerId: string,
     restaurantId: string
-  ): Promise<(SavedRestaurant & { user: User; restaurant: Restaurant }) | null>{
-    const tree = await this.prisma.savedRestaurant.findUnique({
+  ): Promise<TreeDetail | null>{
+    const res = await this.prisma.savedRestaurant.findUnique({
       where:{
         userId_restaurantId: {
           userId: ownerId,
@@ -101,7 +139,7 @@ export class TreeRepository {
         restaurant: true
       }
     })
-    return tree
+    return res ? this.toTreeDetail(res) : null
   }
 
   async waterTree(
