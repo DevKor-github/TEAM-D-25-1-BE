@@ -4,10 +4,13 @@ import { TreeRepository } from './repository';
 import { Coordinate, PlantTreeDto } from './dto';
 import { SavedRestaurant, Restaurant, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
 
 const mockUserId = 'a1b2c3d4-e5f6-7890-1234-567890abcdef';
+const mockOwnerId = 'owner-uuid-5678';
+const mockOtherUserId = 'other-user-uuid-abcd';
 const mockRestaurantId = 'f0e9d8c7-b6a5-4321-fedc-ba9876543210';
+const mockNestedId = `${mockOwnerId}_${mockRestaurantId}`;
 
 const mockRestaurant: Restaurant = {
   id: mockRestaurantId,
@@ -40,9 +43,11 @@ describe('TreeService (unit)', () => {
   const mockTreeRepository = {
     getTreesByLocation: jest.fn(), getTreeById: jest.fn(), waterTree: jest.fn(),
     plantTree: jest.fn(), getRecommendations: jest.fn(), getFollowersTree: jest.fn(),
+    getTreesByRestaurantId: jest.fn(),
   };
 
   const mockPrismaService = {
+    follower: { findMany: jest.fn(), findUnique: jest.fn() },
     user: { findUnique: jest.fn() },
     restaurant: { findUnique: jest.fn() },
     tag: { count: jest.fn() },
@@ -82,16 +87,58 @@ describe('TreeService (unit)', () => {
   });
 
   describe('getTreeById', () => {
-    it('should call repository.getTreeById and return its result', async () => {
-      const expectedRes = { ...mockSavedRestaurant, user: mockUser, restaurant: mockRestaurant };
-      (repository.getTreeById as jest.Mock).mockResolvedValue(expectedRes);
+    it('잘못된 형식의 nestedId가 들어오면 BadRequestException을 던져야 함', async () => {
+        const invalidId = 'invalid-id-format';
+        await expect(service.getTreeById(invalidId, mockUserId)).rejects.toThrow(BadRequestException);
+    });
+    
+    it('조회자가 나무 주인이면 권한 확인 후 repository.getTreeById를 호출해야 함', async () => {
+        (repository.getTreeById as jest.Mock).mockResolvedValue(mockSavedRestaurant);
 
-      const res = await service.getTreeById(mockRestaurantId, mockUserId);
+        await service.getTreeById(mockNestedId, mockOwnerId); // 조회자(viewer)가 주인(owner)
 
-      expect(repository.getTreeById).toHaveBeenCalledWith(mockRestaurantId, mockUserId);
-      expect(res).toEqual(expectedRes);
+        expect(repository.getTreeById).toHaveBeenCalledWith(mockOwnerId, mockRestaurantId);
+    });
+
+    it('조회자가 나무 주인의 팔로워이면 권한 확인 후 repository.getTreeById를 호출해야 함', async () => {
+        (prisma.follower.findUnique as jest.Mock).mockResolvedValue({ status: 'ACCEPTED' });
+        (repository.getTreeById as jest.Mock).mockResolvedValue(mockSavedRestaurant);
+
+        await service.getTreeById(mockNestedId, mockUserId);
+
+        expect(prisma.follower.findUnique).toHaveBeenCalled();
+        expect(repository.getTreeById).toHaveBeenCalledWith(mockOwnerId, mockRestaurantId);
+    });
+
+    it('조회자가 팔로워가 아니면 ForbiddenException을 던져야 함', async () => {
+        (prisma.follower.findUnique as jest.Mock).mockResolvedValue(null);
+        
+        await expect(service.getTreeById(mockNestedId, mockOtherUserId)).rejects.toThrow(ForbiddenException);
+    });
+    
+    it('권한 확인 후 나무를 찾을 수 없으면 NotFoundException을 던져야 함', async () => {
+        (repository.getTreeById as jest.Mock).mockResolvedValue(null);
+        
+        await expect(service.getTreeById(mockNestedId, mockOwnerId)).rejects.toThrow(NotFoundException);
     });
   });
+
+  describe('getTreesByRestaurantId', () => {
+      it('본인과 팔로워의 ID 목록으로 repository.getTreesByRestaurantId를 호출해야 함', async () => {
+          const mockFollowings = [{ userId: 'follower-1' }, { userId: 'follower-2' }];
+          const expectedUserIds = ['follower-1', 'follower-2', mockUserId];
+          (prisma.follower.findMany as jest.Mock).mockResolvedValue(mockFollowings);
+          (repository.getTreesByRestaurantId as jest.Mock).mockResolvedValue([]);
+
+          await service.getTreesByRestaurantId(mockRestaurantId, mockUserId);
+
+          expect(prisma.follower.findMany).toHaveBeenCalledWith({
+              where: { followerId: mockUserId, status: 'ACCEPTED' },
+              select: { userId: true },
+          });
+          expect(repository.getTreesByRestaurantId).toHaveBeenCalledWith(mockRestaurantId, expect.arrayContaining(expectedUserIds));
+      });
+  });  
 
   describe('waterTree', () => {
     it('lastWatered가 null이면 repository.waterTree를 호출해야 함', async () => {

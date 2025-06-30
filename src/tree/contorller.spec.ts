@@ -7,7 +7,9 @@ import { FirebaseAuthGuard } from '../auth/guards/firebase-auth.guard';
 import { Response } from 'express';
 
 const mockUserId = 'a1b2c3d4-e5f6-7890-1234-567890abcdef';
+const mockOwnerId = 'owner-uuid-5678';
 const mockRestaurantId = 'f0e9d8c7-b6a5-4321-fedc-ba9876543210';
+const mockNestedId = `${mockOwnerId}_${mockRestaurantId}`;
 
 const mockTreeDetailResponse: TreeDetailResponse = {
     name: '톤쇼우 부산대본점',
@@ -34,6 +36,7 @@ describe('TreeController (unit)', () => {
     plantTree: jest.fn(),
     getRecommendations: jest.fn(),
     getFollowersTree: jest.fn(),
+    getTreesByRestaurantId: jest.fn()
   };
 
   const mockResponse: Partial<Response> = {
@@ -110,6 +113,19 @@ describe('TreeController (unit)', () => {
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
     });
+  });
+
+  describe('GET /tree/restaurant/:restaurantId', () => {
+      it('식당 ID로 나무 목록 조회를 위해 service.getTreesByRestaurantId를 호출해야 함', async () => {
+          const expectedResult = [mockTreeDetailResponse];
+          (service.getTreesByRestaurantId as jest.Mock).mockResolvedValue(expectedResult);
+
+          await controller.getTreeByRestaurantId(mockRestaurantId, mockUserId, mockResponse as Response);
+
+          expect(service.getTreesByRestaurantId).toHaveBeenCalledWith(mockRestaurantId, mockUserId);
+          expect(mockResponse.status).toHaveBeenCalledWith(200);
+          expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
+      });
   });
 
   describe('POST /tree', () => {
