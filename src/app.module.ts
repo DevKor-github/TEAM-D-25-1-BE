@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import getConfig from './config';
 import { UserModule } from './user/module';
 import { AuthModule } from './auth/module';
+import { TreeModule } from './tree/module';
 import { SearchModule } from './search/module';
 
 @Module({
@@ -19,6 +20,7 @@ import { SearchModule } from './search/module';
     HealthModule,
     UserModule,
     AuthModule,
+    TreeModule,
     SearchModule,
   ],
   controllers: [AppController],
