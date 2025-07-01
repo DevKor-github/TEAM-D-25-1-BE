@@ -53,10 +53,10 @@ export class PlantTreeDto {
 
   // TODO: 데코레이터 추가해서 태그 범위 및 중복 검사
   @IsArray()
-  @IsInt({each: true})
-  @Min(1, {each: true})
+  @IsInt({ each: true })
+  @Min(1, { each: true })
   tagIds: number[];
-  
+
   @IsString()
   @MaxLength(50)
   review: string;
@@ -66,7 +66,7 @@ export class PlantTreeDto {
   description: string;
 }
 
-export class TreeDetailResponse{
+export class TreeDetailResponse {
   @ApiProperty({
     description: '식당 이름',
     example: '톤쇼우 부산대본점',
@@ -109,6 +109,7 @@ export class TreeDetailResponse{
   })
   description: string;
 
+  // Fixme: 태그 수정하기
   @ApiProperty({
     description: '태그 ID 목록',
     example: [1, 3, 5],
@@ -134,7 +135,7 @@ export class TreeDetailResponse{
   recommendedUsers: string[];
 }
 
-export class TreeListResponse{
+export class TreeListResponse {
   @ApiProperty({
     description: '나무 목록',
     type: [TreeDetailResponse],
