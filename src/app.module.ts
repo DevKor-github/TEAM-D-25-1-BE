@@ -8,6 +8,7 @@ import getConfig from './config';
 import { UserModule } from './user/module';
 import { AuthModule } from './auth/module';
 import { TreeModule } from './tree/module';
+import { SearchModule } from './search/module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { TreeModule } from './tree/module';
     UserModule,
     AuthModule,
     TreeModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],

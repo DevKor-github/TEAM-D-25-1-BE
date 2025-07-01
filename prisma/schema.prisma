@@ -116,3 +116,21 @@ model Follower {
   @@id([userId, followerId])
   @@index([followerId]) 
 }
+
+model SearchRestaurantTag {
+  id String @id
+  restaurantId String @db.Uuid
+  name String // Info: varchar_pattern_ops
+
+  @@index([restaurantId])
+  @@index([name])
+}
+
+model SearchUserTag {
+  id String @id 
+  userId String @db.Uuid
+  name String // Info: varchar_pattern_ops 
+
+  @@index([userId])
+  @@index([name])
+}

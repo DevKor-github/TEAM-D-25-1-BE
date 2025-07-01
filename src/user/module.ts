@@ -6,7 +6,10 @@ import { UserRepository } from './repositories/user';
 import { GetFollowingListUseCase } from './usecases/getFollowingList';
 import { FollowerRepository } from './repositories/follower';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
-import { TreeModule } from '@/tree/module';
+import { HandleFollowUseCase } from './usecases/handleFollow';
+import { FollowUserUseCase } from './usecases/followUser';
+import { GetPendingFollowListUseCase } from './usecases/getPendingFollowList';
+import { GetFollowerListUseCase } from './usecases/getFollowerList';
 
 @Module({
   imports: [PrismaModule],
@@ -15,8 +18,12 @@ import { TreeModule } from '@/tree/module';
     UserService,
     UserRepository,
     FollowerRepository,
+    FollowUserUseCase,
     GetFollowingListUseCase,
+    GetPendingFollowListUseCase,
+    GetFollowerListUseCase,
     RestaurantRepository,
+    HandleFollowUseCase,
   ],
 })
 export class UserModule {}

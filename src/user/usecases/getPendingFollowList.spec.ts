@@ -60,7 +60,7 @@ describe('GetPendingFollowListUseCase', () => {
         {
           provide: UserRepository,
           useValue: {
-            findByIds: jest.fn(),
+            findByIdList: jest.fn(),
           },
         },
       ],
@@ -88,7 +88,7 @@ describe('GetPendingFollowListUseCase', () => {
       followerRepository.getFollowingList.mockResolvedValue(
         mockPendingFollowerList,
       );
-      userRepository.findByIds.mockResolvedValue(mockUsers);
+      userRepository.findByIdList.mockResolvedValue(mockUsers);
 
       // Act
       const result = await useCase.execute(userId, perPage, page);
@@ -100,7 +100,7 @@ describe('GetPendingFollowListUseCase', () => {
         perPage,
         status,
       });
-      expect(userRepository.findByIds).toHaveBeenCalledWith([
+      expect(userRepository.findByIdList).toHaveBeenCalledWith([
         'pendingUser1',
         'pendingUser2',
       ]);
@@ -114,7 +114,7 @@ describe('GetPendingFollowListUseCase', () => {
       // Arrange
       const userId = 'user1';
       followerRepository.getFollowingList.mockResolvedValue([]);
-      userRepository.findByIds.mockResolvedValue([]);
+      userRepository.findByIdList.mockResolvedValue([]);
 
       // Act
       const result = await useCase.execute(userId);
@@ -133,7 +133,7 @@ describe('GetPendingFollowListUseCase', () => {
       followerRepository.getFollowingList.mockResolvedValue([
         mockPendingFollowerList[0],
       ]);
-      userRepository.findByIds.mockResolvedValue([mockUsers[0]]);
+      userRepository.findByIdList.mockResolvedValue([mockUsers[0]]);
 
       // Act
       const result = await useCase.execute(userId, perPage, page);
