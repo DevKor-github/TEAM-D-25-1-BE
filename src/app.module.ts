@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import getConfig from './config';
 import { UserModule } from './user/module';
 import { AuthModule } from './auth/module';
+import { TreeModule } from './tree/module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AuthModule } from './auth/module';
     HealthModule,
     UserModule,
     AuthModule,
+    TreeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

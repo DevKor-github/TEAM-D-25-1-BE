@@ -4,59 +4,55 @@ import { Restaurant, SavedRestaurant, User } from '@prisma/client';
 import { Coordinate, PlantTreeDto } from './dto';
 import { TreeDetail } from './types';
 
+const MIN_ZOOM_LEVEL = 11;
+
 @Injectable()
 export class TreeRepository {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly MIN_ZOOM_LEVEL = 11
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  public zoomToRadius(zoom: number): number{
-    switch(true){
+  public zoomToRadius(zoom: number): number {
+    switch (true) {
       case zoom >= 18:
-        return 0.3
+        return 0.3;
       case zoom >= 15:
-        return 0.7
+        return 0.7;
       case zoom >= 12:
-        return 2
+        return 2;
       case zoom >= 9:
-        return 5
+        return 5;
       case zoom >= 6:
-        return 20
+        return 20;
       default:
-        return 50
+        return 50;
     }
   }
 
-  public getBoundBox(
-    center: { lat: number; lon: number },
-    radiusKm: number
-  ){
-    const { lat, lon } = center
-    const KILOMETERS_PER_LATITUDE_DEGREE = 110.574
-    const latRadian = (Math.PI * lat) / 180
-    const KILOMETERS_PER_LONGITUDE_DEGREE = 111.32 * Math.cos(latRadian)
+  public getBoundBox(center: { lat: number; lon: number }, radiusKm: number) {
+    const { lat, lon } = center;
+    const KILOMETERS_PER_LATITUDE_DEGREE = 110.574;
+    const latRadian = (Math.PI * lat) / 180;
+    const KILOMETERS_PER_LONGITUDE_DEGREE = 111.32 * Math.cos(latRadian);
 
-    const latDelta = radiusKm / KILOMETERS_PER_LATITUDE_DEGREE
-    const lonDelta = radiusKm / KILOMETERS_PER_LONGITUDE_DEGREE
+    const latDelta = radiusKm / KILOMETERS_PER_LATITUDE_DEGREE;
+    const lonDelta = radiusKm / KILOMETERS_PER_LONGITUDE_DEGREE;
 
-    const latMin = lat - latDelta
-    const latMax = lat + latDelta
-    const lonMin = lon - lonDelta
-    const lonMax = lon + lonDelta
+    const latMin = lat - latDelta;
+    const latMax = lat + latDelta;
+    const lonMin = lon - lonDelta;
+    const lonMax = lon + lonDelta;
 
-    return { latMin, latMax, lonMin, lonMax }
+    return { latMin, latMax, lonMin, lonMax };
   }
 
   private toTreeDetail(
     prismaRes: SavedRestaurant & { user: User; restaurant: Restaurant },
   ): TreeDetail {
-    const { user, restaurant, ...tree } = prismaRes
+    const { user, restaurant, ...tree } = prismaRes;
     return {
       user,
       restaurant,
       tree,
-    }
+    };
   }
 
   async getTreesByLocation(
@@ -64,23 +60,23 @@ export class TreeRepository {
     zoom: number,
     location: Coordinate,
   ): Promise<Restaurant[]> {
-    if (zoom < this.MIN_ZOOM_LEVEL) return [];
+    if (zoom < MIN_ZOOM_LEVEL) return [];
 
     const following = await this.prisma.follower.findMany({
       where: {
         followerId: userId,
-        status: 'ACCEPTED'
+        status: 'ACCEPTED',
       },
-      select: { userId: true }
-    })
+      select: { userId: true },
+    });
 
-    const followingIds = following.map((e) => e.userId)
-    const searchTargetIds = [...followingIds, userId]
+    const followingIds = following.map((e) => e.userId);
+    const searchTargetIds = [...followingIds, userId];
     const lat = parseFloat(location.lat);
     const lon = parseFloat(location.lon);
 
-    const radius = this.zoomToRadius(zoom)
-    const boundery = this.getBoundBox({ lat, lon }, radius)
+    const radius = this.zoomToRadius(zoom);
+    const boundery = this.getBoundBox({ lat, lon }, radius);
 
     const res = await this.prisma.restaurant.findMany({
       where: {
@@ -94,52 +90,52 @@ export class TreeRepository {
           },
           include: {
             user: { select: { id: true } },
-          }
-        }
-      }
-    })
+          },
+        },
+      },
+    });
 
-    return res
+    return res;
   }
 
   async getTreesByRestaurantId(
     restaurantId: string,
-    targetUids: string[]
-  ): Promise<TreeDetail[]>{
+    targetUids: string[],
+  ): Promise<TreeDetail[]> {
     const res = await this.prisma.savedRestaurant.findMany({
-      where: { 
-        restaurantId: restaurantId, 
-        userId: { in: targetUids }
+      where: {
+        restaurantId: restaurantId,
+        userId: { in: targetUids },
       },
       include: {
         user: true,
-        restaurant: true
+        restaurant: true,
       },
       orderBy: {
-        createdAt: 'desc'
-      }
-    })
+        createdAt: 'desc',
+      },
+    });
 
-    return res.map(this.toTreeDetail)
+    return res.map(this.toTreeDetail);
   }
 
   async getTreeById(
     ownerId: string,
-    restaurantId: string
-  ): Promise<TreeDetail | null>{
+    restaurantId: string,
+  ): Promise<TreeDetail | null> {
     const res = await this.prisma.savedRestaurant.findUnique({
-      where:{
+      where: {
         userId_restaurantId: {
           userId: ownerId,
-          restaurantId: restaurantId
-        }
+          restaurantId: restaurantId,
+        },
       },
       include: {
         user: true,
-        restaurant: true
-      }
-    })
-    return res ? this.toTreeDetail(res) : null
+        restaurant: true,
+      },
+    });
+    return res ? this.toTreeDetail(res) : null;
   }
 
   async waterTree(
@@ -189,13 +185,8 @@ export class TreeRepository {
     plantTreeDto: PlantTreeDto,
     userId: string,
   ): Promise<SavedRestaurant> {
-    const { 
-      restaurantId, 
-      treeTypeId, 
-      review, 
-      tagIds,
-      description 
-    } = plantTreeDto
+    const { restaurantId, treeTypeId, review, tagIds, description } =
+      plantTreeDto;
 
     const plantedTree = await this.prisma.savedRestaurant.create({
       data: {
@@ -203,18 +194,18 @@ export class TreeRepository {
         restaurantId,
         treeType: treeTypeId,
         description,
-        review
+        review,
       },
     });
 
-    if (tagIds.length > 0){
+    if (tagIds.length > 0) {
       await this.prisma.savedRestaurantTag.createMany({
-        data: tagIds.map(tagId => ({ userId, restaurantId, tagId })),
-        skipDuplicates: true        
-      })
+        data: tagIds.map((tagId) => ({ userId, restaurantId, tagId })),
+        skipDuplicates: true,
+      });
     }
 
-    return { ...plantedTree, tagIds } as SavedRestaurant & { tagIds: number[]};
+    return { ...plantedTree, tagIds } as SavedRestaurant & { tagIds: number[] };
   }
 
   async getRecommendations(): Promise<SavedRestaurant[]> {
