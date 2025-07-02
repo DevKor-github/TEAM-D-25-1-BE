@@ -29,6 +29,10 @@ export class Config {
   @Type(() => JwtConfig)
   @IsNotEmpty()
   jwt: JwtConfig;
+
+  @IsString()
+  @IsNotEmpty()
+  firebaseAdminPath: string;
 }
 
 export default function getConfig() {
