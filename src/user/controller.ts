@@ -10,6 +10,7 @@ import {
   Body,
   Post,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UserService } from './service';
@@ -28,6 +29,9 @@ import { FirebaseAuthGuard } from '@/auth/guards/firebase-auth.guard';
 import { User } from '@/decorators/user.decorator';
 import { GetPendingFollowListUseCase } from './usecases/getPendingFollowList';
 import { GetFollowerListUseCase } from './usecases/getFollowerList';
+import { UpdateFcmTokenUseCase } from './usecases/updateFcmToken';
+import { UpdateFcmTokenDto } from './dtos/updateFcmToken.dto';
+import { UserParam } from './params/user';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -40,6 +44,7 @@ export class UserController {
     private readonly followUserUseCase: FollowUserUseCase,
     private readonly getPendingFollowerListUseCase: GetPendingFollowListUseCase,
     private readonly getFollowerListUseCase: GetFollowerListUseCase,
+    private readonly updateFcmTokenUseCase: UpdateFcmTokenUseCase,
   ) {}
 
   @Get('me/restaurants')
@@ -155,5 +160,21 @@ export class UserController {
       page,
     );
     return res.status(HttpStatus.OK).json(result); // TODO: Formatting
+  }
+
+  @Patch('me/fcm-token')
+  @UseGuards(FirebaseAuthGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'Update FCM token',
+    type: UserParam,
+  })
+  async updateFcmToken(
+    @User() user: any,
+    @Body() body: UpdateFcmTokenDto,
+    @Res() res: Response,
+  ) {
+    const result = await this.updateFcmTokenUseCase.execute(user.id, body);
+    return res.status(HttpStatus.OK).json(result);
   }
 }

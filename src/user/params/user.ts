@@ -68,6 +68,12 @@ export class UpdateUserParam {
   isPrivate?: boolean;
 }
 
+export class UpdateFcmTokenParam {
+  @IsString()
+  @IsOptional()
+  fcmToken?: string;
+}
+
 export class UserParam {
   @IsString()
   id: string;
@@ -99,5 +105,16 @@ export class UserParam {
 
   @IsDate()
   createdAt: Date;
+
+  @IsString()
+  @IsOptional()
   profileImageUrl?: string;
+
+  @IsString()
+  @IsOptional()
+  fcmToken?: string;
+
+  @IsDate()
+  @IsOptional()
+  fcmTokenUpdatedAt?: Date;
 }
