@@ -10,6 +10,7 @@ import { HandleFollowUseCase } from './usecases/handleFollow';
 import { FollowUserUseCase } from './usecases/followUser';
 import { GetPendingFollowListUseCase } from './usecases/getPendingFollowList';
 import { GetFollowerListUseCase } from './usecases/getFollowerList';
+import { UpdateFcmTokenUseCase } from './usecases/updateFcmToken';
 
 @Module({
   imports: [PrismaModule],
@@ -24,6 +25,7 @@ import { GetFollowerListUseCase } from './usecases/getFollowerList';
     GetFollowerListUseCase,
     RestaurantRepository,
     HandleFollowUseCase,
+    UpdateFcmTokenUseCase,
   ],
 })
 export class UserModule {}

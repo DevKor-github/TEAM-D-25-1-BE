@@ -44,6 +44,8 @@ model User {
   socialLogin      SocialLogin[]
   isOnboarded      Boolean
   profileImageUrl  String?
+  fcmToken         String?
+  fcmTokenUpdatedAt DateTime?
   lastWatered      DateTime? 
 }
 

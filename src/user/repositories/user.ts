@@ -3,6 +3,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 import {
   CreateUserParam,
   UpdateUserParam,
+  UpdateFcmTokenParam,
   UserParam,
 } from '@/user/params/user';
 import { User } from '@prisma/client';
@@ -45,6 +46,21 @@ export class UserRepository {
     const user = await this.prisma.user.update({
       where: { id },
       data: param,
+    });
+    return this.mapToUserParam(user);
+  }
+
+  // FCM 토큰을 업데이트합니다.
+  async updateFcmToken(
+    id: string,
+    param: UpdateFcmTokenParam,
+  ): Promise<UserParam> {
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: {
+        fcmToken: param.fcmToken,
+        fcmTokenUpdatedAt: new Date(),
+      },
     });
     return this.mapToUserParam(user);
   }
@@ -94,6 +110,9 @@ export class UserRepository {
       socialId: user.socialId,
       isPrivate: user.isPrivate,
       createdAt: user.createdAt,
+      profileImageUrl: user.profileImageUrl,
+      fcmToken: user.fcmToken,
+      fcmTokenUpdatedAt: user.fcmTokenUpdatedAt,
     };
   }
 }
