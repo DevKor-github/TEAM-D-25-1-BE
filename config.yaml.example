@@ -3,3 +3,8 @@ jwt:
   accessTokenExpiredIn: 3600
   refreshTokenExpiredIn: 604800
 firebaseAdminPath: ''
+s3:
+  accessKey: ''
+  secretKey: ''
+  region: ''
+  bucket: ''

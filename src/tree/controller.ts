@@ -11,17 +11,22 @@ import {
 } from '@nestjs/common';
 import { TreeService } from './service';
 import { Response } from 'express';
-import { Coordinate, PlantTreeDto, TreeDetailResponse, TreeListResponse } from './dto';
+import {
+  Coordinate,
+  PlantTreeDto,
+  TreeDetailResponse,
+  TreeListResponse,
+} from './dto';
 import { User } from '../decorators/user.decorator';
 import { FirebaseAuthGuard } from '../auth/guards/firebase-auth.guard';
-import { 
+import {
   ApiBearerAuth,
-  ApiBody, 
-  ApiOperation, 
-  ApiParam, 
-  ApiQuery, 
-  ApiResponse, 
-  ApiTags
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 
 @ApiTags('tree')
@@ -33,8 +38,18 @@ export class TreeController {
 
   @Get()
   @ApiOperation({ summary: '좌표 기준 주변 나무 목록 조회' })
-  @ApiQuery({ name: 'lat', description: '위도', type: String, example: '37.5665' })
-  @ApiQuery({ name: 'lon', description: '경도', type: String, example: '126.9780' })
+  @ApiQuery({
+    name: 'lat',
+    description: '위도',
+    type: String,
+    example: '37.5665',
+  })
+  @ApiQuery({
+    name: 'lon',
+    description: '경도',
+    type: String,
+    example: '126.9780',
+  })
   @ApiResponse({
     status: 200,
     description: '나무 목록 반환',
@@ -52,7 +67,12 @@ export class TreeController {
 
   @Get(':treeId')
   @ApiOperation({ summary: '특정 나무 상세 조회' })
-  @ApiParam({ name: 'treeId', description: '나무 UUID', type: String, example: 'uuid-1234-..._uuid-1234-...' })
+  @ApiParam({
+    name: 'treeId',
+    description: '나무 UUID',
+    type: String,
+    example: 'uuid-1234-..._uuid-1234-...',
+  })
   @ApiResponse({
     status: 200,
     description: '나무 상세 정보 반환',
@@ -69,7 +89,12 @@ export class TreeController {
 
   @Get(':restaurantId')
   @ApiOperation({ summary: '식당에 대한 나무 목록 반환' })
-  @ApiParam({ name: 'restaurantId', description: '식당 UUID', type: String, example: 'uuid-1234-...' })
+  @ApiParam({
+    name: 'restaurantId',
+    description: '식당 UUID',
+    type: String,
+    example: 'uuid-1234-...',
+  })
   @ApiResponse({
     status: 200,
     description: '나무들 상세 정보 반환',
@@ -86,7 +111,12 @@ export class TreeController {
 
   @Post(':treeId/water')
   @ApiOperation({ summary: '나무에 물 주기' })
-  @ApiParam({ name: 'treeId', description: '나무 UUID', type: String, example: 'uuid-1234-...' })
+  @ApiParam({
+    name: 'treeId',
+    description: '나무 UUID',
+    type: String,
+    example: 'uuid-1234-...',
+  })
   @ApiResponse({
     status: 200,
     description: '물주기 결과 반환',
@@ -132,7 +162,12 @@ export class TreeController {
 
   @Get('followers')
   @ApiOperation({ summary: '팔로워 나무 조회' })
-  @ApiQuery({ name: 'restaurantId', description: '식당 UUID', type: String, example: 'uuid-1234-...' })
+  @ApiQuery({
+    name: 'restaurantId',
+    description: '식당 UUID',
+    type: String,
+    example: 'uuid-1234-...',
+  })
   @ApiResponse({
     status: 200,
     description: '팔로워들이 심은 나무 목록 반환',
