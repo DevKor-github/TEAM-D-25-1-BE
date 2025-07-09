@@ -9,6 +9,8 @@ import { UserModule } from './user/module';
 import { AuthModule } from './auth/module';
 import { TreeModule } from './tree/module';
 import { SearchModule } from './search/module';
+import { NotificationModule } from './notification/module';
+import { FirebaseModule } from './firebase.module';
 
 @Module({
   imports: [
@@ -16,12 +18,14 @@ import { SearchModule } from './search/module';
       load: [getConfig],
       isGlobal: true,
     }),
+    FirebaseModule,
     PrismaModule,
     HealthModule,
     UserModule,
     AuthModule,
     TreeModule,
     SearchModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
