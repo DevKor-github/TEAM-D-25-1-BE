@@ -58,6 +58,7 @@ describe('S3Service', () => {
       expect(result).toHaveProperty('url');
       expect(result).toHaveProperty('key');
       expect(result.key).toContain('images/seed/');
+      expect(result.key).toMatch(/images\/seed\/[a-f0-9]{64}\.jpg$/);
     });
   });
 

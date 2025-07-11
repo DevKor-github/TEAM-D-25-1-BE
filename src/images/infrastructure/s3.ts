@@ -4,7 +4,7 @@ import {
   PutObjectCommand,
   DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
-import { v7 as uuidv7 } from 'uuid';
+import { createHash } from 'crypto';
 import getConfig from '../../config';
 
 @Injectable()
@@ -27,7 +27,8 @@ export class S3Service {
     folder: string,
   ): Promise<{ url: string; key: string }> {
     const fileExtension = this.getFileExtension(file.originalname);
-    const fileName = `${uuidv7()}.${fileExtension}`;
+    const fileHash = createHash('sha256').update(file.buffer).digest('hex');
+    const fileName = `${fileHash}.${fileExtension}`;
     const key = `${folder}/${fileName}`;
 
     const command = new PutObjectCommand({
