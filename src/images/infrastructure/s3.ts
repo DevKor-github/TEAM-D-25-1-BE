@@ -16,8 +16,8 @@ export class S3Service {
     this.s3Client = new S3Client({
       region: this.config.s3.region,
       credentials: {
-        accessKeyId: this.config.s3.accessKey,
-        secretAccessKey: this.config.s3.secretKey,
+        accessKeyId: this.config.aws.accessKey,
+        secretAccessKey: this.config.aws.secretKey,
       },
     });
   }
@@ -39,7 +39,7 @@ export class S3Service {
 
     await this.s3Client.send(command);
 
-    const url = `https://s3.${this.config.s3.region}.amazonaws.com/${this.config.s3.bucket}/${key}`;
+    const url = `https://${this.config.s3.cloudfrontUrl}/${key}`;
     return { url, key };
   }
 

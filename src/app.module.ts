@@ -11,7 +11,7 @@ import { TreeModule } from './tree/module';
 import { SearchModule } from './search/module';
 import { NotificationModule } from './notification/module';
 import { FirebaseModule } from './firebase.module';
-import { ImagesModule } from './images/images.module';
+import { ImagesModule } from './images/module';
 
 @Module({
   imports: [

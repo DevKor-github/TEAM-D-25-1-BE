@@ -6,11 +6,14 @@ jest.mock('@aws-sdk/client-s3');
 jest.mock('../../config', () => ({
   __esModule: true,
   default: () => ({
-    s3: {
-      region: 'ap-northeast-2',
+    aws: {
       accessKey: 'test-access-key',
       secretKey: 'test-secret-key',
+    },
+    s3: {
+      region: 'ap-northeast-2',
       bucket: 'test-bucket',
+      cloudfrontUrl: 'test.cloudfront.net/',
     },
   }),
 }));

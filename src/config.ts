@@ -24,7 +24,7 @@ export class JwtConfig {
   refreshTokenExpiredIn: number;
 }
 
-export class S3Config {
+export class AWSConfig {
   @IsString()
   @IsNotEmpty()
   accessKey: string;
@@ -32,6 +32,12 @@ export class S3Config {
   @IsString()
   @IsNotEmpty()
   secretKey: string;
+}
+
+export class S3Config {
+  @IsString()
+  @IsNotEmpty()
+  bucket: string;
 
   @IsString()
   @IsNotEmpty()
@@ -39,7 +45,7 @@ export class S3Config {
 
   @IsString()
   @IsNotEmpty()
-  bucket: string;
+  cloudfrontUrl: string;
 }
 
 export class Config {
@@ -47,6 +53,11 @@ export class Config {
   @Type(() => JwtConfig)
   @IsNotEmpty()
   jwt: JwtConfig;
+
+  @ValidateNested()
+  @Type(() => AWSConfig)
+  @IsNotEmpty()
+  aws: AWSConfig;
 
   @ValidateNested()
   @Type(() => S3Config)
