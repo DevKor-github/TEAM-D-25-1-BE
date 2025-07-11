@@ -9,7 +9,6 @@ import {
   IsNotEmpty,
 } from 'class-validator';
 import { Type, plainToInstance } from 'class-transformer';
-import { S3Config } from './s3.config';
 
 export class JwtConfig {
   @IsString()
@@ -25,11 +24,40 @@ export class JwtConfig {
   refreshTokenExpiredIn: number;
 }
 
+export class AWSConfig {
+  @IsString()
+  @IsNotEmpty()
+  accessKey: string;
+
+  @IsString()
+  @IsNotEmpty()
+  secretKey: string;
+}
+
+export class S3Config {
+  @IsString()
+  @IsNotEmpty()
+  bucket: string;
+
+  @IsString()
+  @IsNotEmpty()
+  region: string;
+
+  @IsString()
+  @IsNotEmpty()
+  cloudfrontUrl: string;
+}
+
 export class Config {
   @ValidateNested()
   @Type(() => JwtConfig)
   @IsNotEmpty()
   jwt: JwtConfig;
+
+  @ValidateNested()
+  @Type(() => AWSConfig)
+  @IsNotEmpty()
+  aws: AWSConfig;
 
   @ValidateNested()
   @Type(() => S3Config)
