@@ -11,7 +11,7 @@ import { TreeModule } from './tree/module';
 import { SearchModule } from './search/module';
 import { NotificationModule } from './notification/module';
 import { FirebaseModule } from './firebase.module';
-import { UploadModule } from './upload/upload.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -27,7 +27,7 @@ import { UploadModule } from './upload/upload.module';
     TreeModule,
     SearchModule,
     NotificationModule,
-    UploadModule,
+    ImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
