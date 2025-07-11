@@ -39,7 +39,7 @@ export class HealthController {
     type: HealthCheckResponse,
   })
   async check(@Res() res: Response) {
-    let detail = {
+    const detail = {
       database: true,
     };
 

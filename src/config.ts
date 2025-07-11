@@ -9,6 +9,7 @@ import {
   IsNotEmpty,
 } from 'class-validator';
 import { Type, plainToInstance } from 'class-transformer';
+import { S3Config } from './s3.config';
 
 export class JwtConfig {
   @IsString()
@@ -29,6 +30,11 @@ export class Config {
   @Type(() => JwtConfig)
   @IsNotEmpty()
   jwt: JwtConfig;
+
+  @ValidateNested()
+  @Type(() => S3Config)
+  @IsNotEmpty()
+  s3: S3Config;
 
   @IsString()
   @IsNotEmpty()

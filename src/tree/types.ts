@@ -1,7 +1,7 @@
-import { Restaurant, SavedRestaurant, User } from "@prisma/client"
+import { Restaurant, SavedRestaurant, User } from '@prisma/client';
 
 export type TreeDetail = {
-    user: User;
-    restaurant: Restaurant;
-    tree: SavedRestaurant;
-}
+  user: User;
+  restaurant: Restaurant;
+  tree: SavedRestaurant;
+};
