@@ -6,7 +6,7 @@ import {
   UpdateFcmTokenParam,
   UserParam,
 } from '@/user/params/user';
-import { User } from '@prisma/client';
+import { User, SocialProvider } from '@prisma/client';
 import { v7 as uuidv7 } from 'uuid';
 
 @Injectable()
@@ -65,6 +65,19 @@ export class UserRepository {
     return this.mapToUserParam(user);
   }
 
+  async updateProfileImageUrl(
+    id: string,
+    profileImageUrl: string,
+  ): Promise<UserParam> {
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: {
+        profileImageUrl,
+      },
+    });
+    return this.mapToUserParam(user);
+  }
+
   // 사용자를 삭제합니다.
   async delete(id: string): Promise<UserParam> {
     const user = await this.prisma.user.delete({
@@ -106,7 +119,7 @@ export class UserRepository {
       username: user.username,
       nickname: user.nickname,
       password: user.password,
-      socialProvider: user.socialProvider,
+      socialProvider: user.socialProvider as SocialProvider,
       socialId: user.socialId,
       isPrivate: user.isPrivate,
       createdAt: user.createdAt,
