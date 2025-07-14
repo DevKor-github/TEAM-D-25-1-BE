@@ -1,7 +1,9 @@
+import { SocialProvider } from '@prisma/client';
 import {
   IsBoolean,
   IsDate,
   IsEmail,
+  IsEnum,
   IsOptional,
   IsString,
 } from 'class-validator';
@@ -21,9 +23,9 @@ export class CreateUserParam {
   @IsOptional()
   password?: string;
 
-  @IsString()
+  @IsEnum(SocialProvider)
   @IsOptional()
-  socialProvider?: string;
+  socialProvider?: SocialProvider;
 
   @IsString()
   @IsOptional()
@@ -55,9 +57,9 @@ export class UpdateUserParam {
   @IsOptional()
   password?: string;
 
-  @IsString()
+  @IsEnum(SocialProvider)
   @IsOptional()
-  socialProvider?: string;
+  socialProvider?: SocialProvider;
 
   @IsString()
   @IsOptional()
@@ -92,9 +94,9 @@ export class UserParam {
   @IsOptional()
   password?: string;
 
-  @IsString()
+  @IsEnum(SocialProvider)
   @IsOptional()
-  socialProvider?: string;
+  socialProvider?: SocialProvider;
 
   @IsString()
   @IsOptional()

@@ -32,6 +32,10 @@ import { GetFollowerListUseCase } from './usecases/getFollowerList';
 import { UpdateFcmTokenUseCase } from './usecases/updateFcmToken';
 import { UpdateFcmTokenDto } from './dtos/updateFcmToken.dto';
 import { UserParam } from './params/user';
+import { UpdateProfileImageUseCase } from './usecases/updateProfileImage';
+import { UpdateProfileImageDto } from './dtos/updateProfileImage.dto';
+import { GetMyProfileUseCase } from './usecases/getMyProfile';
+import { MyProfileResponseDto } from './dtos/my-profile.response.dto';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -45,7 +49,21 @@ export class UserController {
     private readonly getPendingFollowerListUseCase: GetPendingFollowListUseCase,
     private readonly getFollowerListUseCase: GetFollowerListUseCase,
     private readonly updateFcmTokenUseCase: UpdateFcmTokenUseCase,
+    private readonly updateProfileImageUseCase: UpdateProfileImageUseCase,
+    private readonly getMyProfileUseCase: GetMyProfileUseCase,
   ) {}
+
+  @Get('me')
+  @UseGuards(FirebaseAuthGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'Get my profile',
+    type: MyProfileResponseDto,
+  })
+  async getMyProfile(@User() user: any, @Res() res: Response) {
+    const result = await this.getMyProfileUseCase.execute(user.id);
+    return res.status(HttpStatus.OK).json(result);
+  }
 
   @Get('me/restaurants')
   @ApiResponse({
@@ -175,6 +193,22 @@ export class UserController {
     @Res() res: Response,
   ) {
     const result = await this.updateFcmTokenUseCase.execute(user.id, body);
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Patch('me/profile-image')
+  @UseGuards(FirebaseAuthGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'Update profile image',
+    type: UserParam,
+  })
+  async updateProfileImage(
+    @User() user: any,
+    @Body() body: UpdateProfileImageDto,
+    @Res() res: Response,
+  ) {
+    const result = await this.updateProfileImageUseCase.execute(user.id, body);
     return res.status(HttpStatus.OK).json(result);
   }
 }
