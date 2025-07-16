@@ -1,34 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ExecutionContext } from '@nestjs/common';
+import { ExecutionContext } from '@nestjs/common';
 import { TreeController } from './controller';
 import { TreeService } from './service';
-import {
-  Coordinate,
-  TreeIdDto,
-  WaterTreeDto,
-  PlantTreeDto,
-  TreeDetailResponse,
-} from './dto';
+import { Coordinate, PlantTreeDto, TreeDetailResponse } from './dto';
 import { FirebaseAuthGuard } from '../auth/guards/firebase-auth.guard';
 import { Response } from 'express';
+import { Tag } from '@prisma/client';
 
-const mockUserId = 'a1b2c3d4-e5f6-7890-1234-567890abcdef';
-const mockOwnerId = 'owner-uuid-5678';
-const mockRestaurantId = 'f0e9d8c7-b6a5-4321-fedc-ba9876543210';
-const mockNestedId = `${mockOwnerId}_${mockRestaurantId}`;
+const mockUserId = 'user-spicy-lover-1234';
+const mockOwnerId = 'owner-jjamppong-master-5678';
+const mockRestaurantId = 'restaurant-yupdduk-4321';
+const mockTreeId = `${mockOwnerId}_${mockRestaurantId}`;
 
 const mockTreeDetailResponse: TreeDetailResponse = {
-  name: '톤쇼우 부산대본점',
-  address: '부산 금정구 금강로 247-10',
-  latitude: '35.230402',
-  longitude: '129.084294',
-  treeType: 2,
-  review: '맛있어요~',
-  description: '버크셔K 특로스시켜야함',
-  tagIds: [1, 3, 5],
-  createdAt: new Date('2025-06-17T12:34:56.000Z'),
-  updatedAt: new Date('2025-06-18T08:22:10.000Z'),
-  recommendedUsers: ['user-uuid-1', 'user-uuid-2'],
+  treeId: mockTreeId,
+  name: '엽기떡볶이 동대문본점',
+  address: '서울 중구 퇴계로75길 13',
+  latitude: '37.5701',
+  longitude: '127.0125',
+  treeType: 4,
+  review: '역시 원조는 다르다!',
+  description: '스트레스 받을 땐 착한맛도 충분해요.',
+  tags: [Tag.SPICY_FOOD_LOVER, Tag.LATE_NIGHT_EATER],
+  createdAt: new Date('2025-07-16T12:00:00Z'),
+  updatedAt: new Date('2025-07-16T12:00:00Z'),
+  recommendationCount: 1,
 };
 
 describe('TreeController (unit)', () => {
@@ -53,13 +49,7 @@ describe('TreeController (unit)', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TreeController],
-      providers: [
-        { provide: TreeService, useValue: mockTreeService },
-        {
-          provide: FirebaseAuthGuard,
-          useValue: jest.fn().mockImplementation(() => true),
-        },
-      ],
+      providers: [{ provide: TreeService, useValue: mockTreeService }],
     })
       .overrideGuard(FirebaseAuthGuard)
       .useValue({
@@ -81,147 +71,60 @@ describe('TreeController (unit)', () => {
   });
 
   describe('GET /tree', () => {
-    it('주변 나무 목록 조회를 위해 service.getTreesByLocation을 호출하고 Response 객체로 응답해야 함', async () => {
+    it('주변 나무 목록 조회를 위해 service.getTreesByLocation을 호출하고 DTO 배열을 응답해야 함', async () => {
       const location: Coordinate = { lat: '37.5665', lon: '126.987' };
       const zoom = 16;
-      const expectedRes = { items: [mockTreeDetailResponse] };
-      (service.getTreesByLocation as jest.Mock).mockResolvedValue(expectedRes);
+      const expectedResult = [mockTreeDetailResponse];
+      (service.getTreesByLocation as jest.Mock).mockResolvedValue(expectedResult);
 
-      await controller.getTreesByLocation(
-        location,
-        zoom,
-        mockUserId,
-        mockResponse as Response,
-      );
-      expect(service.getTreesByLocation).toHaveBeenCalledWith(
-        mockUserId,
-        zoom,
-        location,
-      );
+      await controller.getTreesByLocation(location, zoom, mockUserId, mockResponse as Response);
+      
+      expect(service.getTreesByLocation).toHaveBeenCalledWith(mockUserId, zoom, location);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(expectedRes);
+      expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
     });
   });
 
   describe('GET /tree/:treeId', () => {
-    it('특정 나무 조회를 위해 service.getTreeById를 호출하고 Response 객체로 응답해야 함', async () => {
-      (service.getTreeById as jest.Mock).mockResolvedValue(
-        mockTreeDetailResponse,
-      );
-      await controller.getTreeById(
-        mockRestaurantId,
-        mockUserId,
-        mockResponse as Response,
-      );
-      expect(service.getTreeById).toHaveBeenCalledWith(
-        mockRestaurantId,
-        mockUserId,
-      );
+    it('특정 나무 조회를 위해 service.getTreeById를 호출하고 DTO를 응답해야 함', async () => {
+      (service.getTreeById as jest.Mock).mockResolvedValue(mockTreeDetailResponse);
+      
+      await controller.getTreeById(mockTreeId, mockUserId, mockResponse as Response);
+      
+      expect(service.getTreeById).toHaveBeenCalledWith(mockTreeId, mockUserId);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith(mockTreeDetailResponse);
     });
   });
 
   describe('POST /tree/:treeId/water', () => {
-    it('나무에 물주기를 위해 service.waterTree를 호출하고 Response 객체로 응답해야 함', async () => {
-      const expectedResult = {
-        ...mockTreeDetailResponse,
-        recommendedUsers: [
-          ...mockTreeDetailResponse.recommendedUsers,
-          mockUserId,
-        ],
-      };
-      await controller.waterTree(
-        mockRestaurantId,
-        mockUserId,
-        mockResponse as Response,
-      );
-      expect(service.waterTree).toHaveBeenCalledWith(
-        mockRestaurantId,
-        mockUserId,
-      );
+    it('나무에 물주기를 위해 service.waterTree를 호출하고 업데이트된 DTO를 응답해야 함', async () => {
+      (service.waterTree as jest.Mock).mockResolvedValue(mockTreeDetailResponse);
+      
+      await controller.waterTree(mockTreeId, mockUserId, mockResponse as Response);
+      
+      expect(service.waterTree).toHaveBeenCalledWith(mockTreeId, mockUserId);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
-    });
-  });
-
-  describe('GET /tree/restaurant/:restaurantId', () => {
-    it('식당 ID로 나무 목록 조회를 위해 service.getTreesByRestaurantId를 호출해야 함', async () => {
-      const expectedResult = [mockTreeDetailResponse];
-      (service.getTreesByRestaurantId as jest.Mock).mockResolvedValue(
-        expectedResult,
-      );
-
-      await controller.getTreeByRestaurantId(
-        mockRestaurantId,
-        mockUserId,
-        mockResponse as Response,
-      );
-
-      expect(service.getTreesByRestaurantId).toHaveBeenCalledWith(
-        mockRestaurantId,
-        mockUserId,
-      );
-      expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
+      expect(mockResponse.json).toHaveBeenCalledWith(mockTreeDetailResponse);
     });
   });
 
   describe('POST /tree', () => {
-    it('새 나무 심기를 위해 service.plantTree를 호출하고 Response 객체로 응답해야 함', async () => {
+    it('새 나무 심기를 위해 service.plantTree를 호출하고 생성된 treeId를 응답해야 함', async () => {
       const plantTreeDto: PlantTreeDto = {
         restaurantId: mockRestaurantId,
-        treeTypeId: 1,
-        tagIds: [1],
-        review: '새 리뷰',
-        description: '새 설명',
+        treeType: 4,
+        tags: [Tag.SPICY_FOOD_LOVER, Tag.LATE_NIGHT_EATER],
+        review: '최고의 야식!',
+        description: '역시 떡볶이는 엽떡이지',
       };
-      const expectedResult = { ...mockTreeDetailResponse, review: '새 리뷰' };
+      const expectedResult = { treeId: `${mockUserId}_${mockRestaurantId}` };
       (service.plantTree as jest.Mock).mockResolvedValue(expectedResult);
 
-      await controller.plantTree(
-        plantTreeDto,
-        mockUserId,
-        mockResponse as Response,
-      );
+      await controller.plantTree(plantTreeDto, mockUserId, mockResponse as Response);
 
       expect(service.plantTree).toHaveBeenCalledWith(plantTreeDto, mockUserId);
       expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
-    });
-  });
-
-  describe('POST /tree/recommendations', () => {
-    it('추천 나무 조회를 위해 service.getRecommendations를 호출하고 Response 객체로 응답해야 함', async () => {
-      const expectedResult = { items: [] };
-      (service.getRecommendations as jest.Mock).mockResolvedValue(
-        expectedResult,
-      );
-
-      await controller.getRecommendations(mockResponse as Response);
-
-      expect(service.getRecommendations).toHaveBeenCalled();
-      expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
-    });
-  });
-
-  describe('GET /tree/followers', () => {
-    it('팔로워 나무 조회를 위해 service.getFollowersTree를 호출하고 Response 객체로 응답해야 함', async () => {
-      const expectedResult = { items: [mockTreeDetailResponse] };
-      (service.getFollowersTree as jest.Mock).mockResolvedValue(expectedResult);
-
-      await controller.getFollowers(
-        mockRestaurantId,
-        mockUserId,
-        mockResponse as Response,
-      );
-
-      expect(service.getFollowersTree).toHaveBeenCalledWith(
-        mockUserId,
-        mockRestaurantId,
-      );
-      expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
     });
   });
