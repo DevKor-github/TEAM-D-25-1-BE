@@ -6,10 +6,33 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { TreeRepository } from './repository';
-import { Coordinate, PlantTreeDto } from './dto';
-import { SavedRestaurant, Restaurant, User } from '@prisma/client';
+import { 
+  Coordinate, 
+  PlantTreeDto, 
+  TreeDetailResponse 
+} from './dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { TreeDetail } from './types';
+
+const toTreeDetailResponse = (
+  detail: TreeDetail
+): TreeDetailResponse => {
+  if (!detail.tree || !detail.restaurant) return null;
+  return {
+    treeId: `${detail.tree.userId}_${detail.tree.restaurantId}`,
+    name: detail.restaurant.name,
+    address: detail.restaurant.address,
+    latitude: String(detail.restaurant.latitude),
+    longitude: String(detail.restaurant.longitude),
+    treeType: detail.tree.treeType,
+    review: detail.tree.review,
+    description: detail.tree.description,
+    tags: detail.tree.tag,
+    createdAt: detail.tree.createdAt,
+    updatedAt: detail.tree.updatedAt,
+    recommendationCount: detail.tree.recommendedByUsers.length,
+  }
+}
 
 @Injectable()
 export class TreeService {
@@ -21,40 +44,34 @@ export class TreeService {
   async getFollowersTree(
     userId: string,
     restaurantId: string,
-  ): Promise<SavedRestaurant[]> {
-    console.log(
-      'Getting all friends trees for user:',
-      userId,
-      'at restaurant:',
-      restaurantId,
-    );
+  ): Promise<TreeDetailResponse[]> {
     const friendsTrees = await this.treeRepository.getFollowersTree(
       userId,
       restaurantId,
     );
-    return friendsTrees;
+    return friendsTrees.map(toTreeDetailResponse);
   }
 
   async getTreesByLocation(
     userId: string,
     zoom: number,
     location: Coordinate,
-  ): Promise<Restaurant[]> {
+  ): Promise<TreeDetailResponse[]> {
     console.log('Getting trees by location:', location);
-    const result = await this.treeRepository.getTreesByLocation(
+    const data = await this.treeRepository.getTreesByLocation(
       userId,
       zoom,
       location,
     );
-    return result;
+
+    return data.map(toTreeDetailResponse).filter(Boolean);
   }
 
   async getTreeById(
     treeId: string,
     userId: string,
-  ): Promise<TreeDetail | null> {
-    const parts = treeId.split('_');
-    const [ownerId, restaurantId] = parts;
+  ): Promise<TreeDetailResponse> {
+    const [ownerId, restaurantId] = treeId.split('_');
 
     let isAllowed = false;
     if (ownerId === userId) isAllowed = true;
@@ -69,39 +86,36 @@ export class TreeService {
         },
       });
 
-      // FIXME: 태현이가 보고 수정 필요함
-      if (!relation) isAllowed = false;
+      if (relation) isAllowed = true;
     }
 
     if (!isAllowed)
       throw new ForbiddenException('이 나무에 접근할 수 없습니다.');
 
-    const tree = await this.treeRepository.getTreeById(ownerId, restaurantId);
-    if (!tree) throw new NotFoundException('해당하는 나무를 찾을 수 없습니다.');
+    const treeData = await this.treeRepository.getTreeById(ownerId, restaurantId);
+    if (!treeData) throw new NotFoundException('해당하는 나무를 찾을 수 없습니다.');
 
-    return tree;
+    return toTreeDetailResponse(treeData)
   }
 
   async getTreesByRestaurantId(
     restaurantId: string,
     userId: string,
-  ): Promise<TreeDetail[]> {
+  ): Promise<TreeDetailResponse[]> {
     const followings = await this.prisma.follower.findMany({
       where: { followerId: userId, status: 'ACCEPTED' },
       select: { userId: true },
     });
     const followingIds = followings.map((e) => e.userId);
-
     const targetUids = [...followingIds, userId];
-
-    return this.treeRepository.getTreesByRestaurantId(restaurantId, targetUids);
+    const treeDatas = await this.treeRepository.getTreesByRestaurantId(restaurantId, targetUids)
+    return treeDatas.map(toTreeDetailResponse);
   }
 
   async waterTree(
-    restaurantId: string,
+    treeId: string,
     userId: string,
-  ): Promise<SavedRestaurant | null> {
-    console.log('Watering tree:', restaurantId, 'by user:', userId);
+  ): Promise<TreeDetailResponse> {
     const { lastWatered = new Date(0) } = await this.prisma.user.findUnique({
       where: { id: userId },
       select: { lastWatered: true },
@@ -113,56 +127,40 @@ export class TreeService {
         lastWatered,
       });
     }
+    const parts = treeId.split('_');
+    const [ownerId, restaurantId] = parts;
+    if (ownerId === userId) throw new BadRequestException('자신의 나무에는 물을 줄 수 없습니다.');
 
-    const result = await this.treeRepository.waterTree(restaurantId, userId);
-    return result;
+    const result = await this.treeRepository.waterTree(ownerId, restaurantId, userId);
+    return toTreeDetailResponse(result)
   }
 
   async plantTree(
     plantTreeDto: PlantTreeDto,
     userId: string,
-  ): Promise<SavedRestaurant & { warnings?: string[] }> {
-    const { tagIds, restaurantId } = plantTreeDto;
-    const warnings: string[] = [];
-
+  ): Promise<{ treeId: string }> {
+    const { restaurantId } = plantTreeDto;
+    
     const restaurant = await this.prisma.restaurant.findUnique({
-      where: { id: restaurantId },
-      select: { id: true },
-    });
-    if (!restaurant)
-      throw new NotFoundException(
-        `Id: ${restaurantId}에 해당하는 식당을 찾을 수 없습니다.`,
-      );
+      where: { id: restaurantId }
+    })
+    if(!restaurant) throw new NotFoundException("존재하지 않는 Restaurant입니다.")
 
-    const uniqueTagIds = [...new Set(tagIds)];
-    if (uniqueTagIds.length !== tagIds.length)
-      warnings.push('중복된 태그가 있어 자동으로 제거하였습니다.');
+    const existingTree = await this.prisma.savedRestaurant.findUnique({
+      where: { userId_restaurantId: { userId, restaurantId }}
+    })
+    if(existingTree) throw new ConflictException("이미 나무를 심은 Restaurant입니다.")
 
-    const validTags = await this.prisma.tag.findMany({
-      where: { id: { in: uniqueTagIds } },
-      select: { id: true },
-    });
-    const validTagIds = validTags.map((e) => e.id);
-
-    if (validTagIds.length !== uniqueTagIds.length)
-      warnings.push(`존재하지 않는 태그가 감지되어 자동으로 제거하였습니다.`);
-
-    const processedDto: PlantTreeDto = {
-      ...plantTreeDto,
-      tagIds: validTagIds,
-    };
-
-    const res: SavedRestaurant & { warnings?: string[] } =
-      await this.treeRepository.plantTree(processedDto, userId);
-    if (warnings.length > 0) res.warnings = warnings;
-
-    return res;
+    const newTree = await this.treeRepository.plantTree(plantTreeDto, userId)
+    return {
+      treeId: `${newTree.userId}_${newTree.restaurantId}`
+    }
   }
 
-  async getRecommendations(): Promise<SavedRestaurant[]> {
+  async getRecommendations(): Promise<TreeDetailResponse[]> {
     // AI 관련 추천 추가 필요 on Service단
     console.log('Getting recommendations');
     const recommendations = await this.treeRepository.getRecommendations();
-    return recommendations;
+    return recommendations.map(toTreeDetailResponse)
   }
 }
