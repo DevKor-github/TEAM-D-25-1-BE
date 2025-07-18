@@ -13,6 +13,7 @@ import { RegisterRequest } from './dto/register.dto';
 import { SocialLoginDto } from './dto/social-login.dto';
 import { SocialProvider, User } from '@prisma/client';
 import { FirebaseLoginResponseDto } from './dto/authUser.dto';
+import { sign as signJwt } from '../auth/libs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +34,7 @@ export class AuthService {
 
   async register(
     registerDto: RegisterRequest,
-  ): Promise<{ customToken: string; user: any }> {
+  ): Promise<{ accessToken: string; user: any }> {
     try {
       const firebaseUser = await this.firebaseApp.auth().createUser({
         email: registerDto.email,
@@ -51,10 +52,11 @@ export class AuthService {
         },
       });
 
+      // JWT 토큰 발급
+      const accessToken = signJwt({ uid: user.id });
+
       return {
-        customToken: await this.firebaseApp
-          .auth()
-          .createCustomToken(user.firebaseUid),
+        accessToken,
         user,
       };
     } catch (error: any) {
@@ -103,11 +105,9 @@ export class AuthService {
         where: { firebaseUid },
       });
       if (user) {
-        // 로그인: customToken 반환
-        const customToken = await this.firebaseApp
-          .auth()
-          .createCustomToken(firebaseUid);
-        return { accessToken: customToken, user };
+        // 로그인: JWT 토큰 반환
+        const accessToken = signJwt({ uid: user.id });
+        return { accessToken, user };
       } else {
         // 회원가입: firebase에서 정보 추출 후 생성
         const fbUser = await this.firebaseApp.auth().getUser(firebaseUid);
@@ -126,10 +126,8 @@ export class AuthService {
             socialProvider: providerType,
           },
         });
-        const customToken = await this.firebaseApp
-          .auth()
-          .createCustomToken(firebaseUid);
-        return { accessToken: customToken, user };
+        const accessToken = signJwt({ uid: user.id });
+        return { accessToken, user };
       }
     } catch (error) {
       throw new HttpException(

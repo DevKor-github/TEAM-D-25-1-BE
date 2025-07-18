@@ -13,6 +13,7 @@ import { GetFollowerListUseCase } from './usecases/getFollowerList';
 import { UpdateFcmTokenUseCase } from './usecases/updateFcmToken';
 import { UpdateProfileImageUseCase } from './usecases/updateProfileImage';
 import { GetMyProfileUseCase } from './usecases/getMyProfile';
+import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 
 @Module({
   imports: [PrismaModule],
@@ -30,6 +31,7 @@ import { GetMyProfileUseCase } from './usecases/getMyProfile';
     UpdateFcmTokenUseCase,
     UpdateProfileImageUseCase,
     GetMyProfileUseCase,
+    AccessTokenGuard,
   ],
 })
 export class UserModule {}

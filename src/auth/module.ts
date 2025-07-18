@@ -8,6 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthController } from './controller';
 import { AuthService } from './service';
 import { PrismaModule } from '../prisma/prisma.module';
+import { AccessTokenGuard } from './guards/access-token.guard';
+import { UserRepository } from '@/user/repositories/user';
 
 @Module({
   imports: [
@@ -21,8 +23,10 @@ import { PrismaModule } from '../prisma/prisma.module';
     AppleStrategy,
     FirebaseAuthGuard,
     AuthService,
+    AccessTokenGuard,
+    UserRepository,
   ],
-  exports: [FirebaseAuthGuard],
+  exports: [FirebaseAuthGuard, AccessTokenGuard],
   controllers: [AuthController],
 })
 export class AuthModule {}

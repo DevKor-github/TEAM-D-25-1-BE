@@ -36,6 +36,7 @@ import { UpdateProfileImageUseCase } from './usecases/updateProfileImage';
 import { UpdateProfileImageDto } from './dtos/updateProfileImage.dto';
 import { GetMyProfileUseCase } from './usecases/getMyProfile';
 import { MyProfileResponseDto } from './dtos/my-profile.response.dto';
+import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -54,7 +55,7 @@ export class UserController {
   ) {}
 
   @Get('me')
-  @UseGuards(FirebaseAuthGuard)
+  @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 200,
     description: 'Get my profile',

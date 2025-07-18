@@ -79,12 +79,12 @@ export class AuthController {
   @UsePipes(ValidationPipe)
   async register(
     @Body() registerData: RegisterRequest,
-  ): Promise<{ customToken: string; user: any }> {
+  ): Promise<{ accessToken: string; user: any }> {
     try {
       const result = await this.authService.register(registerData);
 
       return {
-        customToken: result.customToken,
+        accessToken: result.accessToken,
         user: this.mapToUserResponse(result.user),
       };
     } catch (error: any) {
