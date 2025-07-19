@@ -12,7 +12,6 @@ import {
 import { User } from '../decorators/user.decorator';
 import { AuthService } from './service';
 import { OnboardingInfoRequest } from './dto/onboarding.dto';
-import { FirebaseAuthGuard } from './guards/firebase-auth.guard';
 import { RegisterRequest, RegisterResponse } from './dto/register.dto';
 import { SocialLoginDto } from './dto/social-login.dto';
 import { ApiResponse, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -22,6 +21,7 @@ import {
   FirebaseLoginResponseDto,
 } from './dto/authUser.dto';
 import { User as PrismaUser } from '@prisma/client';
+import { AccessTokenGuard } from './guards/access-token.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -50,7 +50,7 @@ export class AuthController {
     type: AuthUserResponse,
   })
   @Post('onboard')
-  @UseGuards(FirebaseAuthGuard)
+  @UseGuards(AccessTokenGuard)
   async getOnboardingInfo(
     @User() user: any,
     @Body() onboardingData: OnboardingInfoRequest,

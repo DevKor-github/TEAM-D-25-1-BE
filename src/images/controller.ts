@@ -6,11 +6,13 @@ import {
   ParseFilePipe,
   MaxFileSizeValidator,
   FileTypeValidator,
+  UseGuards,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiConsumes, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { ImagesService } from './service';
 import { UploadImageResponseDto } from './dto/upload-image.dto';
+import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 
 @ApiTags('images')
 @Controller('images')
@@ -32,6 +34,7 @@ export class ImagesController {
       },
     },
   })
+  @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 201,
     description: '시드 이미지 업로드 성공',
@@ -66,6 +69,7 @@ export class ImagesController {
       },
     },
   })
+  @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 201,
     description: '프로필 이미지 업로드 성공',
@@ -100,6 +104,7 @@ export class ImagesController {
       },
     },
   })
+  @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 201,
     description: '레스토랑 이미지 업로드 성공',
@@ -134,6 +139,7 @@ export class ImagesController {
       },
     },
   })
+  @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 201,
     description: '리뷰 이미지 업로드 성공',
