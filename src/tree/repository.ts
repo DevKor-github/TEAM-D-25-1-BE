@@ -71,12 +71,16 @@ export class TreeRepository {
     });
 
     const followingIds = following.map((e) => e.userId);
-    const searchTargetIds = [...followingIds, userId];
+    const searchTargetIds = [...followingIds];
     const lat = parseFloat(location.lat);
     const lon = parseFloat(location.lon);
 
     const radius = this.zoomToRadius(zoom);
     const boundery = this.getBoundBox({ lat, lon }, radius);
+
+    if (userId !== undefined) {
+      searchTargetIds.push(userId);
+    }
 
     const res = await this.prisma.restaurant.findMany({
       where: {

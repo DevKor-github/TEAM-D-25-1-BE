@@ -11,14 +11,25 @@ import * as admin from 'firebase-admin';
 import { OnboardingInfoRequest } from './dto/onboarding.dto';
 import { RegisterRequest } from './dto/register.dto';
 import { SocialLoginDto } from './dto/social-login.dto';
-import { User } from '@prisma/client';
+import { SocialProvider, User } from '@prisma/client';
+import { FirebaseLoginResponseDto } from './dto/authUser.dto';
+import { sign as signJwt } from '../auth/libs/jwt';
+import { ConfigService } from '@nestjs/config';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly prismaService: PrismaService,
     @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App,
+    private readonly configService: ConfigService,
   ) {}
+
+  private generateJwtToken(uid: string): string {
+    const secret = this.configService.get<string>('jwt.secret');
+    return signJwt({ uid }, secret);
+  }
+
   async validateUser(decoded: FirebaseInformation) {
     const user = await this.prismaService.user.findUnique({
       where: { firebaseUid: decoded.uid },
@@ -32,7 +43,7 @@ export class AuthService {
 
   async register(
     registerDto: RegisterRequest,
-  ): Promise<{ customToken: string; user: any }> {
+  ): Promise<{ accessToken: string; user: any }> {
     try {
       const firebaseUser = await this.firebaseApp.auth().createUser({
         email: registerDto.email,
@@ -50,10 +61,11 @@ export class AuthService {
         },
       });
 
+      // JWT 토큰 발급
+      const accessToken = this.generateJwtToken(user.id);
+
       return {
-        customToken: await this.firebaseApp
-          .auth()
-          .createCustomToken(user.firebaseUid),
+        accessToken,
         user,
       };
     } catch (error: any) {
@@ -86,56 +98,51 @@ export class AuthService {
     }
   }
 
-  async socialLogin(
-    firebaseUid: string,
-    socialLoginDto: SocialLoginDto,
-  ): Promise<{ customToken: string; user: any }> {
-    let user: any = null;
+  async firebaseLoginOrRegister(
+    firebaseAccessToken: string,
+    providerType?: SocialProvider,
+  ): Promise<FirebaseLoginResponseDto> {
     try {
-      const { provider, providerUserId } = socialLoginDto;
-      const fbUser = await this.firebaseApp.auth().getUser(firebaseUid);
-      const email = fbUser.email;
-      const displayName = fbUser.displayName;
+      // 1. firebaseAccessToken 검증 및 uid 추출
+      const decoded = await this.firebaseApp
+        .auth()
+        .verifyIdToken(firebaseAccessToken);
+      const firebaseUid = decoded.uid;
 
-      if (!email) throw new UnauthorizedException('이메일이 없는 계정입니다.');
-
-      user = await this.prismaService.user.findUnique({
+      // 2. 유저 조회
+      let user = await this.prismaService.user.findUnique({
         where: { firebaseUid },
       });
-
       if (user) {
-        user = await this.prismaService.user.update({
-          where: { id: user.id },
-          data: {
-            email,
-            nickname: displayName || user.nickname,
-            socialProvider: provider,
-            socialId: providerUserId,
-          },
-        });
+        // 로그인: JWT 토큰 반환
+        const accessToken = this.generateJwtToken(user.id);
+        return { accessToken, user };
       } else {
+        // 회원가입: firebase에서 정보 추출 후 생성
+        const fbUser = await this.firebaseApp.auth().getUser(firebaseUid);
+
+        const email = fbUser.email;
+        const displayName = fbUser.displayName;
+        if (!email)
+          throw new UnauthorizedException('이메일이 없는 계정입니다.');
         user = await this.prismaService.user.create({
           data: {
             firebaseUid,
             email,
             username: `user_${firebaseUid.slice(0, 8)}`,
-            nickname: displayName || '', // TODO:: Random Nickname 사용
-            socialProvider: provider,
-            socialId: providerUserId,
+            nickname: displayName || '',
             isOnboarded: false,
+            socialProvider: providerType,
           },
         });
+        const accessToken = this.generateJwtToken(user.id);
+        return { accessToken, user };
       }
     } catch (error) {
       throw new HttpException(
-        `소셜 로그인 실패: ${error.message || '알 수 없는 오류'}`,
+        `firebase 로그인/회원가입 실패: ${error.message || '알 수 없는 오류'}`,
         HttpStatus.BAD_REQUEST,
       );
     }
-    const customToken = await this.firebaseApp
-      .auth()
-      .createCustomToken(firebaseUid);
-
-    return { customToken, user };
   }
 }

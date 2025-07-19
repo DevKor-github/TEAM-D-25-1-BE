@@ -34,7 +34,7 @@ import * as admin from 'firebase-admin';
               credential: admin.credential.cert(
                 serviceAccount as admin.ServiceAccount,
               ),
-              projectId: 'groo-test',
+              projectId: 'devkor-groo-space',
             },
             APP_NAME,
           );

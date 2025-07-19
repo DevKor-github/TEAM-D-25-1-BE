@@ -25,7 +25,6 @@ import {
 import { GetFollowingListUseCase } from './usecases/getFollowingList';
 import { HandleFollowUseCase } from './usecases/handleFollow';
 import { FollowUserUseCase } from './usecases/followUser';
-import { FirebaseAuthGuard } from '@/auth/guards/firebase-auth.guard';
 import { User } from '@/decorators/user.decorator';
 import { GetPendingFollowListUseCase } from './usecases/getPendingFollowList';
 import { GetFollowerListUseCase } from './usecases/getFollowerList';
@@ -36,6 +35,7 @@ import { UpdateProfileImageUseCase } from './usecases/updateProfileImage';
 import { UpdateProfileImageDto } from './dtos/updateProfileImage.dto';
 import { GetMyProfileUseCase } from './usecases/getMyProfile';
 import { MyProfileResponseDto } from './dtos/my-profile.response.dto';
+import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -54,7 +54,7 @@ export class UserController {
   ) {}
 
   @Get('me')
-  @UseGuards(FirebaseAuthGuard)
+  @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 200,
     description: 'Get my profile',
@@ -122,7 +122,7 @@ export class UserController {
   }
 
   @Post(':userId/follow')
-  @UseGuards(FirebaseAuthGuard) // TODO: fix to jwt guard
+  @UseGuards(AccessTokenGuard) // TODO: fix to jwt guard
   @ApiResponse({
     status: 201,
     description: 'Follow User',
@@ -138,7 +138,7 @@ export class UserController {
   }
 
   @Get('me/followers/pending')
-  @UseGuards(FirebaseAuthGuard) // TODO: fix to jwt guard
+  @UseGuards(AccessTokenGuard) // TODO: fix to jwt guard
   @ApiResponse({
     status: 200,
     description: 'Get pending follower list',
@@ -160,7 +160,7 @@ export class UserController {
   }
 
   @Get('me/followers')
-  @UseGuards(FirebaseAuthGuard) // TODO: fix to jwt guard
+  @UseGuards(AccessTokenGuard) // TODO: fix to jwt guard
   @ApiResponse({
     status: 200,
     description: 'Get follower list',
@@ -181,7 +181,7 @@ export class UserController {
   }
 
   @Patch('me/fcm-token')
-  @UseGuards(FirebaseAuthGuard)
+  @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 200,
     description: 'Update FCM token',
@@ -197,7 +197,7 @@ export class UserController {
   }
 
   @Patch('me/profile-image')
-  @UseGuards(FirebaseAuthGuard)
+  @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 200,
     description: 'Update profile image',
