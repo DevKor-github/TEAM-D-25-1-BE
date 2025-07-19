@@ -1,18 +1,20 @@
 import jwt, { SignOptions, VerifyErrors } from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
-
 export interface JwtPayload {
   uid: string;
 }
 
-export function sign(payload: JwtPayload, options?: SignOptions): string {
-  return jwt.sign(payload, JWT_SECRET, options);
+export function sign(
+  payload: JwtPayload,
+  secret: string,
+  options?: SignOptions,
+): string {
+  return jwt.sign(payload, secret, options);
 }
 
-export function verify<T = JwtPayload>(token: string): T {
+export function verify<T = JwtPayload>(token: string, secret: string): T {
   try {
-    return jwt.verify(token, JWT_SECRET) as T;
+    return jwt.verify(token, secret) as T;
   } catch (err) {
     throw err;
   }

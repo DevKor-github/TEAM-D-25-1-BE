@@ -14,13 +14,22 @@ import { SocialLoginDto } from './dto/social-login.dto';
 import { SocialProvider, User } from '@prisma/client';
 import { FirebaseLoginResponseDto } from './dto/authUser.dto';
 import { sign as signJwt } from '../auth/libs/jwt';
+import { ConfigService } from '@nestjs/config';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly prismaService: PrismaService,
     @Inject('FIREBASE_ADMIN') private readonly firebaseApp: admin.app.App,
+    private readonly configService: ConfigService,
   ) {}
+
+  private generateJwtToken(uid: string): string {
+    const secret = this.configService.get<string>('jwt.secret');
+    return signJwt({ uid }, secret);
+  }
+
   async validateUser(decoded: FirebaseInformation) {
     const user = await this.prismaService.user.findUnique({
       where: { firebaseUid: decoded.uid },
@@ -53,7 +62,7 @@ export class AuthService {
       });
 
       // JWT 토큰 발급
-      const accessToken = signJwt({ uid: user.id });
+      const accessToken = this.generateJwtToken(user.id);
 
       return {
         accessToken,
@@ -106,7 +115,7 @@ export class AuthService {
       });
       if (user) {
         // 로그인: JWT 토큰 반환
-        const accessToken = signJwt({ uid: user.id });
+        const accessToken = this.generateJwtToken(user.id);
         return { accessToken, user };
       } else {
         // 회원가입: firebase에서 정보 추출 후 생성
@@ -126,7 +135,7 @@ export class AuthService {
             socialProvider: providerType,
           },
         });
-        const accessToken = signJwt({ uid: user.id });
+        const accessToken = this.generateJwtToken(user.id);
         return { accessToken, user };
       }
     } catch (error) {
