@@ -65,10 +65,10 @@ export class TreeController {
   async getTreesByLocation(
     @Query() location: Coordinate,
     @Query() zoom: number,
-    @User('uid') user: any,
+    @User('id') userId: string,
     @Res() res: Response,
   ) {
-    const result = await this.tree.getTreesByLocation(user.id, zoom, location);
+    const result = await this.tree.getTreesByLocation(userId, zoom, location);
     return res.status(HttpStatus.OK).json(TreeListResponse.from(result));
   }
 
@@ -87,7 +87,7 @@ export class TreeController {
   })
   async getTreeById(
     @Param('treeId') treeId: string,
-    @User('uid') userId: string,
+    @User('id') userId: string,
     @Res() res: Response,
   ) {
     const result = await this.tree.getTreeById(treeId, userId);
@@ -109,7 +109,7 @@ export class TreeController {
   })
   async getTreeByRestaurantId(
     @Param('restaurantId') restaurantId: string,
-    @User('uid') userId: string,
+    @User('id') userId: string,
     @Res() res: Response,
   ) {
     const result = await this.tree.getTreesByRestaurantId(restaurantId, userId);
@@ -132,7 +132,7 @@ export class TreeController {
   @UseGuards(AccessTokenGuard)
   async waterTree(
     @Param('treeId') treeId: string,
-    @User('uid') userId: string,
+    @User('id') userId: string,
     @Res() res: Response,
   ) {
     const result = await this.tree.waterTree(treeId, userId);
@@ -150,7 +150,7 @@ export class TreeController {
   @UseGuards(AccessTokenGuard)
   async plantTree(
     @Body() plantTreeDto: PlantTreeDto,
-    @User('uid') userId: string,
+    @User('id') userId: string,
     @Res() res: Response,
   ) {
     const result = await this.tree.plantTree(plantTreeDto, userId);
@@ -186,7 +186,7 @@ export class TreeController {
   @UseGuards(AccessTokenGuard)
   async getFollowers(
     @Query('restaurantId') restaurantId: string,
-    @User('uid') userId: string,
+    @User('id') userId: string,
     @Res() res: Response,
   ) {
     const result = this.tree.getFollowersTree(userId, restaurantId);
