@@ -50,6 +50,12 @@ export class TreeController {
     type: String,
     example: '126.9780',
   })
+  @ApiQuery({
+    name: 'zoom',
+    description: '줌 레벨',
+    type: Number,
+    example: 10,
+  })
   @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 200,

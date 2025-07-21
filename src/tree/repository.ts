@@ -63,7 +63,7 @@ export class TreeRepository {
     if (zoom < MIN_ZOOM_LEVEL) return [];
 
     let searchTargetIds: string[] = [];
-    if (userId){
+    if (userId) {
       const following = await this.prisma.follower.findMany({
         where: {
           followerId: userId,
@@ -71,8 +71,8 @@ export class TreeRepository {
         },
         select: { userId: true },
       });
-      const followingIds = following.map((e) => e.userId)
-      searchTargetIds = [...followingIds, userId]
+      const followingIds = following.map((e) => e.userId);
+      searchTargetIds = [...followingIds, userId];
     }
 
     const lat = parseFloat(location.lat);
@@ -82,20 +82,21 @@ export class TreeRepository {
     const boundery = this.getBoundBox({ lat, lon }, radius);
 
     const res = await this.prisma.savedRestaurant.findMany({
-      where: { 
-        userId: searchTargetIds.length > 0 ? { in: searchTargetIds } : undefined,
+      where: {
+        userId:
+          searchTargetIds.length > 0 ? { in: searchTargetIds } : undefined,
         restaurant: {
           latitude: { gte: boundery.latMin, lte: boundery.latMax },
-          longitude: { gte: boundery.lonMin, lte: boundery.lonMax }
+          longitude: { gte: boundery.lonMin, lte: boundery.lonMax },
         },
       },
-      include: { 
-        restaurant: true, 
-        user: true
-      }
+      include: {
+        restaurant: true,
+        user: true,
+      },
     });
 
-    return res.map(e => this.toTreeDetail(e));
+    return res.map((e) => this.toTreeDetail(e));
   }
 
   async getTreesByRestaurantId(
@@ -116,7 +117,7 @@ export class TreeRepository {
       },
     });
 
-    return res.map(e => this.toTreeDetail(e));
+    return res.map((e) => this.toTreeDetail(e));
   }
 
   async getTreeById(
@@ -166,24 +167,18 @@ export class TreeRepository {
       },
       include: {
         user: true,
-        restaurant: true
-      }
+        restaurant: true,
+      },
     });
 
-    return this.toTreeDetail(updatedData)
+    return this.toTreeDetail(updatedData);
   }
 
   async plantTree(
     plantTreeDto: PlantTreeDto,
     userId: string,
   ): Promise<SavedRestaurant> {
-    const { 
-      restaurantId, 
-      treeType, 
-      review, 
-      description, 
-      tags 
-    } = plantTreeDto;
+    const { restaurantId, treeType, review, description, tags } = plantTreeDto;
 
     return await this.prisma.savedRestaurant.create({
       data: {
@@ -192,7 +187,7 @@ export class TreeRepository {
         treeType,
         description,
         review,
-        tag: tags
+        tag: tags,
       },
     });
   }
@@ -220,6 +215,6 @@ export class TreeRepository {
       },
       include: { user: true, restaurant: true },
     });
-    return followerTreeData.map(e => this.toTreeDetail(e));
+    return followerTreeData.map((e) => this.toTreeDetail(e));
   }
 }
