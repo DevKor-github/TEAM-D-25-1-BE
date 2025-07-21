@@ -83,7 +83,7 @@ export class PlantTreeDto {
     example: [Tag.MEAT_LOVER, Tag.VALUE_SEEKER],
     enum: Tag,
     isArray: true,
-    required: false
+    required: false,
   })
   tags?: Tag[];
 }
@@ -170,4 +170,10 @@ export class TreeListResponse {
     type: [TreeDetailResponse],
   })
   items: TreeDetailResponse[];
+
+  static from(trees: TreeDetailResponse[]): TreeListResponse {
+    return {
+      items: trees,
+    };
+  }
 }
