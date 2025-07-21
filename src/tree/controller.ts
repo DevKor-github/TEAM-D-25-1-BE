@@ -18,7 +18,6 @@ import {
   TreeListResponse,
 } from './dto';
 import { User } from '../decorators/user.decorator';
-import { FirebaseAuthGuard } from '../auth/guards/firebase-auth.guard';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -28,6 +27,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 
 @ApiTags('tree')
 @ApiBearerAuth()
@@ -50,6 +50,7 @@ export class TreeController {
     type: String,
     example: '126.9780',
   })
+  @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 200,
     description: '나무 목록 반환',
@@ -122,6 +123,7 @@ export class TreeController {
     description: '물주기 결과 반환',
     type: TreeDetailResponse,
   })
+  @UseGuards(AccessTokenGuard)
   async waterTree(
     @Param('treeId') treeId: string,
     @User('uid') userId: string,
@@ -139,6 +141,7 @@ export class TreeController {
     description: '심기 성공 시 생성된 나무 정보',
     type: TreeDetailResponse,
   })
+  @UseGuards(AccessTokenGuard)
   async plantTree(
     @Body() plantTreeDto: PlantTreeDto,
     @User('uid') userId: string,
@@ -155,6 +158,7 @@ export class TreeController {
     description: '추천 되는 나무를 반환',
     type: TreeListResponse,
   })
+  @UseGuards(AccessTokenGuard)
   async getRecommendations(@Res() res: Response) {
     const result = await this.tree.getRecommendations();
     return res.status(HttpStatus.OK).json(result);
@@ -173,6 +177,7 @@ export class TreeController {
     description: '팔로워들이 심은 나무 목록 반환',
     type: TreeListResponse,
   })
+  @UseGuards(AccessTokenGuard)
   async getFollowers(
     @Query('restaurantId') restaurantId: string,
     @User('uid') userId: string,

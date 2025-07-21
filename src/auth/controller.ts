@@ -12,13 +12,18 @@ import {
 import { User } from '../decorators/user.decorator';
 import { AuthService } from './service';
 import { OnboardingInfoRequest } from './dto/onboarding.dto';
-import { FirebaseAuthGuard } from './guards/firebase-auth.guard';
 import { RegisterRequest, RegisterResponse } from './dto/register.dto';
 import { SocialLoginDto } from './dto/social-login.dto';
-import { ApiResponse } from '@nestjs/swagger';
-import { AuthUserResponse } from './dto/authUser.dto';
+import { ApiResponse, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  AuthUserResponse,
+  FirebaseLoginDto,
+  FirebaseLoginResponseDto,
+} from './dto/authUser.dto';
 import { User as PrismaUser } from '@prisma/client';
+import { AccessTokenGuard } from './guards/access-token.guard';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -45,7 +50,7 @@ export class AuthController {
     type: AuthUserResponse,
   })
   @Post('onboard')
-  @UseGuards(FirebaseAuthGuard)
+  @UseGuards(AccessTokenGuard)
   async getOnboardingInfo(
     @User() user: any,
     @Body() onboardingData: OnboardingInfoRequest,
@@ -74,12 +79,12 @@ export class AuthController {
   @UsePipes(ValidationPipe)
   async register(
     @Body() registerData: RegisterRequest,
-  ): Promise<{ customToken: string; user: any }> {
+  ): Promise<{ accessToken: string; user: any }> {
     try {
       const result = await this.authService.register(registerData);
 
       return {
-        customToken: result.customToken,
+        accessToken: result.accessToken,
         user: this.mapToUserResponse(result.user),
       };
     } catch (error: any) {
@@ -89,34 +94,15 @@ export class AuthController {
     }
   }
 
+  @Post('sign-in/firebase')
+  @ApiOperation({ summary: 'Firebase AccessToken으로 회원가입/로그인' })
+  @ApiBody({ type: FirebaseLoginDto })
   @ApiResponse({
-    status: 200,
-    description: 'Social login',
-    type: RegisterResponse,
+    status: 201,
+    description: '로그인/회원가입 성공',
+    type: FirebaseLoginResponseDto,
   })
-  @Post('social-login')
-  @UseGuards(FirebaseAuthGuard)
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  async socialLogin(
-    @User() user: any,
-    @Body() socialLoginData: SocialLoginDto,
-  ): Promise<{ customToken: string; user: any }> {
-    const firebaseUid = user.uid;
-    // const provider = socialLoginData.provider;
-
-    try {
-      const result = await this.authService.socialLogin(
-        firebaseUid,
-        socialLoginData,
-      );
-      return {
-        customToken: result.customToken,
-        user: this.mapToUserResponse(result.user),
-      };
-    } catch (error: any) {
-      throw new BadRequestException(
-        `소셜 로그인 처리 중 오류 발생: ${error.message || '알 수 없는 오류'}`,
-      );
-    }
+  async firebaseLogin(@Body() body: FirebaseLoginDto) {
+    return this.authService.firebaseLoginOrRegister(body.firebaseAccessToken);
   }
 }

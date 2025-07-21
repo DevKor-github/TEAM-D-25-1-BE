@@ -33,6 +33,7 @@
     "class-validator": "^0.14.1",
     "firebase-admin": "^13.3.0",
     "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
     "passport-http-bearer": "^1.0.1",
     "prisma": "^6.6.0",
     "reflect-metadata": "^0.2.0",
@@ -45,6 +46,7 @@
     "@nestjs/testing": "^10.0.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.2",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20.3.1",
     "@types/passport-http-bearer": "^1.0.41",
     "@types/supertest": "^6.0.0",
@@ -82,5 +84,6 @@
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/$1"
     }
-  }
+  },
+  "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
 }

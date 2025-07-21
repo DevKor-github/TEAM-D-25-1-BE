@@ -96,3 +96,33 @@ export class AuthUserResponse {
   @IsOptional()
   profileImageUrl?: string;
 }
+
+export class FirebaseLoginDto {
+  @ApiProperty({
+    description: 'Firebase Access Token',
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6...',
+  })
+  @IsString()
+  firebaseAccessToken: string;
+
+  @ApiProperty({
+    description: '소셜 제공자',
+    example: 'KAKAO',
+    enum: ['KAKAO', 'GOOGLE', 'APPLE'],
+  })
+  @IsString()
+  @IsOptional()
+  socialProvider?: string;
+}
+
+export class FirebaseLoginResponseDto {
+  @ApiProperty({
+    description: '커스텀 토큰',
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6...',
+  })
+  @IsString()
+  accessToken: string;
+
+  @ApiProperty({ description: '유저 정보', type: AuthUserResponse })
+  user: AuthUserResponse;
+}
