@@ -56,50 +56,46 @@ export class TreeRepository {
   }
 
   async getTreesByLocation(
-    userId: string,
+    userId: string | undefined,
     zoom: number,
     location: Coordinate,
-  ): Promise<Restaurant[]> {
+  ): Promise<TreeDetail[]> {
     if (zoom < MIN_ZOOM_LEVEL) return [];
 
-    const following = await this.prisma.follower.findMany({
-      where: {
-        followerId: userId,
-        status: 'ACCEPTED',
-      },
-      select: { userId: true },
-    });
+    let searchTargetIds: string[] = [];
+    if (userId){
+      const following = await this.prisma.follower.findMany({
+        where: {
+          followerId: userId,
+          status: 'ACCEPTED',
+        },
+        select: { userId: true },
+      });
+      const followingIds = following.map((e) => e.userId)
+      searchTargetIds = [...followingIds, userId]
+    }
 
-    const followingIds = following.map((e) => e.userId);
-    const searchTargetIds = [...followingIds];
     const lat = parseFloat(location.lat);
     const lon = parseFloat(location.lon);
 
     const radius = this.zoomToRadius(zoom);
     const boundery = this.getBoundBox({ lat, lon }, radius);
 
-    if (userId !== undefined) {
-      searchTargetIds.push(userId);
-    }
-
-    const res = await this.prisma.restaurant.findMany({
-      where: {
-        latitude: { gte: boundery.latMin, lte: boundery.latMax },
-        longitude: { gte: boundery.lonMin, lte: boundery.lonMax },
-      },
-      include: {
-        savedBy: {
-          where: {
-            userId: { in: searchTargetIds },
-          },
-          include: {
-            user: { select: { id: true } },
-          },
+    const res = await this.prisma.savedRestaurant.findMany({
+      where: { 
+        userId: searchTargetIds.length > 0 ? { in: searchTargetIds } : undefined,
+        restaurant: {
+          latitude: { gte: boundery.latMin, lte: boundery.latMax },
+          longitude: { gte: boundery.lonMin, lte: boundery.lonMax }
         },
       },
+      include: { 
+        restaurant: true, 
+        user: true
+      }
     });
 
-    return res;
+    return res.map(e => this.toTreeDetail(e));
   }
 
   async getTreesByRestaurantId(
@@ -120,7 +116,7 @@ export class TreeRepository {
       },
     });
 
-    return res.map(this.toTreeDetail);
+    return res.map(e => this.toTreeDetail(e));
   }
 
   async getTreeById(
@@ -143,76 +139,65 @@ export class TreeRepository {
   }
 
   async waterTree(
+    ownerId: string,
     restaurantId: string,
     userId: string,
-  ): Promise<SavedRestaurant | null> {
-    console.log(
-      'Watering tree (SavedRestaurant) for restaurant:',
-      restaurantId,
-      'by user:',
-      userId,
-    );
-
-    const savedRestaurant = await this.prisma.savedRestaurant.findUnique({
+  ): Promise<TreeDetail | null> {
+    const tree = await this.prisma.savedRestaurant.findUnique({
       where: {
-        userId_restaurantId: { userId: userId, restaurantId: restaurantId },
+        userId_restaurantId: { userId: ownerId, restaurantId: restaurantId },
       },
       select: { recommendedByUsers: true },
     });
 
-    if (!savedRestaurant) {
+    if (!tree) {
       return null;
     }
     /*
-    if ((savedRestaurant.recommendedByUsers as string[]).includes(userId)) {
-      console.log('User already watered this tree.');
-      return this.prisma.savedRestaurant.findUnique({
-        where: {
-          userId_restaurantId: { userId: userId, restaurantId: restaurantId },
-        },
-      });
-    } */
+    if (tree.recommendedByUsers.includes(userId))
+    */
 
-    const updatedSavedTree = await this.prisma.savedRestaurant.update({
+    const updatedData = await this.prisma.savedRestaurant.update({
       where: {
-        userId_restaurantId: { userId: userId, restaurantId: restaurantId },
+        userId_restaurantId: { userId: ownerId, restaurantId: restaurantId },
       },
       data: {
         recommendedByUsers: { push: userId },
       },
+      include: {
+        user: true,
+        restaurant: true
+      }
     });
 
-    return updatedSavedTree;
+    return this.toTreeDetail(updatedData)
   }
 
   async plantTree(
     plantTreeDto: PlantTreeDto,
     userId: string,
   ): Promise<SavedRestaurant> {
-    const { restaurantId, treeTypeId, review, tagIds, description } =
-      plantTreeDto;
+    const { 
+      restaurantId, 
+      treeType, 
+      review, 
+      description, 
+      tags 
+    } = plantTreeDto;
 
-    const plantedTree = await this.prisma.savedRestaurant.create({
+    return await this.prisma.savedRestaurant.create({
       data: {
         userId,
         restaurantId,
-        treeType: treeTypeId,
+        treeType,
         description,
         review,
+        tag: tags
       },
     });
-
-    if (tagIds.length > 0) {
-      await this.prisma.savedRestaurantTag.createMany({
-        data: tagIds.map((tagId) => ({ userId, restaurantId, tagId })),
-        skipDuplicates: true,
-      });
-    }
-
-    return { ...plantedTree, tagIds } as SavedRestaurant & { tagIds: number[] };
   }
 
-  async getRecommendations(): Promise<SavedRestaurant[]> {
+  async getRecommendations(): Promise<TreeDetail[]> {
     console.log('Getting recommendations from DB');
     return [];
   }
@@ -221,27 +206,20 @@ export class TreeRepository {
   async getFollowersTree(
     userId: string,
     restaurantId: string,
-  ): Promise<SavedRestaurant[]> {
-    console.log(
-      'Getting all friends trees for user:',
-      userId,
-      'at restaurant:',
-      restaurantId,
-    );
-
+  ): Promise<TreeDetail[]> {
     const followers = await this.prisma.follower.findMany({
-      where: { userId: userId },
+      where: { userId, status: 'ACCEPTED' },
       select: { followerId: true },
     });
     const followerUserId = followers.map((f) => f.followerId);
 
-    const followerTrees = await this.prisma.savedRestaurant.findMany({
+    const followerTreeData = await this.prisma.savedRestaurant.findMany({
       where: {
         userId: { in: followerUserId },
         restaurantId: restaurantId,
       },
       include: { user: true, restaurant: true },
     });
-    return followerTrees;
+    return followerTreeData.map(e => this.toTreeDetail(e));
   }
 }

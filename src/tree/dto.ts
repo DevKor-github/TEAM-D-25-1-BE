@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Tag } from '@prisma/client';
 import {
   IsLatitude,
   IsLongitude,
@@ -10,11 +11,11 @@ import {
   Min,
   MaxLength,
   Max,
+  IsEnum,
+  IsOptional,
 } from 'class-validator';
 
 export class UpdateTreeDto {}
-
-export class CreateTreeDto {}
 
 export class RemoveTreeDto {}
 
@@ -42,31 +43,58 @@ export class WaterTreeDto {
 }
 
 export class PlantTreeDto {
+  @ApiProperty({
+    description: '나무 타입 / 0~4까지 숫자로 매핑',
+    example: 0,
+  })
   @IsNumber()
   @Min(0)
   @Max(4)
-  // 0 ~ 4사이 정수로? (트리 타입 5개)
-  treeTypeId: number;
+  treeType: number;
 
+  @ApiProperty({
+    description: '식당 고유 ID',
+    example: 'uuid-1234-5678',
+  })
   @IsUUID()
   restaurantId: string;
 
-  // TODO: 데코레이터 추가해서 태그 범위 및 중복 검사
-  @IsArray()
-  @IsInt({ each: true })
-  @Min(1, { each: true })
-  tagIds: number[];
-
+  @ApiProperty({
+    description: '한 줄 리뷰 (말풍선에 뜨게 할 것 / 50자 이내)',
+    example: '맛있어요',
+  })
   @IsString()
   @MaxLength(50)
   review: string;
 
+  @ApiProperty({
+    description: '상세평 (300자 이내)',
+    example: '특이한 향이 입혀져있어요~',
+  })
   @IsString()
   @MaxLength(300)
   description: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsEnum(Tag, { each: true })
+  @ApiProperty({
+    description: '관련 태그 목록',
+    example: [Tag.MEAT_LOVER, Tag.VALUE_SEEKER],
+    enum: Tag,
+    isArray: true,
+    required: false
+  })
+  tags?: Tag[];
 }
 
 export class TreeDetailResponse {
+  @ApiProperty({
+    description: '나무 고유 ID (userId_restaurantId)',
+    example: 'user-uuid-1234_restaurant-uuid-5678',
+  })
+  treeId: string;
+
   @ApiProperty({
     description: '식당 이름',
     example: '톤쇼우 부산대본점',
@@ -98,7 +126,7 @@ export class TreeDetailResponse {
   treeType: number;
 
   @ApiProperty({
-    description: '리뷰 텍스트',
+    description: '한 줄 리뷰',
     example: '맛있어요~',
   })
   review: string;
@@ -109,12 +137,13 @@ export class TreeDetailResponse {
   })
   description: string;
 
-  // Fixme: 태그 수정하기
   @ApiProperty({
-    description: '태그 ID 목록',
-    example: [1, 3, 5],
+    description: '태그 목록',
+    example: ['MEAT_LOVER', 'CLASSIC_TASTE'],
+    enum: Tag,
+    isArray: true,
   })
-  tagIds: number[];
+  tags: Tag[];
 
   @ApiProperty({
     description: '생성일',
@@ -129,10 +158,10 @@ export class TreeDetailResponse {
   updatedAt: Date;
 
   @ApiProperty({
-    description: '추천한 유저들',
-    example: 3,
+    description: '추천한 유저들의 수',
+    example: 0,
   })
-  recommendedUsers: string[];
+  recommendationCount: number;
 }
 
 export class TreeListResponse {

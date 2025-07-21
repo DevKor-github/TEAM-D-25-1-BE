@@ -32,7 +32,7 @@ import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 @ApiTags('tree')
 @ApiBearerAuth()
 @Controller('tree')
-//@UseGuards(FirebaseAuthGuard)
+@UseGuards(FirebaseAuthGuard)
 export class TreeController {
   constructor(private readonly tree: TreeService) {}
 

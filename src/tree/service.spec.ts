@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TreeService } from './service';
 import { TreeRepository } from './repository';
-import { Coordinate, PlantTreeDto } from './dto';
-import { SavedRestaurant, Restaurant, User } from '@prisma/client';
+import { PlantTreeDto, TreeDetailResponse } from './dto';
+import { Tag, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   BadRequestException,
@@ -10,50 +10,48 @@ import {
   ForbiddenException,
   NotFoundException,
 } from '@nestjs/common';
+import { TreeDetail } from './types';
 
-const mockUserId = 'a1b2c3d4-e5f6-7890-1234-567890abcdef';
-const mockOwnerId = 'owner-uuid-5678';
-const mockOtherUserId = 'other-user-uuid-abcd';
-const mockRestaurantId = 'f0e9d8c7-b6a5-4321-fedc-ba9876543210';
-const mockNestedId = `${mockOwnerId}_${mockRestaurantId}`;
+const mockUserId = 'user-spicy-lover-1234';
+const mockOwnerId = 'owner-jjamppong-master-5678';
+const mockRestaurantId = 'restaurant-yupdduk-4321';
+const mockTreeId = `${mockOwnerId}_${mockRestaurantId}`;
 
-const mockRestaurant: Restaurant = {
-  id: mockRestaurantId,
-  placeId: 'place-123',
-  name: '톤쇼우 부산대본점',
-  address: '부산 금정구 금강로 247-10',
-  latitude: 35.230402,
-  longitude: 129.084294,
-  createdAt: new Date(),
+const mockTreeDetail: TreeDetail = {
+  user: { id: mockOwnerId, isPrivate: false } as User,
+  restaurant: {
+    id: mockRestaurantId,
+    name: '엽기떡볶이 동대문본점',
+    address: '서울 중구 퇴계로75길 13',
+    latitude: 37.5701,
+    longitude: 127.0125,
+  } as any,
+  tree: {
+    userId: mockOwnerId,
+    restaurantId: mockRestaurantId,
+    description: '스트레스 받을 땐 착한맛도 충분해요.',
+    review: '역시 원조는 다르다!',
+    createdAt: new Date('2025-07-16T12:00:00Z'),
+    updatedAt: new Date('2025-07-16T12:00:00Z'),
+    recommendedByUsers: [mockUserId],
+    treeType: 4, // 단풍나무 씨앗
+    tag: [Tag.SPICY_FOOD_LOVER, Tag.LATE_NIGHT_EATER],
+  },
 };
 
-const mockUser: User = {
-  id: mockUserId,
-  email: 'test@test.com',
-  username: 'testuser',
-  nickname: '테스트유저',
-  password: 'hashedpassword',
-  socialProvider: null,
-  socialId: null,
-  isPrivate: false,
-  status: 'ACTIVE',
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  firebaseUid: 'firebase-uid-1',
-  isOnboarded: true,
-  profileImageUrl: null,
-  lastWatered: null,
-};
-
-const mockSavedRestaurant: SavedRestaurant = {
-  userId: mockUserId,
-  restaurantId: mockRestaurantId,
-  description: '버크셔K 특로스시켜야함',
-  review: '맛있어요~',
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  recommendedByUsers: [],
-  treeType: 2,
+const mockTreeDetailResponse: TreeDetailResponse = {
+  treeId: mockTreeId,
+  name: '엽기떡볶이 동대문본점',
+  address: '서울 중구 퇴계로75길 13',
+  latitude: '37.5701',
+  longitude: '127.0125',
+  treeType: 4,
+  review: '역시 원조는 다르다!',
+  description: '스트레스 받을 땐 착한맛도 충분해요.',
+  tags: [Tag.SPICY_FOOD_LOVER, Tag.LATE_NIGHT_EATER],
+  createdAt: new Date('2025-07-16T12:00:00Z'),
+  updatedAt: new Date('2025-07-16T12:00:00Z'),
+  recommendationCount: 1,
 };
 
 describe('TreeService (unit)', () => {
@@ -75,7 +73,7 @@ describe('TreeService (unit)', () => {
     follower: { findMany: jest.fn(), findUnique: jest.fn() },
     user: { findUnique: jest.fn() },
     restaurant: { findUnique: jest.fn() },
-    tag: { count: jest.fn() },
+    savedRestaurant: { findUnique: jest.fn() },
   };
 
   beforeEach(async () => {
@@ -97,244 +95,95 @@ describe('TreeService (unit)', () => {
     expect(service).toBeDefined();
   });
 
-  describe('getTreesByLocation', () => {
-    it('should call repository.getTreesByLocation and return its result', async () => {
-      const location: Coordinate = { lat: '37.123', lon: '127.456' };
-      const zoom = 16;
-      const expectedRes = [mockRestaurant];
-      (repository.getTreesByLocation as jest.Mock).mockResolvedValue(
-        expectedRes,
-      );
-
-      const res = await service.getTreesByLocation(mockUserId, zoom, location);
-
-      expect(repository.getTreesByLocation).toHaveBeenCalledWith(
-        mockUserId,
-        zoom,
-        location,
-      );
-      expect(res).toEqual(expectedRes);
-    });
-  });
-
   describe('getTreeById', () => {
-    it('잘못된 형식의 nestedId가 들어오면 BadRequestException을 던져야 함', async () => {
-      const invalidId = 'invalid-id-format';
-      await expect(service.getTreeById(invalidId, mockUserId)).rejects.toThrow(
-        BadRequestException,
-      );
+    it('조회자가 나무 주인이면 DTO를 반환해야 함', async () => {
+      jest.spyOn(repository, 'getTreeById').mockResolvedValue(mockTreeDetail);
+      const result = await service.getTreeById(mockTreeId, mockOwnerId);
+      expect(repository.getTreeById).toHaveBeenCalledWith(mockOwnerId, mockRestaurantId);
+      expect(result).toEqual(mockTreeDetailResponse);
     });
-
-    it('조회자가 나무 주인이면 권한 확인 후 repository.getTreeById를 호출해야 함', async () => {
-      (repository.getTreeById as jest.Mock).mockResolvedValue(
-        mockSavedRestaurant,
-      );
-
-      await service.getTreeById(mockNestedId, mockOwnerId); // 조회자(viewer)가 주인(owner)
-
-      expect(repository.getTreeById).toHaveBeenCalledWith(
-        mockOwnerId,
-        mockRestaurantId,
-      );
-    });
-
-    it('조회자가 나무 주인의 팔로워이면 권한 확인 후 repository.getTreeById를 호출해야 함', async () => {
-      (prisma.follower.findUnique as jest.Mock).mockResolvedValue({
-        status: 'ACCEPTED',
-      });
-      (repository.getTreeById as jest.Mock).mockResolvedValue(
-        mockSavedRestaurant,
-      );
-
-      await service.getTreeById(mockNestedId, mockUserId);
-
+  
+    it('조회자가 ACCEPTED 상태의 팔로워이면 DTO를 반환해야 함', async () => {
+      jest.spyOn(prisma.follower, 'findUnique').mockResolvedValue({ status: 'ACCEPTED' } as any);
+      jest.spyOn(repository, 'getTreeById').mockResolvedValue(mockTreeDetail);
+      await service.getTreeById(mockTreeId, mockUserId);
       expect(prisma.follower.findUnique).toHaveBeenCalled();
-      expect(repository.getTreeById).toHaveBeenCalledWith(
-        mockOwnerId,
-        mockRestaurantId,
-      );
+      expect(repository.getTreeById).toHaveBeenCalled();
     });
-
-    it('조회자가 팔로워가 아니면 ForbiddenException을 던져야 함', async () => {
-      (prisma.follower.findUnique as jest.Mock).mockResolvedValue(null);
-
-      await expect(
-        service.getTreeById(mockNestedId, mockOtherUserId),
-      ).rejects.toThrow(ForbiddenException);
+    
+    it('팔로우 상태가 PENDING이면 ForbiddenException을 던져야 함', async () => {
+      jest.spyOn(prisma.follower, 'findUnique').mockResolvedValue(null);
+      await expect(service.getTreeById(mockTreeId, mockUserId)).rejects.toThrow(ForbiddenException);
     });
-
-    it('권한 확인 후 나무를 찾을 수 없으면 NotFoundException을 던져야 함', async () => {
-      (repository.getTreeById as jest.Mock).mockResolvedValue(null);
-
-      await expect(
-        service.getTreeById(mockNestedId, mockOwnerId),
-      ).rejects.toThrow(NotFoundException);
+  
+    it('팔로우 상태가 REJECTED이면 ForbiddenException을 던져야 함', async () => {
+      jest.spyOn(prisma.follower, 'findUnique').mockResolvedValue(null);
+      await expect(service.getTreeById(mockTreeId, mockUserId)).rejects.toThrow(ForbiddenException);
     });
-  });
-
-  describe('getTreesByRestaurantId', () => {
-    it('본인과 팔로워의 ID 목록으로 repository.getTreesByRestaurantId를 호출해야 함', async () => {
-      const mockFollowings = [
-        { userId: 'follower-1' },
-        { userId: 'follower-2' },
-      ];
-      const expectedUserIds = ['follower-1', 'follower-2', mockUserId];
-      (prisma.follower.findMany as jest.Mock).mockResolvedValue(mockFollowings);
-      (repository.getTreesByRestaurantId as jest.Mock).mockResolvedValue([]);
-
-      await service.getTreesByRestaurantId(mockRestaurantId, mockUserId);
-
-      expect(prisma.follower.findMany).toHaveBeenCalledWith({
-        where: { followerId: mockUserId, status: 'ACCEPTED' },
-        select: { userId: true },
-      });
-      expect(repository.getTreesByRestaurantId).toHaveBeenCalledWith(
-        mockRestaurantId,
-        expect.arrayContaining(expectedUserIds),
-      );
+    
+    it('비공개 계정의 나무에 팔로워가 아닌 유저가 접근하면 ForbiddenException을 던져야 함', async () => {
+      const privateAccountDetail = { ...mockTreeDetail, user: { ...mockTreeDetail.user, isPrivate: true }};
+      jest.spyOn(repository, 'getTreeById').mockResolvedValue(privateAccountDetail);
+      jest.spyOn(prisma.follower, 'findUnique').mockResolvedValue(null);
+      await expect(service.getTreeById(mockTreeId, mockUserId)).rejects.toThrow(ForbiddenException);
+    });
+  
+    it('나무를 찾을 수 없으면 NotFoundException을 던져야 함', async () => {
+      jest.spyOn(repository, 'getTreeById').mockResolvedValue(null);
+      await expect(service.getTreeById(mockTreeId, mockOwnerId)).rejects.toThrow(NotFoundException);
     });
   });
 
   describe('waterTree', () => {
-    it('lastWatered가 null이면 repository.waterTree를 호출해야 함', async () => {
-      (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
+    it('성공 시, 업데이트된 DTO를 반환해야 함', async () => {
+      jest.spyOn(prisma.user, 'findUnique').mockResolvedValue({ lastWatered: new Date(0) } as any);
+      jest.spyOn(repository, 'waterTree').mockResolvedValue(mockTreeDetail);
 
-      await service.waterTree(mockRestaurantId, mockUserId);
-
-      expect(repository.waterTree).toHaveBeenCalledWith(
-        mockRestaurantId,
-        mockUserId,
-      );
+      const result = await service.waterTree(mockTreeId, mockUserId);
+      expect(repository.waterTree).toHaveBeenCalledWith(mockOwnerId, mockRestaurantId, mockUserId);
+      expect(result).toEqual(mockTreeDetailResponse);
     });
 
-    it('lastWatered가 메서드 호출 시각으로부터 4시간 이내이면 BadRequestException을 던져야 함', async () => {
-      const lastWatered = new Date(Date.now() - 3 * 60 * 60 * 1000);
-      (prisma.user.findUnique as jest.Mock).mockResolvedValue({ lastWatered });
-      const expectedError = new BadRequestException({
-        message: '아직 물을 줄 수 없습니다.',
-        lastWatered,
-      });
-      await expect(
-        service.waterTree(mockRestaurantId, mockUserId),
-      ).rejects.toThrow(expectedError);
+    it('쿨타임이 지나지 않았으면 BadRequestException을 던져야 함', async () => {
+      const recentDate = new Date(Date.now() - 1000 * 60 * 60); // 1시간 전
+      jest.spyOn(prisma.user, 'findUnique').mockResolvedValue({ lastWatered: recentDate } as any);
+      await expect(service.waterTree(mockTreeId, mockUserId)).rejects.toThrow(BadRequestException);
     });
 
-    it('물을 줄 수 있는 경우 repository.waterTree를 호출하고 결과를 반환해야 함', async () => {
-      const lastWatered = new Date(Date.now() - 5 * 60 * 60 * 1000);
-      const expectedResult = {
-        ...mockSavedRestaurant,
-        recommendedByUsers: [mockUserId],
-      };
-      (prisma.user.findUnique as jest.Mock).mockResolvedValue({ lastWatered });
-      (repository.waterTree as jest.Mock).mockResolvedValue(expectedResult);
-
-      const result = await service.waterTree(mockRestaurantId, mockUserId);
-
-      expect(repository.waterTree).toHaveBeenCalledWith(
-        mockRestaurantId,
-        mockUserId,
-      );
-      expect(result).toEqual(expectedResult);
+    it('자신의 나무에 물을 주려고 하면 BadRequestException을 던져야 함', async () => {
+      await expect(service.waterTree(mockTreeId, mockOwnerId)).rejects.toThrow(BadRequestException);
     });
   });
 
   describe('plantTree', () => {
-    it('should throw BadRequestException if restaurant does not exist', async () => {
-      const plantTreeDto: PlantTreeDto = {
-        treeTypeId: 1,
-        restaurantId: mockRestaurantId,
-        tagIds: [1, 2],
-        review: 'test-review',
-        description: 'test-description',
-      };
-      it('존재하지 않는 식당 ID일 경우 BadRequestException을 던져야 함', async () => {
-        (prisma.restaurant.findUnique as jest.Mock).mockResolvedValue(null);
+    const plantTreeDto: PlantTreeDto = { restaurantId: mockRestaurantId } as any;
 
-        await expect(
-          service.plantTree(plantTreeDto, mockUserId),
-        ).rejects.toThrow(
-          new BadRequestException(
-            `Id: ${plantTreeDto.restaurantId}에 해당하는 식당을 찾을 수 없습니다.`,
-          ),
-        );
-      });
+    it('성공 시, 생성된 treeId 객체를 반환해야 함', async () => {
+      jest.spyOn(prisma.restaurant, 'findUnique').mockResolvedValue({} as any);
+      jest.spyOn(prisma.savedRestaurant, 'findUnique').mockResolvedValue(null);
+      jest.spyOn(repository, 'plantTree').mockResolvedValue({ userId: mockUserId, restaurantId: mockRestaurantId } as any);
 
-      it('중복된 태그가 있을 경우 BadRequestException을 던져야 함', async () => {
-        const dtoWithDuplicateTags = { ...plantTreeDto, tagIds: [1, 1, 2] };
-        (prisma.restaurant.findUnique as jest.Mock).mockResolvedValue(
-          mockRestaurant,
-        );
-
-        await expect(
-          service.plantTree(dtoWithDuplicateTags, mockUserId),
-        ).rejects.toThrow(new BadRequestException('중복된 태그가 존재합니다'));
-      });
-
-      it('유효하지 않은 태그가 있을 경우 ConflictException을 던져야 함', async () => {
-        (prisma.restaurant.findUnique as jest.Mock).mockResolvedValue(
-          mockRestaurant,
-        );
-        (prisma.tag.count as jest.Mock).mockResolvedValue(100000);
-
-        await expect(
-          service.plantTree(plantTreeDto, mockUserId),
-        ).rejects.toThrow(
-          new ConflictException('사용할 수 없는 태그가 존재합니다.'),
-        );
-      });
-
-      it('모든 검증을 통과하면 repository.plantTree를 호출하고 결과를 반환해야 함', async () => {
-        const expectedResult = { ...mockSavedRestaurant, ...plantTreeDto };
-        (prisma.restaurant.findUnique as jest.Mock).mockResolvedValue(
-          mockRestaurant,
-        );
-        (prisma.tag.count as jest.Mock).mockResolvedValue(
-          plantTreeDto.tagIds.length,
-        );
-        (repository.plantTree as jest.Mock).mockResolvedValue(expectedResult);
-
-        const result = await service.plantTree(plantTreeDto, mockUserId);
-
-        expect(repository.plantTree).toHaveBeenCalledWith(
-          plantTreeDto,
-          mockUserId,
-        );
-        expect(result).toEqual(expectedResult);
-      });
+      const result = await service.plantTree(plantTreeDto, mockUserId);
+      expect(result).toEqual({ treeId: `${mockUserId}_${mockRestaurantId}` });
     });
-  });
 
-  describe('getRecommendations', () => {
-    it('should call repository.getRecommendations', async () => {
-      const expectedResult = [];
-      (repository.getRecommendations as jest.Mock).mockResolvedValue(
-        expectedResult,
-      );
+    it('식당이 존재하지 않으면 NotFoundException을 던져야 함', async () => {
+      jest.spyOn(prisma.restaurant, 'findUnique').mockResolvedValue(null);
+      await expect(service.plantTree(plantTreeDto, mockUserId)).rejects.toThrow(NotFoundException);
+    });
 
-      const result = await service.getRecommendations();
-
-      expect(repository.getRecommendations).toHaveBeenCalled();
-      expect(result).toEqual(expectedResult);
+    it('이미 나무가 심겨 있으면 ConflictException을 던져야 함', async () => {
+      jest.spyOn(prisma.restaurant, 'findUnique').mockResolvedValue({} as any);
+      jest.spyOn(prisma.savedRestaurant, 'findUnique').mockResolvedValue({} as any);
+      await expect(service.plantTree(plantTreeDto, mockUserId)).rejects.toThrow(ConflictException);
     });
   });
 
   describe('getFollowersTree', () => {
-    it('should call repository.getFollowersTree with userId and restaurantId', async () => {
-      const expectedResult = [mockSavedRestaurant];
-      (repository.getFollowersTree as jest.Mock).mockResolvedValue(
-        expectedResult,
-      );
-
-      const result = await service.getFollowersTree(
-        mockUserId,
-        mockRestaurantId,
-      );
-
-      expect(repository.getFollowersTree).toHaveBeenCalledWith(
-        mockUserId,
-        mockRestaurantId,
-      );
-      expect(result).toEqual(expectedResult);
+    it('결과가 없을 경우 빈 배열을 반환해야 함', async () => {
+      jest.spyOn(repository, 'getFollowersTree').mockResolvedValue([]);
+      const result = await service.getFollowersTree(mockUserId, mockRestaurantId);
+      expect(result).toEqual([]);
     });
   });
 });

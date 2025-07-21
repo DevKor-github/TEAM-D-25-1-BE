@@ -27,6 +27,49 @@ enum SocialProvider {
   APPLE
 }
 
+enum Mbti {
+  ESTJ
+  INFP
+  ISFP
+  INTJ
+  ENTJ
+  ISFJ
+  ESFP
+  ISTP
+  INFJ
+  ENTP
+  ISTJ
+  ESTP
+  ENFJ
+  ESFJ
+  ENFP
+  INTP
+}
+
+enum Tag {
+  DRINKER
+  VEGAN_OR_VEGETARIAN
+  SPICY_FOOD_LOVER
+  PICKY_EATER
+  DESSERT_LOVER
+  DIETER
+  LATE_NIGHT_EATER
+  SWEET_TOOTH
+  HEALTH_CONSCIOUS
+  VALUE_SEEKER
+  MEAT_LOVER
+  DIET_PLANNER
+  CAFFEINE_ADDICT
+  CLASSIC_TASTE
+  STREET_FOOD_FAN
+  TTEOKBOKKI_LOVER
+  SMALL_EATER
+  BIG_EATER
+  SOLO_DINER
+  SEAFOOD_LOVER
+  HEARTY_EATER
+}
+
 model User {
   id               String             @id @default(uuid())
   email            String             @unique
@@ -46,7 +89,9 @@ model User {
   profileImageUrl  String?
   fcmToken         String?
   fcmTokenUpdatedAt DateTime?
-  lastWatered      DateTime? 
+  lastWatered      DateTime?
+  tag              Tag[]
+  mbti             Mbti?
 }
 
 model SocialLogin {
@@ -76,11 +121,6 @@ model Restaurant {
   savedBy   SavedRestaurant[]
 }
 
-model Tag {
-  id                Int     @id   @default(autoincrement())
-  name              String  @unique
-}
-
 model SavedRestaurant {
   user                User       @relation(fields: [userId], references: [id])
   userId              String
@@ -94,20 +134,10 @@ model SavedRestaurant {
   updatedAt           DateTime   @updatedAt
   recommendedByUsers  String[]
   treeType            Int
+  tag                 Tag[]
 
   @@id([userId,restaurantId])
 }
-
-model SavedRestaurantTag {
-  userId        String
-  restaurantId  String
-  tagId         Int
-
-  @@id([userId, restaurantId, tagId])
-  @@index([userId, tagId])
-  @@index([restaurantId])
-}
-
 
 model Follower {
   userId     String @db.Uuid 
