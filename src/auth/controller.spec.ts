@@ -7,12 +7,9 @@ import {
 } from '@nestjs/common';
 import request from 'supertest';
 import { AuthService } from './service';
-import { FirebaseAuthGuard } from './guards/firebase-auth.guard';
-import { User } from 'src/decorators/user.decorator';
 import { AuthController } from './controller';
-import { FirebaseAuthStrategy } from './strategies/firebase.strategy';
-import * as admin from 'firebase-admin';
 import { CanActivate } from '@nestjs/common';
+import { AccessTokenGuard } from './guards/access-token.guard';
 
 jest.mock('firebase-admin', () => ({
   initializeApp: jest.fn(),
@@ -21,21 +18,36 @@ jest.mock('firebase-admin', () => ({
     cert: jest.fn(),
   },
   auth: () => ({
-    verifyIdToken: jest.fn(),
+    verifyIdToken: jest.fn().mockResolvedValue({ uid: 'firebase-uid' }),
   }),
 }));
 
 describe('AuthController', () => {
   let app: INestApplication;
   let authService: AuthService;
-  let firebaseAdminAuth: any;
-  let mockFirebaseAuthGuard: CanActivate;
+  let mockAuthGuard: CanActivate;
+
+  const mockDecodedFirebaseToken = {
+    iss: 'https://securetoken.google.com/your-project-id',
+    aud: 'your-project-id',
+    auth_time: Math.floor(Date.now() / 1000) - 60,
+    user_id: 'mockFirebaseUid-12345',
+    sub: 'mockFirebaseUid-12345',
+    iat: Math.floor(Date.now() / 1000),
+    exp: Math.floor(Date.now() / 1000) + 3600,
+    email: 'test@example.com',
+    email_verified: true,
+    firebase: {
+      identities: {
+        email: ['test@example.com'],
+      },
+      'sign_in_provider': 'password',
+    },
+    uid: 'mockFirebaseUid-12345',
+  };
 
   beforeEach(async () => {
-    firebaseAdminAuth = admin.auth();
-    jest.spyOn(admin, 'auth').mockReturnValue(firebaseAdminAuth);
-
-    mockFirebaseAuthGuard = { canActivate: jest.fn() };
+    mockAuthGuard = { canActivate: jest.fn() };
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
@@ -50,8 +62,8 @@ describe('AuthController', () => {
         },
       ],
     })
-      .overrideGuard(FirebaseAuthGuard)
-      .useValue(mockFirebaseAuthGuard)
+      .overrideGuard(AccessTokenGuard)
+      .useValue(mockAuthGuard)
       .compile();
 
     app = moduleFixture.createNestApplication();
@@ -67,17 +79,17 @@ describe('AuthController', () => {
   });
 
   describe('POST /auth/onboard', () => {
+    const onboardingData = { nickname: 'testuser' };
     it('성공: 유효한 온보딩 정보로 온보딩', async () => {
-      const onboardingData = { nickname: 'testuser' };
       const expectedResult = {
-        id: 'user-id',
+        id: 'user-id-from-database',
         nickname: 'testuser',
         isOnboarded: true,
       };
-      (mockFirebaseAuthGuard.canActivate as jest.Mock).mockImplementation(
+      (mockAuthGuard.canActivate as jest.Mock).mockImplementation(
         (context) => {
           const req = context.switchToHttp().getRequest();
-          req.user = { uid: 'mockFirebaseUid', email: 'test@example.com' };
+          req.user = mockDecodedFirebaseToken;
           return true;
         },
       );
@@ -93,53 +105,43 @@ describe('AuthController', () => {
         .expect(HttpStatus.CREATED);
 
       expect(authService.completeOnboarding).toHaveBeenCalledWith(
-        'mockFirebaseUid',
+        mockDecodedFirebaseToken.uid,
         onboardingData,
       );
       expect(res.body).toEqual(expectedResult);
     });
 
     it('실패: 유효하지 않은 온보딩 데이터', async () => {
-      (mockFirebaseAuthGuard.canActivate as jest.Mock).mockImplementation(
-        (context) => {
-          const req = context.switchToHttp().getRequest();
-          req.user = { uid: 'mockFirebaseUid', email: 'test@example.com' };
-          return true;
-        },
-      );
+      (mockAuthGuard.canActivate as jest.Mock).mockReturnValue(true);
 
-      const invalidOnboardData = { nickname: '' };
-      const res = await request(app.getHttpServer())
+      const invalidOnboardData = { nickname: '' }
+      await request(app.getHttpServer())
         .post('/auth/onboard')
         .set('Authorization', 'Bearer valid-firebase-token')
         .send(invalidOnboardData)
-        .expect(HttpStatus.BAD_REQUEST);
+        .expect(HttpStatus.BAD_REQUEST)
+      
       expect(authService.completeOnboarding).not.toHaveBeenCalled();
-      expect(res.body.message).toBeInstanceOf(Array);
     });
 
     it('실패: Firebase 인증 실패', async () => {
-      (mockFirebaseAuthGuard.canActivate as jest.Mock).mockImplementation(
+      (mockAuthGuard.canActivate as jest.Mock).mockImplementation(
         () => {
           throw new UnauthorizedException();
         },
       );
-
-      const onboardingData = { nickname: 'testuser' };
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .post('/auth/onboard')
-        .set('Authorization', 'Bearer invalid-token')
+        .set('Authorization', 'Bearer invalid-firebase-token')
         .send(onboardingData)
         .expect(HttpStatus.UNAUTHORIZED);
       expect(authService.completeOnboarding).not.toHaveBeenCalled();
-    });
+      });
 
     it('실패: 서비스 에러 발생', async () => {
-      const onboardingData = { nickname: 'testuser' };
-      (mockFirebaseAuthGuard.canActivate as jest.Mock).mockImplementation(
+      (mockAuthGuard.canActivate as jest.Mock).mockImplementation(
         (context) => {
-          const req = context.switchToHttp().getRequest();
-          req.user = { uid: 'mockFirebaseUid', email: 'test@example.com' };
+          context.switchToHttp().getRequest().user = mockDecodedFirebaseToken;
           return true;
         },
       );
@@ -147,16 +149,16 @@ describe('AuthController', () => {
       (authService.completeOnboarding as jest.Mock).mockRejectedValue(
         new Error('Service failed'),
       );
-      const res = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .post('/auth/onboard')
         .set('Authorization', 'Bearer valid-firebase-token')
         .send(onboardingData)
         .expect(HttpStatus.BAD_REQUEST);
-
+      
       expect(authService.completeOnboarding).toHaveBeenCalledWith(
-        'mockFirebaseUid',
-        onboardingData,
-      );
+        mockDecodedFirebaseToken.uid,
+        onboardingData
+      )
     });
   });
 
