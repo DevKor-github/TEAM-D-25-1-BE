@@ -10,6 +10,7 @@ import { AuthService } from './service';
 import { AuthController } from './controller';
 import { CanActivate } from '@nestjs/common';
 import { AccessTokenGuard } from './guards/access-token.guard';
+import { User as UserType, Mbti, Tag } from '@prisma/client';
 
 jest.mock('firebase-admin', () => ({
   initializeApp: jest.fn(),
@@ -46,6 +47,28 @@ describe('AuthController', () => {
     uid: 'mockFirebaseUid-12345',
   };
 
+  const mockPrismaUser: UserType = {
+    id: 'user-id-from-database',
+    email: 'test@example.com',
+    username: 'testuser',
+    nickname: 'testuser',
+    socialProvider: null,
+    socialId: null,
+    isPrivate: false,
+    status: 'ACTIVE',
+    firebaseUid: 'mockFirebaseUid-12345',
+    isOnboarded: true,
+    mbti: Mbti.INFJ,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    password: '',
+    profileImageUrl: '',
+    fcmToken: '',
+    fcmTokenUpdatedAt: undefined,
+    lastWatered: undefined,
+    tag: []
+  };
+
   beforeEach(async () => {
     mockAuthGuard = { canActivate: jest.fn() };
 
@@ -78,14 +101,27 @@ describe('AuthController', () => {
     await app.close();
   });
 
+  const expectedResponse = {
+    id: mockPrismaUser.id,
+    email: mockPrismaUser.email,
+    username: mockPrismaUser.username,
+    nickname: mockPrismaUser.nickname,
+    socialProvider: mockPrismaUser.socialProvider,
+    socialId: mockPrismaUser.socialId,
+    isPrivate: mockPrismaUser.isPrivate,
+    status: mockPrismaUser.status,
+    firebaseUid: mockPrismaUser.firebaseUid,
+    isOnboarded: mockPrismaUser.isOnboarded,
+    profileImageUrl: null,
+  };
+
   describe('POST /auth/onboard', () => {
-    const onboardingData = { nickname: 'testuser' };
+    const onboardingData = {
+      username: 'testuser',
+      mbti: Mbti.INFJ,
+      tags: [Tag.LATE_NIGHT_EATER],
+    };
     it('성공: 유효한 온보딩 정보로 온보딩', async () => {
-      const expectedResult = {
-        id: 'user-id-from-database',
-        nickname: 'testuser',
-        isOnboarded: true,
-      };
       (mockAuthGuard.canActivate as jest.Mock).mockImplementation(
         (context) => {
           const req = context.switchToHttp().getRequest();
@@ -95,7 +131,7 @@ describe('AuthController', () => {
       );
 
       (authService.completeOnboarding as jest.Mock).mockResolvedValue(
-        expectedResult,
+        mockPrismaUser,
       );
 
       const res = await request(app.getHttpServer())
@@ -108,7 +144,8 @@ describe('AuthController', () => {
         mockDecodedFirebaseToken.uid,
         onboardingData,
       );
-      expect(res.body).toEqual(expectedResult);
+
+      expect(res.body).toEqual(expectedResponse);
     });
 
     it('실패: 유효하지 않은 온보딩 데이터', async () => {
@@ -166,17 +203,41 @@ describe('AuthController', () => {
     it('성공: 유효한 정보로 회원가입', async () => {
       const registerData = {
         email: 'newuser@example.com',
-        password: 'newpassword',
+        password: 'ValidPassword123!',
         nickname: 'newuser',
       };
-      const expectedServiceResult = {
-        uid: 'firebase-uid-new',
-        email: 'newuser@example.com',
+      const mockServiceResponse = {
+        accessToken: 'a-very-long-access-token',
+        user: {
+          ...mockPrismaUser,
+          id: 'new-user-uuid',
+          email: registerData.email,
+          nickname: registerData.nickname,
+          username: registerData.nickname,
+          isOnboarded: false,
+        },
       };
 
       (authService.register as jest.Mock).mockResolvedValue(
-        expectedServiceResult,
+        mockServiceResponse,
       );
+
+      const expectedResponse = {
+        accessToken: mockServiceResponse.accessToken,
+        user: {
+          id: mockServiceResponse.user.id,
+          email: mockServiceResponse.user.email,
+          username: mockServiceResponse.user.username,
+          nickname: mockServiceResponse.user.nickname,
+          socialProvider: mockServiceResponse.user.socialProvider,
+          socialId: mockServiceResponse.user.socialId,
+          isPrivate: mockServiceResponse.user.isPrivate,
+          status: mockServiceResponse.user.status,
+          firebaseUid: mockServiceResponse.user.firebaseUid,
+          isOnboarded: mockServiceResponse.user.isOnboarded,
+          profileImageUrl: null,
+        },
+      };
 
       const res = await request(app.getHttpServer())
         .post('/auth/register')
@@ -184,7 +245,7 @@ describe('AuthController', () => {
         .expect(HttpStatus.CREATED);
 
       expect(authService.register).toHaveBeenCalledWith(registerData);
-      expect(res.body).toEqual(expectedServiceResult);
+      expect(res.body).toEqual(expectedResponse);
     });
 
     it('실패: 유효하지 않은 가입 데이터', async () => {

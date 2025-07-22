@@ -81,7 +81,7 @@ describe('TreeController (unit)', () => {
       
       expect(service.getTreesByLocation).toHaveBeenCalledWith(mockUserId, zoom, location);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
+      expect(mockResponse.json).toHaveBeenCalledWith({ items: expectedResult });
     });
   });
 
