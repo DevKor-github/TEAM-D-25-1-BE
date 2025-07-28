@@ -126,6 +126,7 @@ export class UserRepository {
       profileImageUrl: user.profileImageUrl,
       fcmToken: user.fcmToken,
       fcmTokenUpdatedAt: user.fcmTokenUpdatedAt,
+      lastWatered: user.lastWatered
     };
   }
 }

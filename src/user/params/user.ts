@@ -119,4 +119,8 @@ export class UserParam {
   @IsDate()
   @IsOptional()
   fcmTokenUpdatedAt?: Date;
+
+  @IsDate()
+  @IsOptional()
+  lastWatered?: Date;
 }
