@@ -144,23 +144,14 @@ export class TreeRepository {
     restaurantId: string,
     userId: string,
   ): Promise<TreeDetail | null> {
-    const tree = await this.prisma.savedRestaurant.findUnique({
-      where: {
-        userId_restaurantId: { userId: ownerId, restaurantId: restaurantId },
-      },
-      select: { recommendedByUsers: true },
-    });
-
-    if (!tree) {
-      return null;
-    }
-    /*
-    if (tree.recommendedByUsers.includes(userId))
-    */
-
     const updatedData = await this.prisma.savedRestaurant.update({
       where: {
         userId_restaurantId: { userId: ownerId, restaurantId: restaurantId },
+        /*
+        NOT: {
+          recommendedByUsers: { has: userId }
+        } 필터링 로직 수정 (쿼리 단순화)
+        */
       },
       data: {
         recommendedByUsers: { push: userId },
