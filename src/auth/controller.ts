@@ -22,6 +22,7 @@ import {
 } from './dto/authUser.dto';
 import { User as PrismaUser } from '@prisma/client';
 import { AccessTokenGuard } from './guards/access-token.guard';
+import { UserParam } from '@/user/params/user';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -52,12 +53,12 @@ export class AuthController {
   @Post('onboard')
   @UseGuards(AccessTokenGuard)
   async getOnboardingInfo(
-    @User('firebaseUid') userUid: string,
+    @User() user: UserParam,
     @Body() onboardingData: OnboardingInfoRequest,
   ): Promise<AuthUserResponse> {
     try {
       const result = await this.authService.completeOnboarding(
-        userUid,
+        user.firebaseUid,
         onboardingData,
       );
 
