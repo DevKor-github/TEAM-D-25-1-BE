@@ -18,6 +18,7 @@ describe('UpdateFcmTokenUseCase', () => {
     const param: UpdateFcmTokenParam = { fcmToken: 'new-fcm-token' };
     const expectedUser: UserParam = {
       id: userId,
+      firebaseUid: 'firebase-uid-1234',
       email: 'test@example.com',
       username: 'testuser',
       nickname: 'nickname',
