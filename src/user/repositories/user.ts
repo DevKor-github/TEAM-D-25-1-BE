@@ -115,6 +115,7 @@ export class UserRepository {
   private mapToUserParam(user: User): UserParam {
     return {
       id: user.id,
+      firebaseUid: user.firebaseUid,
       email: user.email,
       username: user.username,
       nickname: user.nickname,
