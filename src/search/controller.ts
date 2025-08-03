@@ -1,7 +1,13 @@
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SearchRestaurantUseCase } from './usecases/searchRestaurant';
 import { SearchUserUseCase } from './usecases/searchUser';
-import { Controller, Get, Query } from '@nestjs/common';
+import { 
+  Controller, 
+  DefaultValuePipe, 
+  Get, 
+  ParseIntPipe, 
+  Query 
+} from '@nestjs/common';
 import { SearchUserListResponse, SearchUserResponse } from './dto/searchUser';
 import SearchRestaurantResponse, {
   SearchRestaurantListResponse,
@@ -23,8 +29,8 @@ export class SearchController {
   })
   async searchUsers(
     @Query('query') query: string,
-    @Query('page') page: number,
-    @Query('per_page') perPage: number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('per_page', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
   ) {
     const result = await this.searchUserUseCase.execute(query, page, perPage);
     const items = result.map(SearchUserResponse.from);
@@ -41,8 +47,8 @@ export class SearchController {
   })
   async searchRestaurants(
     @Query('query') query: string,
-    @Query('page') page: number,
-    @Query('per_page') perPage: number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('per_page', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
   ) {
     const result = await this.searchRestaurantUseCase.execute(
       query,
