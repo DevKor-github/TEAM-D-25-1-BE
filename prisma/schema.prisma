@@ -118,6 +118,7 @@ model Restaurant {
   latitude  Float
   longitude Float
   createdAt DateTime          @default(now())
+  images    String[]
   savedBy   SavedRestaurant[]
 }
 
@@ -137,6 +138,7 @@ model SavedRestaurant {
   recommendedByUsers  String[]
   treeType            Int
   tag                 Tag[]
+  images              String[]
 
   @@id([userId,restaurantId])
 }
@@ -159,6 +161,12 @@ model Follower {
 
   @@id([userId, followerId])
   @@index([followerId]) 
+}
+
+model Images {
+  key         String
+  uploadedAt  DateTime  @default(now())
+  @@id([key])
 }
 
 model SearchRestaurantTag {
