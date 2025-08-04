@@ -86,6 +86,15 @@ export class PlantTreeDto {
     required: false,
   })
   tags?: Tag[];
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  @ApiProperty({
+    description: 'images 엔드포인트에서 받은 이미지 링크의 배열',
+    example: ['cloudfront-1234.com/sha256-hash.jpg',]
+  })
+  images: string[]
 }
 
 export class TreeDetailResponse {
@@ -162,6 +171,12 @@ export class TreeDetailResponse {
     example: 0,
   })
   recommendationCount: number;
+
+  @ApiProperty({
+    description: 'CloudFrontURL로 조합된 이미지 링크의 배열',
+    example: ['https://a1b2c3d4.cloudfront.net/review/sha-256-hash.jpg',]
+  })
+  images: string[]
 }
 
 export class TreeListResponse {
