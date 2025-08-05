@@ -1,12 +1,12 @@
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SearchRestaurantUseCase } from './usecases/searchRestaurant';
 import { SearchUserUseCase } from './usecases/searchUser';
-import { 
-  Controller, 
-  DefaultValuePipe, 
-  Get, 
-  ParseIntPipe, 
-  Query 
+import {
+  Controller,
+  DefaultValuePipe,
+  Get,
+  ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { SearchUserListResponse, SearchUserResponse } from './dto/searchUser';
 import SearchRestaurantResponse, {
