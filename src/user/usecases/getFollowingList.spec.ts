@@ -29,6 +29,7 @@ describe('GetFollowingListUseCase', () => {
   const mockUsers: UserParam[] = [
     {
       id: 'following1',
+      firebaseUid: 'firebase-uid-1234',
       email: 'following1@example.com',
       username: 'following1',
       nickname: 'Following 1',
@@ -38,6 +39,7 @@ describe('GetFollowingListUseCase', () => {
     },
     {
       id: 'following2',
+      firebaseUid: 'firebase-uid-1234',
       email: 'following2@example.com',
       username: 'following2',
       nickname: 'Following 2',

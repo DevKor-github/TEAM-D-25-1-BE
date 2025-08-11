@@ -80,6 +80,9 @@ export class UserParam {
   @IsString()
   id: string;
 
+  @IsString()
+  firebaseUid: string;
+
   @IsEmail()
   email: string;
 
@@ -119,4 +122,8 @@ export class UserParam {
   @IsDate()
   @IsOptional()
   fcmTokenUpdatedAt?: Date;
+
+  @IsDate()
+  @IsOptional()
+  lastWatered?: Date;
 }

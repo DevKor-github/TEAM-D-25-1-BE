@@ -3,9 +3,9 @@ import { ExecutionContext } from '@nestjs/common';
 import { TreeController } from './controller';
 import { TreeService } from './service';
 import { Coordinate, PlantTreeDto, TreeDetailResponse } from './dto';
-import { FirebaseAuthGuard } from '../auth/guards/firebase-auth.guard';
 import { Response } from 'express';
 import { Tag } from '@prisma/client';
+import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 
 const mockUserId = 'user-spicy-lover-1234';
 const mockOwnerId = 'owner-jjamppong-master-5678';
@@ -51,11 +51,11 @@ describe('TreeController (unit)', () => {
       controllers: [TreeController],
       providers: [{ provide: TreeService, useValue: mockTreeService }],
     })
-      .overrideGuard(FirebaseAuthGuard)
+      .overrideGuard(AccessTokenGuard)
       .useValue({
         canActivate: (context: ExecutionContext) => {
           const request = context.switchToHttp().getRequest();
-          request.user = { uid: mockUserId };
+          request.user = { id: mockUserId };
           return true;
         },
       })
@@ -81,7 +81,7 @@ describe('TreeController (unit)', () => {
       
       expect(service.getTreesByLocation).toHaveBeenCalledWith(mockUserId, zoom, location);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(expectedResult);
+      expect(mockResponse.json).toHaveBeenCalledWith({ items: expectedResult });
     });
   });
 

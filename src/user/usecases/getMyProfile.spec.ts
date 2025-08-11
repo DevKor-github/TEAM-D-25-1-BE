@@ -13,6 +13,7 @@ describe('GetMyProfileUseCase', () => {
 
   const mockUser: UserParam = {
     id: 'test-user-id',
+    firebaseUid: 'firebase-uid-1234',
     email: 'test@example.com',
     username: 'testuser',
     nickname: 'Test User',

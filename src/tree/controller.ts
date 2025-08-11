@@ -28,6 +28,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
+import { UserParam } from '@/user/params/user';
 
 @ApiTags('tree')
 @ApiBearerAuth()
@@ -65,10 +66,10 @@ export class TreeController {
   async getTreesByLocation(
     @Query() location: Coordinate,
     @Query() zoom: number,
-    @User('uid') user: any,
+    @User() user: UserParam,
     @Res() res: Response,
   ) {
-    const result = await this.tree.getTreesByLocation(user.id, zoom, location);
+    const result = await this.tree.getTreesByLocation(user, zoom, location);
     return res.status(HttpStatus.OK).json(TreeListResponse.from(result));
   }
 
@@ -87,10 +88,10 @@ export class TreeController {
   })
   async getTreeById(
     @Param('treeId') treeId: string,
-    @User('uid') user: any,
+    @User() user: UserParam,
     @Res() res: Response,
   ) {
-    const result = await this.tree.getTreeById(treeId, user.id);
+    const result = await this.tree.getTreeById(treeId, user.);
     return res.status(HttpStatus.OK).json(result);
   }
 
@@ -109,7 +110,7 @@ export class TreeController {
   })
   async getTreeByRestaurantId(
     @Param('restaurantId') restaurantId: string,
-    @User() user: any,
+    @User() user: UserParam,
     @Res() res: Response,
   ) {
     const result = await this.tree.getTreesByRestaurantId(
@@ -135,10 +136,10 @@ export class TreeController {
   @UseGuards(AccessTokenGuard)
   async waterTree(
     @Param('treeId') treeId: string,
-    @User('uid') userId: string,
+    @User() user: UserParam,
     @Res() res: Response,
   ) {
-    const result = await this.tree.waterTree(treeId, userId);
+    const result = await this.tree.waterTree(treeId, user);
     return res.status(HttpStatus.OK).json(result);
   }
 
@@ -153,7 +154,7 @@ export class TreeController {
   @UseGuards(AccessTokenGuard)
   async plantTree(
     @Body() plantTreeDto: PlantTreeDto,
-    @User() user: any,
+    @User() user: UserParam,
     @Res() res: Response,
   ) {
     const result = await this.tree.plantTree(plantTreeDto, user.id);
@@ -189,7 +190,7 @@ export class TreeController {
   @UseGuards(AccessTokenGuard)
   async getFollowers(
     @Query('restaurantId') restaurantId: string,
-    @User('uid') user: any,
+    @User() user: UserParam,
     @Res() res: Response,
   ) {
     const result = this.tree.getFollowersTree(user.id, restaurantId);

@@ -60,8 +60,8 @@ export class UserController {
     description: 'Get my profile',
     type: MyProfileResponseDto,
   })
-  async getMyProfile(@User() user: any, @Res() res: Response) {
-    const result = await this.getMyProfileUseCase.execute(user.id);
+  async getMyProfile(@User('id') userId: string, @Res() res: Response) {
+    const result = await this.getMyProfileUseCase.execute(userId);
     return res.status(HttpStatus.OK).json(result);
   }
 
@@ -145,13 +145,13 @@ export class UserController {
     type: FollowerListResponse,
   })
   async getPendingFollowerList(
-    @User() user: any,
+    @User('id') userId: string,
     @Query('per_page', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response,
   ) {
     const result = await this.getPendingFollowerListUseCase.execute(
-      user.id,
+      userId,
       perPage,
       page,
     );
@@ -167,13 +167,13 @@ export class UserController {
     type: FollowerListResponse,
   })
   async getFollowerList(
-    @User() user: any,
+    @User('id') userId: string,
     @Query('per_page', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Res() res: Response,
   ) {
     const result = await this.getFollowerListUseCase.execute(
-      user.id,
+      userId,
       perPage,
       page,
     );
@@ -188,11 +188,11 @@ export class UserController {
     type: UserParam,
   })
   async updateFcmToken(
-    @User() user: any,
+    @User('id') userId: string,
     @Body() body: UpdateFcmTokenDto,
     @Res() res: Response,
   ) {
-    const result = await this.updateFcmTokenUseCase.execute(user.id, body);
+    const result = await this.updateFcmTokenUseCase.execute(userId, body);
     return res.status(HttpStatus.OK).json(result);
   }
 
@@ -204,11 +204,11 @@ export class UserController {
     type: UserParam,
   })
   async updateProfileImage(
-    @User() user: any,
+    @User('id') userId: string,
     @Body() body: UpdateProfileImageDto,
     @Res() res: Response,
   ) {
-    const result = await this.updateProfileImageUseCase.execute(user.id, body);
+    const result = await this.updateProfileImageUseCase.execute(userId, body);
     return res.status(HttpStatus.OK).json(result);
   }
 }

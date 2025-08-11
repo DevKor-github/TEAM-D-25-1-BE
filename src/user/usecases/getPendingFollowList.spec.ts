@@ -28,6 +28,7 @@ describe('GetPendingFollowListUseCase', () => {
   const mockUsers = [
     {
       id: 'pendingUser1',
+      firebaseUid: 'firebase-uid-1234',
       email: 'pending1@example.com',
       username: 'pendingUser1',
       nickname: 'Pending User 1',
@@ -37,6 +38,7 @@ describe('GetPendingFollowListUseCase', () => {
     },
     {
       id: 'pendingUser2',
+      firebaseUid: 'firebase-uid-5678',
       email: 'pending2@example.com',
       username: 'pendingUser2',
       nickname: 'Pending User 2',

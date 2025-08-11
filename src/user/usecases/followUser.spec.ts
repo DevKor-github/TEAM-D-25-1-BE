@@ -4,14 +4,16 @@ import { FollowerRepository } from '../repositories/follower';
 import { UserRepository } from '../repositories/user';
 import { FollowerStatus } from '@prisma/client';
 import { ConflictException, ForbiddenException } from '@nestjs/common';
+import { UserParam } from '../params/user';
 
 describe('FollowUserUseCase', () => {
   let useCase: FollowUserUseCase;
   let followerRepository: jest.Mocked<FollowerRepository>;
   let userRepository: jest.Mocked<UserRepository>;
 
-  const mockUser = {
+  const mockUser: UserParam = {
     id: 'user1',
+    firebaseUid: 'firebase-uid-1234',
     email: 'user1@example.com',
     username: 'user1',
     nickname: 'User 1',
