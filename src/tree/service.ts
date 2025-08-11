@@ -158,7 +158,7 @@ export class TreeService {
 
     const newTree = await this.treeRepository.plantTree(plantTreeDto, userId);
     return {
-      treeId: newTree.id,
+      treeId: `${newTree.userId}_${newTree.restaurantId}`,
     };
   }
 

@@ -153,7 +153,7 @@ export class TreeController {
   @UseGuards(AccessTokenGuard)
   async plantTree(
     @Body() plantTreeDto: PlantTreeDto,
-    @User('uid') user: any,
+    @User() user: any,
     @Res() res: Response,
   ) {
     const result = await this.tree.plantTree(plantTreeDto, user.id);

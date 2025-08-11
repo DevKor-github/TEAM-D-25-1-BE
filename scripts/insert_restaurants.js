@@ -1,8 +1,15 @@
 const { PrismaClient } = require('@prisma/client');
 const fs = require('fs');
 const path = require('path');
+const { v7: uuid } = require('uuid');
+const Hangul = require('hangul-js');
 
 const prisma = new PrismaClient();
+
+function decomposeHangul(input) {
+  const cleaned = String(input || '').replace(/\s/g, '');
+  return Hangul.disassemble(cleaned).join('');
+}
 
 async function main() {
   // input.json 파일 경로 (프로젝트 루트 기준)
@@ -75,6 +82,27 @@ async function main() {
       console.log(
         `Upserted restaurant: ${result.name} (PlaceID: ${result.placeId})`,
       );
+
+      // 자모 분해된 식당명 태그 저장 (중복 방지)
+      try {
+        const tagName = decomposeHangul(result.name);
+        const existing = await prisma.searchRestaurantTag.findFirst({
+          where: { restaurantId: result.id, name: tagName },
+          select: { id: true },
+        });
+        if (!existing) {
+          await prisma.searchRestaurantTag.create({
+            data: { id: uuid(), restaurantId: result.id, name: tagName },
+          });
+          console.log(`  -> Created SearchRestaurantTag: ${tagName}`);
+        } else {
+          console.log(`  -> SearchRestaurantTag exists: ${tagName}`);
+        }
+      } catch (tagErr) {
+        console.error(
+          `  -> Failed to upsert SearchRestaurantTag: ${tagErr.message}`,
+        );
+      }
       upsertedCount++;
     } catch (error) {
       console.error(
