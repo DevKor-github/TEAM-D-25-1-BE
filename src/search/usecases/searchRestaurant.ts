@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SearchRestaurantTagRepository } from '../repositories/searchRestaurantTag';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
 import { RestaurantEntity } from '@/restaurant/entity';
+import { decomposeHangul } from '@/utils/search';
 
 @Injectable()
 export class SearchRestaurantUseCase {
@@ -17,8 +18,14 @@ export class SearchRestaurantUseCase {
     page: number,
     perPage: number,
   ): Promise<RestaurantEntity[]> {
+    const decomposedQuery = decomposeHangul(query);
+
     const restaurantIds: string[] =
-      await this.searchRestaurantRepository.getIdList(query, page, perPage);
+      await this.searchRestaurantRepository.getIdList(
+        decomposedQuery,
+        page,
+        perPage,
+      );
 
     const restaurants: RestaurantEntity[] =
       await this.restaurantRepository.getRestaurantsByIds(restaurantIds);

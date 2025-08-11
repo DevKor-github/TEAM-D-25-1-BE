@@ -91,7 +91,7 @@ export class TreeController {
     @User() user: UserParam,
     @Res() res: Response,
   ) {
-    const result = await this.tree.getTreeById(treeId, user);
+    const result = await this.tree.getTreeById(treeId, user.);
     return res.status(HttpStatus.OK).json(result);
   }
 
@@ -113,7 +113,10 @@ export class TreeController {
     @User() user: UserParam,
     @Res() res: Response,
   ) {
-    const result = await this.tree.getTreesByRestaurantId(restaurantId, user);
+    const result = await this.tree.getTreesByRestaurantId(
+      restaurantId,
+      user.id,
+    );
     return res.status(HttpStatus.OK).json(result);
   }
 
@@ -154,7 +157,7 @@ export class TreeController {
     @User() user: UserParam,
     @Res() res: Response,
   ) {
-    const result = await this.tree.plantTree(plantTreeDto, user);
+    const result = await this.tree.plantTree(plantTreeDto, user.id);
     return res.status(HttpStatus.CREATED).json(result);
   }
 
@@ -190,7 +193,7 @@ export class TreeController {
     @User() user: UserParam,
     @Res() res: Response,
   ) {
-    const result = this.tree.getFollowersTree(user, restaurantId);
+    const result = this.tree.getFollowersTree(user.id, restaurantId);
     return res.status(HttpStatus.OK).json(result);
   }
 }

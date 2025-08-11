@@ -44,6 +44,9 @@ importers:
       firebase-admin:
         specifier: ^13.3.0
         version: 13.4.0
+      hangul-js:
+        specifier: ^0.2.6
+        version: 0.2.6
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -2429,6 +2432,9 @@ packages:
   gtoken@7.1.0:
     resolution: {integrity: sha512-pCcEwRi+TKpMlxAQObHDQ56KawURgyAf6jtIY046fJ5tIv3zDe/LEIubckAO8fj6JnAxLdmWkUfNyulQ2iKdEw==}
     engines: {node: '>=14.0.0'}
+
+  hangul-js@0.2.6:
+    resolution: {integrity: sha512-48axU8LgjCD30FEs66Xc04/8knxMwCMQw0f67l67rlttW7VXT3qRJgQeHmhiuGwWXGvSbk6YM0fhQlcjE1JFQA==}
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -7033,6 +7039,8 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  hangul-js@0.2.6: {}
 
   has-flag@4.0.0: {}
 
