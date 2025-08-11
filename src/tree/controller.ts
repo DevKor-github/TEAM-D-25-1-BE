@@ -87,10 +87,10 @@ export class TreeController {
   })
   async getTreeById(
     @Param('treeId') treeId: string,
-    @User('uid') userId: string,
+    @User('uid') user: any,
     @Res() res: Response,
   ) {
-    const result = await this.tree.getTreeById(treeId, userId);
+    const result = await this.tree.getTreeById(treeId, user.id);
     return res.status(HttpStatus.OK).json(result);
   }
 
@@ -109,10 +109,13 @@ export class TreeController {
   })
   async getTreeByRestaurantId(
     @Param('restaurantId') restaurantId: string,
-    @User('uid') userId: string,
+    @User() user: any,
     @Res() res: Response,
   ) {
-    const result = await this.tree.getTreesByRestaurantId(restaurantId, userId);
+    const result = await this.tree.getTreesByRestaurantId(
+      restaurantId,
+      user.id,
+    );
     return res.status(HttpStatus.OK).json(result);
   }
 
@@ -150,10 +153,10 @@ export class TreeController {
   @UseGuards(AccessTokenGuard)
   async plantTree(
     @Body() plantTreeDto: PlantTreeDto,
-    @User('uid') userId: string,
+    @User('uid') user: any,
     @Res() res: Response,
   ) {
-    const result = await this.tree.plantTree(plantTreeDto, userId);
+    const result = await this.tree.plantTree(plantTreeDto, user.id);
     return res.status(HttpStatus.CREATED).json(result);
   }
 
@@ -186,10 +189,10 @@ export class TreeController {
   @UseGuards(AccessTokenGuard)
   async getFollowers(
     @Query('restaurantId') restaurantId: string,
-    @User('uid') userId: string,
+    @User('uid') user: any,
     @Res() res: Response,
   ) {
-    const result = this.tree.getFollowersTree(userId, restaurantId);
+    const result = this.tree.getFollowersTree(user.id, restaurantId);
     return res.status(HttpStatus.OK).json(result);
   }
 }

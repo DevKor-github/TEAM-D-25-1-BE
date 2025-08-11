@@ -129,7 +129,7 @@ model SavedRestaurant {
   restaurantId        String
 
   description         String?
-  review              String?
+  review              String? // 한 줄 리뷰
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
   recommendedByUsers  String[]
