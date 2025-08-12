@@ -25,6 +25,7 @@ const mockTreeDetailResponse: TreeDetailResponse = {
   createdAt: new Date('2025-07-16T12:00:00Z'),
   updatedAt: new Date('2025-07-16T12:00:00Z'),
   recommendationCount: 1,
+  images: []
 };
 
 describe('TreeController (unit)', () => {
@@ -117,6 +118,7 @@ describe('TreeController (unit)', () => {
         tags: [Tag.SPICY_FOOD_LOVER, Tag.LATE_NIGHT_EATER],
         review: '최고의 야식!',
         description: '역시 떡볶이는 엽떡이지',
+        images: []
       };
       const expectedResult = { treeId: `${mockUserId}_${mockRestaurantId}` };
       (service.plantTree as jest.Mock).mockResolvedValue(expectedResult);

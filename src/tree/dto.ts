@@ -67,13 +67,13 @@ export class PlantTreeDto {
   @MaxLength(50)
   review: string;
 
-  @ApiProperty({
-    description: '상세평 (300자 이내)',
-    example: '특이한 향이 입혀져있어요~',
-  })
-  @IsString()
-  @MaxLength(300)
-  description: string;
+  // @ApiProperty({
+  //   description: '상세평 (300자 이내)',
+  //   example: '특이한 향이 입혀져있어요~',
+  // })
+  // @IsString()
+  // @MaxLength(300)
+  // description: string;
 
   @IsOptional()
   @IsArray()
@@ -86,6 +86,15 @@ export class PlantTreeDto {
     required: false,
   })
   tags?: Tag[];
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  @ApiProperty({
+    description: 'images 엔드포인트에서 받은 이미지 URL',
+    example: ['https://cloudfront-1234.com/sha256-hash.jpg'],
+  })
+  images: string[];
 }
 
 export class TreeDetailResponse {
@@ -131,11 +140,11 @@ export class TreeDetailResponse {
   })
   review: string;
 
-  @ApiProperty({
-    description: '추가 설명',
-    example: '버크셔K 특로스시켜야함',
-  })
-  description: string;
+  // @ApiProperty({
+  //   description: '추가 설명',
+  //   example: '버크셔K 특로스시켜야함',
+  // })
+  // description: string;
 
   @ApiProperty({
     description: '태그 목록',
@@ -162,6 +171,12 @@ export class TreeDetailResponse {
     example: 0,
   })
   recommendationCount: number;
+
+  @ApiProperty({
+    description: 'CloudFrontURL로 조합된 이미지 링크의 배열',
+    example: ['https://a1b2c3d4.cloudfront.net/review/sha-256-hash.jpg'],
+  })
+  images: string[];
 }
 
 export class TreeListResponse {

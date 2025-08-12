@@ -36,6 +36,7 @@ const mockTreeDetail: TreeDetail = {
     recommendedByUsers: [mockUserId],
     treeType: 4, // 단풍나무 씨앗
     tag: [Tag.SPICY_FOOD_LOVER, Tag.LATE_NIGHT_EATER],
+    images: []
   },
 };
 
@@ -52,6 +53,7 @@ const mockTreeDetailResponse: TreeDetailResponse = {
   createdAt: new Date('2025-07-16T12:00:00Z'),
   updatedAt: new Date('2025-07-16T12:00:00Z'),
   recommendationCount: 1,
+  images: []
 };
 
 describe('TreeService (unit)', () => {
@@ -172,10 +174,30 @@ describe('TreeService (unit)', () => {
       await expect(service.plantTree(plantTreeDto, mockUserId)).rejects.toThrow(NotFoundException);
     });
 
-    it('이미 나무가 심겨 있으면 ConflictException을 던져야 함', async () => {
+    it('이미 나무가 심어져 있으면 ConflictException을 던져야 함', async () => {
       jest.spyOn(prisma.restaurant, 'findUnique').mockResolvedValue({} as any);
       jest.spyOn(prisma.savedRestaurant, 'findUnique').mockResolvedValue({} as any);
       await expect(service.plantTree(plantTreeDto, mockUserId)).rejects.toThrow(ConflictException);
+    });
+    
+    it('유효하지 않은 이미지가 포함된 경우 BadRequestException을 던져야 함', async () => {
+      const dtoWithInvalidImages: PlantTreeDto = {
+        ...plantTreeDto,
+        images: ['valid-key-1', 'invalid-key-2'],
+      };
+      jest.spyOn(prisma.images, 'findMany').mockResolvedValue([{ key: 'valid-key-1', uploadedAt: new Date() }]);
+      jest.spyOn(prisma.restaurant, 'findUnique').mockResolvedValue({} as any);
+      jest.spyOn(prisma.savedRestaurant, 'findUnique').mockResolvedValue(null);
+      
+      await expect(service.plantTree(dtoWithInvalidImages, mockUserId)).rejects.toThrow(
+        BadRequestException,
+      );
+      expect(prisma.images.findMany).toHaveBeenCalledWith({
+        where: {
+          key: { in: dtoWithInvalidImages.images },
+        },
+        select: { key: true },
+      });
     });
   });
 

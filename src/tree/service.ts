@@ -10,10 +10,15 @@ import { Coordinate, PlantTreeDto, TreeDetailResponse } from './dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { TreeDetail } from './types';
 import { UserParam } from '@/user/params/user';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import config from '@/config';
 
 const toTreeDetailResponse = (detail: TreeDetail): TreeDetailResponse => {
   if (!detail.tree || !detail.restaurant) return null;
+
+  const images = (detail.tree.images ?? []).map(
+    (key) => `https://${config().s3.cloudfrontUrl}/${key}`,
+  );
+
   return {
     treeId: `${detail.tree.userId}_${detail.tree.restaurantId}`,
     name: detail.restaurant.name,
@@ -22,11 +27,11 @@ const toTreeDetailResponse = (detail: TreeDetail): TreeDetailResponse => {
     longitude: String(detail.restaurant.longitude),
     treeType: detail.tree.treeType,
     review: detail.tree.review,
-    description: detail.tree.description,
     tags: detail.tree.tag,
     createdAt: detail.tree.createdAt,
     updatedAt: detail.tree.updatedAt,
     recommendationCount: detail.tree.recommendedByUsers.length,
+    images,
   };
 };
 
@@ -115,8 +120,11 @@ export class TreeService {
     return treeDatas.map(toTreeDetailResponse);
   }
 
-  async waterTree(treeId: string, user: UserParam): Promise<TreeDetailResponse> {
-    const lastWatered = user.lastWatered || new Date(0)
+  async waterTree(
+    treeId: string,
+    user: UserParam,
+  ): Promise<TreeDetailResponse> {
+    const lastWatered = user.lastWatered || new Date(0);
 
     if (Date.now() - lastWatered.getTime() < 4 * 60 * 60 * 1000) {
       throw new BadRequestException({
@@ -141,18 +149,33 @@ export class TreeService {
     plantTreeDto: PlantTreeDto,
     user: UserParam,
   ): Promise<{ treeId: string }> {
-    try{
-      const newTree = await this.treeRepository.plantTree(plantTreeDto, user.id);
-      return {
-        treeId: `${newTree.userId}_${newTree.restaurantId}`,
-      };
-    } catch(err) {
-      if (err instanceof PrismaClientKnownRequestError){
-        if (err.code === 'P2002') throw new ConflictException("이미 나무를 심은 식당입니다.")
-        if (err.code === 'P2003') throw new NotFoundException("해당 ID의 식당을 찾을 수 없습니다.")
-      }
-      throw err
-    }
+    const { restaurantId, images } = plantTreeDto;
+
+    const restaurant = await this.prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+    });
+    if (!restaurant)
+      throw new NotFoundException('존재하지 않는 Restaurant입니다.');
+
+    const existingTree = await this.prisma.savedRestaurant.findUnique({
+      where: { userId_restaurantId: { userId: user.id, restaurantId } },
+    });
+    if (existingTree)
+      throw new ConflictException('이미 나무를 심은 Restaurant입니다.');
+
+    const savableImages = this.stripImageUrlPrefix(images);
+
+    const newTree = await this.treeRepository.plantTree(
+      {
+        ...plantTreeDto,
+        images: savableImages,
+      },
+      user.id,
+    );
+
+    return {
+      treeId: `${newTree.userId}_${newTree.restaurantId}`,
+    };
   }
 
   async getRecommendations(): Promise<TreeDetailResponse[]> {
@@ -161,4 +184,28 @@ export class TreeService {
     const recommendations = await this.treeRepository.getRecommendations();
     return recommendations.map(toTreeDetailResponse);
   }
+
+  stripImageUrlPrefix(urlList: string[]): string[] {
+    return urlList.map((url) =>
+      url.replace(`https://${config().s3.cloudfrontUrl}/`, ''),
+    );
+  }
+
+  // private async validateImages(keys: string[]): Promise<void> {
+  //   const foundKeys = await this.prisma.images.findMany({
+  //     where: {
+  //       key: { in: keys },
+  //     },
+  //     select: { key: true },
+  //   });
+  //   if (foundKeys.length === keys.length) return;
+
+  //   const foundKeysSet = new Set(foundKeys.map((e) => e.key));
+  //   const missing = keys.filter((key) => !foundKeysSet.has(key));
+
+  //   throw new BadRequestException({
+  //     message: `key에 해당하는 이미지가 없습니다. ${missing.join(', ')}`,
+  //     missingImages: missing,
+  //   });
+  // }
 }
