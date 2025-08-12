@@ -118,7 +118,6 @@ model Restaurant {
   latitude  Float
   longitude Float
   createdAt DateTime          @default(now())
-  images    String[]
   savedBy   SavedRestaurant[]
 }
 
@@ -131,8 +130,7 @@ model SavedRestaurant {
   restaurant          Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId        String
 
-  review              String? // 한 줄 리뷰
-  description         String?
+  review              String?
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
   recommendedByUsers  String[]
@@ -143,15 +141,6 @@ model SavedRestaurant {
   @@id([userId,restaurantId])
 }
 
-model SavedRestaurantImages {
-  id String @db.Uuid @id
-
-  // SavedRestaurantId
-  restaurantId String @db.Uuid
-  userId String @db.Uuid
-
-  imageUri String
-}
 
 model Follower {
   userId     String @db.Uuid 
@@ -161,12 +150,6 @@ model Follower {
 
   @@id([userId, followerId])
   @@index([followerId]) 
-}
-
-model Images {
-  key         String
-  uploadedAt  DateTime  @default(now())
-  @@id([key])
 }
 
 model SearchRestaurantTag {

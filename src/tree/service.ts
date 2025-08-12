@@ -27,7 +27,6 @@ const toTreeDetailResponse = (detail: TreeDetail): TreeDetailResponse => {
     longitude: String(detail.restaurant.longitude),
     treeType: detail.tree.treeType,
     review: detail.tree.review,
-    description: detail.tree.description,
     tags: detail.tree.tag,
     createdAt: detail.tree.createdAt,
     updatedAt: detail.tree.updatedAt,
@@ -164,9 +163,15 @@ export class TreeService {
     if (existingTree)
       throw new ConflictException('이미 나무를 심은 Restaurant입니다.');
 
-    if (images && images.length > 0) await this.validateImages(images);
+    const savableImages = this.stripImageUrlPrefix(images);
 
-    const newTree = await this.treeRepository.plantTree(plantTreeDto, user.id);
+    const newTree = await this.treeRepository.plantTree(
+      {
+        ...plantTreeDto,
+        images: savableImages,
+      },
+      user.id,
+    );
     return {
       treeId: `${newTree.userId}_${newTree.restaurantId}`,
     };
@@ -179,21 +184,27 @@ export class TreeService {
     return recommendations.map(toTreeDetailResponse);
   }
 
-  private async validateImages(keys: string[]): Promise<void> {
-    const foundKeys = await this.prisma.images.findMany({
-      where: {
-        key: { in: keys },
-      },
-      select: { key: true },
-    });
-    if (foundKeys.length === keys.length) return;
-
-    const foundKeysSet = new Set(foundKeys.map((e) => e.key));
-    const missing = keys.filter((key) => !foundKeysSet.has(key));
-
-    throw new BadRequestException({
-      message: `key에 해당하는 이미지가 없습니다. ${missing.join(', ')}`,
-      missingImages: missing,
-    });
+  stripImageUrlPrefix(urlList: string[]): string[] {
+    return urlList.map((url) =>
+      url.replace(`https://${config().s3.cloudfrontUrl}/`, ''),
+    );
   }
+
+  // private async validateImages(keys: string[]): Promise<void> {
+  //   const foundKeys = await this.prisma.images.findMany({
+  //     where: {
+  //       key: { in: keys },
+  //     },
+  //     select: { key: true },
+  //   });
+  //   if (foundKeys.length === keys.length) return;
+
+  //   const foundKeysSet = new Set(foundKeys.map((e) => e.key));
+  //   const missing = keys.filter((key) => !foundKeysSet.has(key));
+
+  //   throw new BadRequestException({
+  //     message: `key에 해당하는 이미지가 없습니다. ${missing.join(', ')}`,
+  //     missingImages: missing,
+  //   });
+  // }
 }
