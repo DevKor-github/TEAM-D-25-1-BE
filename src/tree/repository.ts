@@ -169,17 +169,16 @@ export class TreeRepository {
     plantTreeDto: PlantTreeDto,
     userId: string,
   ): Promise<SavedRestaurant> {
-    const { restaurantId, treeType, review, description, tags, images } = plantTreeDto;
+    const { restaurantId, treeType, review, tags, images } = plantTreeDto;
 
     return await this.prisma.savedRestaurant.create({
       data: {
         userId,
         restaurantId,
         treeType,
-        description,
         review,
         tag: tags,
-        images
+        images,
       },
     });
   }

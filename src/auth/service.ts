@@ -11,11 +11,12 @@ import * as admin from 'firebase-admin';
 import { OnboardingInfoRequest } from './dto/onboarding.dto';
 import { RegisterRequest } from './dto/register.dto';
 import { SocialLoginDto } from './dto/social-login.dto';
-import { SocialProvider, User } from '@prisma/client';
+import { FollowerStatus, SocialProvider, User } from '@prisma/client';
 import { FirebaseLoginResponseDto } from './dto/authUser.dto';
 import { sign as signJwt } from '../auth/libs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as jwt from 'jsonwebtoken';
+import { INSTRUCTION_USER } from '@/consts';
 
 @Injectable()
 export class AuthService {
@@ -28,6 +29,35 @@ export class AuthService {
   private generateJwtToken(uid: string): string {
     const secret = this.configService.get<string>('jwt.secret');
     return signJwt({ uid }, secret);
+  }
+
+  private async createUserFromFirebase(
+    firebaseUid: string,
+    email: string,
+    displayName: string | null,
+    providerType?: SocialProvider,
+  ): Promise<User> {
+    const user = await this.prismaService.user.create({
+      data: {
+        firebaseUid,
+        email,
+        username: `user_${firebaseUid.slice(0, 8)}`,
+        nickname: displayName || '',
+        isOnboarded: false,
+        socialProvider: providerType,
+      },
+    });
+
+    // force follow instruction user
+    await this.prismaService.follower.create({
+      data: {
+        userId: user.id,
+        followerId: INSTRUCTION_USER,
+        status: FollowerStatus.ACCEPTED,
+      },
+    });
+
+    return user;
   }
 
   async validateUser(decoded: FirebaseInformation) {
@@ -125,16 +155,12 @@ export class AuthService {
         const displayName = fbUser.displayName;
         if (!email)
           throw new UnauthorizedException('이메일이 없는 계정입니다.');
-        user = await this.prismaService.user.create({
-          data: {
-            firebaseUid,
-            email,
-            username: `user_${firebaseUid.slice(0, 8)}`,
-            nickname: displayName || '',
-            isOnboarded: false,
-            socialProvider: providerType,
-          },
-        });
+        user = await this.createUserFromFirebase(
+          firebaseUid,
+          email,
+          displayName,
+          providerType,
+        );
         const accessToken = this.generateJwtToken(user.id);
         return { accessToken, user };
       }
