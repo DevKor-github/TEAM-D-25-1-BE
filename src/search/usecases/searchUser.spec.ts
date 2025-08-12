@@ -11,6 +11,7 @@ describe('SearchUserUseCase', () => {
 
   const mockUserParam: UserParam = {
     id: 'user-1',
+    firebaseUid: 'firebase-uid-1',
     email: 'test@example.com',
     username: 'testuser',
     nickname: 'Test User',
@@ -23,6 +24,7 @@ describe('SearchUserUseCase', () => {
 
   const mockUserParam2: UserParam = {
     id: 'user-2',
+    firebaseUid: 'firebase-uid-2',
     email: 'test2@example.com',
     username: 'testuser2',
     nickname: 'Test User 2',
