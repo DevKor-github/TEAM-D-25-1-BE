@@ -172,6 +172,7 @@ export class TreeService {
       },
       user.id,
     );
+
     return {
       treeId: `${newTree.userId}_${newTree.restaurantId}`,
     };
