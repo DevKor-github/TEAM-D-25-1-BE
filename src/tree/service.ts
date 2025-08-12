@@ -159,7 +159,7 @@ export class TreeService {
       throw new NotFoundException('존재하지 않는 Restaurant입니다.');
 
     const existingTree = await this.prisma.savedRestaurant.findUnique({
-      where: { userId_restaurantId: { userId, restaurantId } },
+      where: { userId_restaurantId: { userId: user.id, restaurantId } },
     });
     if (existingTree)
       throw new ConflictException('이미 나무를 심은 Restaurant입니다.');
