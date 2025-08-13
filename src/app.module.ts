@@ -13,6 +13,7 @@ import { NotificationModule } from './notification/module';
 import { FirebaseModule } from './firebase.module';
 import { ImagesModule } from './images/module';
 import { LoggerMiddleware } from './logger.middleware';
+import { SettingsModule } from './settings/module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { LoggerMiddleware } from './logger.middleware';
     SearchModule,
     NotificationModule,
     ImagesModule,
+    SettingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
