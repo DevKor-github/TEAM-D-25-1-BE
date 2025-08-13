@@ -64,21 +64,21 @@ async function main() {
 
     try {
       const result = await prisma.restaurant.upsert({
-        where: { placeId: restaurant.naver_place_id }, // 고유 식별자인 placeId (JSON의 id 필드 사용)
+        where: { placeId: restaurant.naver_place_id.toString() }, // 고유 식별자인 placeId (JSON의 id 필드 사용)
         update: {
           name: restaurant.name,
           address: restaurant.address, // 도로명 주소 사용
           latitude: restaurant.lat, // 문자열 좌표를 숫자로 변환
           longitude: restaurant.lon, // 문자열 좌표를 숫자로 변환
-          tags: restaurant.tags || []
+          tags: restaurant.tags || [],
         },
         create: {
-          placeId: restaurant.naver_place_id,
+          placeId: restaurant.naver_place_id.toString(),
           name: restaurant.name,
           address: restaurant.address,
           latitude: restaurant.lat,
           longitude: restaurant.lon,
-          tags: restaurant.tags || []
+          tags: restaurant.tags || [],
         },
       });
       console.log(
@@ -106,38 +106,42 @@ async function main() {
         );
       }
 
-      const tagsToProcess = new Set()
+      const tagsToProcess = new Set();
 
-      if (Array.isArray(restaurant.tags)){
-        restaurant.tags.foreach(tag => {
-          if (typeof tag === 'string' && tag.length > 0){
-            tagsToProcess.add(tag)
+      if (Array.isArray(restaurant.tags)) {
+        restaurant.tags.forEach((tag) => {
+          if (typeof tag === 'string' && tag.length > 0) {
+            tagsToProcess.add(tag);
           }
-        })
+        });
       }
-      for (const tag of tagsToProcess){
+      for (const tag of tagsToProcess) {
         try {
-          const tagName = decomposeHangul(tag)
-          const existingTag = await prisma.searchRestaurantTag.FindFirst({
+          const tagName = decomposeHangul(tag);
+          const existingTag = await prisma.searchRestaurantTag.findFirst({
             where: {
-              restaurant: result.id,
-              name: tagName
-            }
-          })
+              restaurantId: result.id,
+              name: tagName,
+            },
+          });
 
-          if (!existingTag){
+          if (!existingTag) {
             await prisma.searchRestaurantTag.create({
               data: {
                 id: uuid(),
                 restaurantId: result.id,
-                name: tagName
-              }
-            })
-            console.log(`  -> Created search tag: ${tagName} (from: ${tag})`)
-          } else console.log(`  -> Search tag already exists: ${tagName} (from: ${tag})`);
-          
-        } catch(tagErr){
-          console.error(`  -> Failed to process tag '${tag}': ${tagErr.message}`);
+                name: tagName,
+              },
+            });
+            console.log(`  -> Created search tag: ${tagName} (from: ${tag})`);
+          } else
+            console.log(
+              `  -> Search tag already exists: ${tagName} (from: ${tag})`,
+            );
+        } catch (tagErr) {
+          console.error(
+            `  -> Failed to process tag '${tag}': ${tagErr.message}`,
+          );
         }
       }
 

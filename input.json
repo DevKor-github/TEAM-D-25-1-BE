@@ -1,296 +1,2170 @@
 [
-    {
-        "address_name": "서울 성북구 안암동2가 118-2",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 한식 > 찌개,전골",
-        "distance": "",
-        "id": "1252583290",
-        "phone": "02-926-4472",
-        "place_name": "양지식당",
-        "place_url": "http://place.map.kakao.com/1252583290",
-        "road_address_name": "서울 성북구 고려대로 47",
-        "x": "127.02478393313",
-        "y": "37.5864922386121"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 100-4",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 양식 > 스테이크,립",
-        "distance": "",
-        "id": "125113828",
-        "phone": "02-924-8525",
-        "place_name": "달링스테이크 고려대가족점",
-        "place_url": "http://place.map.kakao.com/125113828",
-        "road_address_name": "서울 성북구 고려대로27길 9",
-        "x": "127.029813160414",
-        "y": "37.5867253336568"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 15-37",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 아시아음식 > 동남아음식 > 베트남음식",
-        "distance": "",
-        "id": "1268519146",
-        "phone": "070-7612-8151",
-        "place_name": "꽌부이",
-        "place_url": "http://place.map.kakao.com/1268519146",
-        "road_address_name": "서울 성북구 고려대로27길 28",
-        "x": "127.029879289892",
-        "y": "37.587596576936"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 15-32",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 일식",
-        "distance": "",
-        "id": "2040703324",
-        "phone": "",
-        "place_name": "특별식당 안암점",
-        "place_url": "http://place.map.kakao.com/2040703324",
-        "road_address_name": "서울 성북구 개운사길 22-6",
-        "x": "127.02965274330882",
-        "y": "37.58733804915587"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 15-80",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 양식 > 이탈리안",
-        "distance": "",
-        "id": "1030080486",
-        "phone": "",
-        "place_name": "효이당",
-        "place_url": "http://place.map.kakao.com/1030080486",
-        "road_address_name": "서울 성북구 고려대로27길 30-2",
-        "x": "127.029845349553",
-        "y": "37.5876623579888"
-    },
-    {
-        "address_name": "서울 동대문구 제기동 137-5",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 한식",
-        "distance": "",
-        "id": "77468335",
-        "phone": "02-929-0804",
-        "place_name": "연한담",
-        "place_url": "http://place.map.kakao.com/77468335",
-        "road_address_name": "서울 동대문구 안암로24길 14",
-        "x": "127.035784139239",
-        "y": "37.5882679760215"
-    },
-    {
-        "address_name": "서울 동대문구 청량리동 773",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 한식",
-        "distance": "",
-        "id": "18829150",
-        "phone": "02-969-4403",
-        "place_name": "광주식당",
-        "place_url": "http://place.map.kakao.com/18829150",
-        "road_address_name": "서울 동대문구 경동시장로2길 49-4",
-        "x": "127.04378449408145",
-        "y": "37.580562689108845"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 93-15",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 일식 > 돈까스,우동",
-        "distance": "",
-        "id": "831914070",
-        "phone": "070-4642-9882",
-        "place_name": "돈까스발전소",
-        "place_url": "http://place.map.kakao.com/831914070",
-        "road_address_name": "서울 성북구 고려대로28길 2",
-        "x": "127.030263643901",
-        "y": "37.5861125438638"
-    },
-    {
-        "address_name": "서울 동대문구 제기동 137-30",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 한식",
-        "distance": "",
-        "id": "938818825",
-        "phone": "02-2039-0988",
-        "place_name": "미식본좌",
-        "place_url": "http://place.map.kakao.com/938818825",
-        "road_address_name": "서울 동대문구 제기로5길 46",
-        "x": "127.035606376535",
-        "y": "37.5882626238227"
-    },
-    {
-        "address_name": "서울 성북구 종암동 23-29",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 일식",
-        "distance": "",
-        "id": "614426999",
-        "phone": "",
-        "place_name": "맛식당연어랑",
-        "place_url": "http://place.map.kakao.com/614426999",
-        "road_address_name": "서울 성북구 북악산로31길 35",
-        "x": "127.03485841206397",
-        "y": "37.594060731484525"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 12-74",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 일식 > 돈까스,우동",
-        "distance": "",
-        "id": "850808804",
-        "phone": "",
-        "place_name": "행운돈가스 고대점",
-        "place_url": "http://place.map.kakao.com/850808804",
-        "road_address_name": "서울 성북구 고려대로27길 14-4",
-        "x": "127.03000699420735",
-        "y": "37.58700729528912"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 93-15",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 일식",
-        "distance": "",
-        "id": "927297064",
-        "phone": "02-6326-1055",
-        "place_name": "야마토텐동",
-        "place_url": "http://place.map.kakao.com/927297064",
-        "road_address_name": "서울 성북구 고려대로28길 2",
-        "x": "127.030225143356",
-        "y": "37.5860981378418"
-    },
-    {
-        "address_name": "서울 동대문구 제기동 137-46",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 일식 > 돈까스,우동",
-        "distance": "",
-        "id": "24529027",
-        "phone": "02-953-6592",
-        "place_name": "고래돈가스 고대점",
-        "place_url": "http://place.map.kakao.com/24529027",
-        "road_address_name": "서울 동대문구 안암로 154",
-        "x": "127.035044836056",
-        "y": "37.5883600990759"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 15-53",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 일식 > 돈까스,우동",
-        "distance": "",
-        "id": "395796193",
-        "phone": "02-927-7749",
-        "place_name": "이세돈가스 고려대점",
-        "place_url": "http://place.map.kakao.com/395796193",
-        "road_address_name": "서울 성북구 개운사길 32",
-        "x": "127.029437799665",
-        "y": "37.5877885993072"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 15-64",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 일식",
-        "distance": "",
-        "id": "2073306137",
-        "phone": "0503-7150-6138",
-        "place_name": "일월의제면소",
-        "place_url": "http://place.map.kakao.com/2073306137",
-        "road_address_name": "서울 성북구 개운사길 41-3",
-        "x": "127.029016775725",
-        "y": "37.5882085661189"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 101-28",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 분식",
-        "distance": "",
-        "id": "13086789",
-        "phone": "02-953-3394",
-        "place_name": "고른햇살",
-        "place_url": "http://place.map.kakao.com/13086789",
-        "road_address_name": "서울 성북구 개운사길 14",
-        "x": "127.02944654687776",
-        "y": "37.587000228483895"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 146-12",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 술집",
-        "distance": "",
-        "id": "854685664",
-        "phone": "010-9289-4279",
-        "place_name": "탐관오리",
-        "place_url": "http://place.map.kakao.com/854685664",
-        "road_address_name": "서울 성북구 고려대로22길 6-2",
-        "x": "127.02868984782",
-        "y": "37.5860048177196"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 86-5",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 한식",
-        "distance": "",
-        "id": "2074141616",
-        "phone": "02-929-4838",
-        "place_name": "나그네파전",
-        "place_url": "http://place.map.kakao.com/2074141616",
-        "road_address_name": "서울 성북구 고려대로28길 7-4",
-        "x": "127.03075040729821",
-        "y": "37.5859141996152"
-    },
-    {
-        "address_name": "서울 동대문구 제기동 140-3",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 한식",
-        "distance": "",
-        "id": "16529587",
-        "phone": "02-921-3626",
-        "place_name": "형제집",
-        "place_url": "http://place.map.kakao.com/16529587",
-        "road_address_name": "서울 동대문구 제기로6길 12",
-        "x": "127.03440171795938",
-        "y": "37.5858771522245"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 104-153",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 한식 > 냉면",
-        "distance": "",
-        "id": "712735216",
-        "phone": "",
-        "place_name": "짱가네돈냉면",
-        "place_url": "http://place.map.kakao.com/712735216",
-        "road_address_name": "서울 성북구 안암로 73-9",
-        "x": "127.0288246656183",
-        "y": "37.58329279549974"
-    },
-    {
-        "address_name": "서울 성북구 안암동5가 147-9",
-        "category_group_code": "FD6",
-        "category_group_name": "음식점",
-        "category_name": "음식점 > 한식 > 냉면",
-        "distance": "",
-        "id": "10501014",
-        "phone": "02-929-4610",
-        "place_name": "서울쌈냉면 고대점",
-        "place_url": "http://place.map.kakao.com/10501014",
-        "road_address_name": "서울 성북구 개운사길 21-4",
-        "x": "127.028871568485",
-        "y": "37.5874787976777"
-    }
+  {
+    "naver_place_id": "18240900",
+    "name": "고려성",
+    "tags": ["중식당"],
+    "phone": "02-923-9577",
+    "address": "서울 성북구 안암로 69-1 대성빌딩 2층 고려성",
+    "images": [
+      "aeb6fed242df6b4f10279e46d48ca4c6b18559ba108e8a2da7a35351cbe2da7f.jpg",
+      "aeb6fed242df6b4f10279e46d48ca4c6b18559ba108e8a2da7a35351cbe2da7f.jpg",
+      "7d78377166f8b7a301affef6517ec04d71608cf4c23efa0a57d31656268dd81b.jpg",
+      "aeb6fed242df6b4f10279e46d48ca4c6b18559ba108e8a2da7a35351cbe2da7f.jpg",
+      "7d78377166f8b7a301affef6517ec04d71608cf4c23efa0a57d31656268dd81b.jpg",
+      "a1d2b031da42db05b1070019694754580c7210453c2fc1014112e8c7890dc516.jpg"
+    ],
+    "lat": 37.5826556929093,
+    "lon": 127.028866196141
+  },
+  {
+    "naver_place_id": "36650062",
+    "name": "니뽕내뽕 고려대점",
+    "tags": ["중식당"],
+    "phone": "070-7722-2848",
+    "address": "서울 성북구 고려대로24길 23",
+    "images": [
+      "d26fc0d6895cd533f04fdfbae78697a0ad735c9330e2fbc75d65443fe0c21399.jpg",
+      "d26fc0d6895cd533f04fdfbae78697a0ad735c9330e2fbc75d65443fe0c21399.jpg",
+      "095c7f118be8554d32f6f120b178c3ab72bcff3c225c9234821a9b1820382281.jpg",
+      "d26fc0d6895cd533f04fdfbae78697a0ad735c9330e2fbc75d65443fe0c21399.jpg",
+      "095c7f118be8554d32f6f120b178c3ab72bcff3c225c9234821a9b1820382281.jpg",
+      "3eeebdab8688ae4416b0c205c3859b99172a7a4f2f66d265092d805c17dd2866.jpg"
+    ],
+    "lat": 37.5851814641493,
+    "lon": 127.029526668343
+  },
+  {
+    "naver_place_id": "20152271",
+    "name": "북경양꼬치",
+    "tags": ["양꼬치"],
+    "phone": "02-953-5880",
+    "address": "서울 성북구 고려대로24길 3-36",
+    "images": [
+      "66071cce9f5e998837272cd20cfd63f0f3b7bf0242d45dd6c3e6cbeb84149432.jpg",
+      "66071cce9f5e998837272cd20cfd63f0f3b7bf0242d45dd6c3e6cbeb84149432.jpg",
+      "69d5b0350ce88b704fd87931044af0c2c5b03e5c85518a5a1468b89b0863fc27.jpg",
+      "66071cce9f5e998837272cd20cfd63f0f3b7bf0242d45dd6c3e6cbeb84149432.jpg",
+      "69d5b0350ce88b704fd87931044af0c2c5b03e5c85518a5a1468b89b0863fc27.jpg",
+      "f7395d6ed6a4252df40e39e45aaf0086864bf744ca03e67eb79c600ffa901165.jpg"
+    ],
+    "lat": 37.5858368017769,
+    "lon": 127.029704794787
+  },
+  {
+    "naver_place_id": "1230538178",
+    "name": "산시면가",
+    "tags": ["중식당"],
+    "phone": "02-3291-0880",
+    "address": "서울 성북구 안암로 91",
+    "images": [
+      "15c5d8b2085d24e79477aa39d47f769e5dd3eff7d510116ba0f84a5135b50389.jpg",
+      "15c5d8b2085d24e79477aa39d47f769e5dd3eff7d510116ba0f84a5135b50389.jpg",
+      "61b28ce3669a48709625cc0f1c20f3ac3ed70d916c10a180c705e16e6d52b159.jpg",
+      "15c5d8b2085d24e79477aa39d47f769e5dd3eff7d510116ba0f84a5135b50389.jpg",
+      "61b28ce3669a48709625cc0f1c20f3ac3ed70d916c10a180c705e16e6d52b159.jpg",
+      "5075d92ebd066c417ba023474b66426d57302a696d88b04388a1b5b78dd3c686.jpg"
+    ],
+    "lat": 37.5841861235608,
+    "lon": 127.030640102558
+  },
+  {
+    "naver_place_id": "1596069243",
+    "name": "탕화쿵푸마라탕 고대안암점",
+    "tags": ["마라탕"],
+    "phone": "070-4651-7298",
+    "address": "서울 성북구 고려대로24길 9 2층",
+    "images": [
+      "c9c8b14e1c643992cac111a91bb19614af5281ba4150786af2f86711a70561cd.jpg",
+      "c9c8b14e1c643992cac111a91bb19614af5281ba4150786af2f86711a70561cd.jpg",
+      "ff52a584454dc7039a19c52a57135901d741d23a043dfd52da0a42eab27eb82a.jpg",
+      "c9c8b14e1c643992cac111a91bb19614af5281ba4150786af2f86711a70561cd.jpg",
+      "ff52a584454dc7039a19c52a57135901d741d23a043dfd52da0a42eab27eb82a.jpg",
+      "bf68bf28fb9ba8ca0a39bc9ed080eb0971c815b183e45f85ca6717cb91d02ab0.jpg"
+    ],
+    "lat": 37.5858162191305,
+    "lon": 127.029505067734
+  },
+  {
+    "naver_place_id": "1942669312",
+    "name": "천라쿵푸마라탕 고려대점",
+    "tags": ["마라탕"],
+    "phone": "0507-1382-5189",
+    "address": "서울 성북구 개운사길 22-3 2층",
+    "images": [
+      "bf62989f8135347e7e5c7addb26852bc2dd1f7b1726fb7c495fb75142facc30d.jpg",
+      "bf62989f8135347e7e5c7addb26852bc2dd1f7b1726fb7c495fb75142facc30d.jpg",
+      "a37b6c105f3a19563ba9eb401a8826ed664597dcfb03847ce6d63ce0276cfc19.jpg",
+      "bf62989f8135347e7e5c7addb26852bc2dd1f7b1726fb7c495fb75142facc30d.jpg",
+      "a37b6c105f3a19563ba9eb401a8826ed664597dcfb03847ce6d63ce0276cfc19.jpg",
+      "46107173c4a675306378f8c26c72c2f942a4f9214d9357d6582765a25f1ee186.jpg"
+    ],
+    "lat": 37.5874837888439,
+    "lon": 127.029456361227
+  },
+  {
+    "naver_place_id": "31044451",
+    "name": "홍콩반점0410 고대안암점",
+    "tags": ["중식당"],
+    "phone": "02-6084-8864",
+    "address": "서울 성북구 고려대로24가길 6 2층",
+    "images": [
+      "9eea4c54abe3b40239d4a0d164a4e271b0be3795d55ebf1a35bdcf517a88d70f.jpg",
+      "9eea4c54abe3b40239d4a0d164a4e271b0be3795d55ebf1a35bdcf517a88d70f.jpg",
+      "8b320d3f0b60ee45d28876dd62435757f5f60f1b2e0504257ee1f600e4a2a6c5.jpg",
+      "9eea4c54abe3b40239d4a0d164a4e271b0be3795d55ebf1a35bdcf517a88d70f.jpg",
+      "8b320d3f0b60ee45d28876dd62435757f5f60f1b2e0504257ee1f600e4a2a6c5.jpg",
+      "95a8dcb701bb89f9d51d8add9ab693cb77d256359af5199806890ff97f3c1f86.jpg"
+    ],
+    "lat": 37.5851759214435,
+    "lon": 127.029712570679
+  },
+  {
+    "naver_place_id": "1613011824",
+    "name": "신룽푸마라탕 고대점",
+    "tags": ["마라탕"],
+    "phone": "02-6404-2014",
+    "address": "서울 성북구 고려대로24길 35 2층",
+    "images": [
+      "88cddf9bb9281ea7212a3d5e139233555101a80f67ce8b640b16b18bad167a74.jpg",
+      "88cddf9bb9281ea7212a3d5e139233555101a80f67ce8b640b16b18bad167a74.jpg",
+      "7895e28e1d9ae00466b1038fa5357ed21a2ae035eb10a5dec934940d30676326.jpg",
+      "88cddf9bb9281ea7212a3d5e139233555101a80f67ce8b640b16b18bad167a74.jpg",
+      "7895e28e1d9ae00466b1038fa5357ed21a2ae035eb10a5dec934940d30676326.jpg",
+      "66c7477c88317f476057e1f00ed7a6633d0bae9a7f2087094bfebb87ad8186c9.jpg"
+    ],
+    "lat": 37.5846644662531,
+    "lon": 127.029558844368
+  },
+  {
+    "naver_place_id": "18240895",
+    "name": "미스터왕시즌2",
+    "tags": ["중식당"],
+    "phone": "02-922-0406",
+    "address": "서울 성북구 안암로9가길 87",
+    "images": [
+      "463eac54bfc7a84663d9e5e38ff5288280672cef0958fd6762b254b8eea5fc57.jpg",
+      "463eac54bfc7a84663d9e5e38ff5288280672cef0958fd6762b254b8eea5fc57.jpg",
+      "6c303edcba6093531b53c63dc736f09b628a9fc2389d742716e94d874c2dacac.jpg",
+      "463eac54bfc7a84663d9e5e38ff5288280672cef0958fd6762b254b8eea5fc57.jpg",
+      "6c303edcba6093531b53c63dc736f09b628a9fc2389d742716e94d874c2dacac.jpg",
+      "118710fc179cd38b301f86e07fc6be09b9baa2dd308ebcb637a5107f67bd0ae8.jpg"
+    ],
+    "lat": 37.5828996287574,
+    "lon": 127.028341992128
+  },
+  {
+    "naver_place_id": "1793503661",
+    "name": "시시마라탕",
+    "tags": ["마라탕"],
+    "phone": null,
+    "address": "서울 성북구 개운사길 22-6",
+    "images": [
+      "7bf270c9bcf95c0fdf2510ef6b9fd71a38ac38a04ba355e7a55bc085993889b4.jpg",
+      "7bf270c9bcf95c0fdf2510ef6b9fd71a38ac38a04ba355e7a55bc085993889b4.jpg",
+      "86c5d42d5a0a1d2377d50ab66da3939f119050ae467b84cc294d685b8d29286d.jpg",
+      "7bf270c9bcf95c0fdf2510ef6b9fd71a38ac38a04ba355e7a55bc085993889b4.jpg",
+      "86c5d42d5a0a1d2377d50ab66da3939f119050ae467b84cc294d685b8d29286d.jpg",
+      "97ca8c323732aab3bbe395320b14a98fbef7305e1e197c053e91344d699ac048.jpg"
+    ],
+    "lat": 37.5873467848241,
+    "lon": 127.029668484581
+  },
+  {
+    "naver_place_id": "1971933017",
+    "name": "송림",
+    "tags": ["중식당"],
+    "phone": "02-928-1815",
+    "address": "서울 성북구 안암로 145 수당삼양패컬티하우스",
+    "images": [
+      "9d747235df1b3547fd00213a34cef37b41e6408f268920ee421e7f07d5e99603.jpg",
+      "9d747235df1b3547fd00213a34cef37b41e6408f268920ee421e7f07d5e99603.jpg",
+      "55b95f6047be94d1f85702cda28b5287ddfd2aae69ebe2df75fcf9fda892e76e.jpg",
+      "9d747235df1b3547fd00213a34cef37b41e6408f268920ee421e7f07d5e99603.jpg",
+      "55b95f6047be94d1f85702cda28b5287ddfd2aae69ebe2df75fcf9fda892e76e.jpg",
+      "27cb159500100ed2ff5b937fb3d2d7bef0eeb4edf78bcdcc3ec151a000ace9e2.jpg"
+    ],
+    "lat": 37.5887034223667,
+    "lon": 127.031698331241
+  },
+  {
+    "naver_place_id": "1759320701",
+    "name": "하오마라 고려대점",
+    "tags": ["중식당"],
+    "phone": "0507-1339-9985",
+    "address": "서울 성북구 고려대로27길 24-2 2층",
+    "images": [
+      "532df3c6550cef16f917e28c025ebe285fd94ab617bb5c653637b11f219b3332.jpg",
+      "532df3c6550cef16f917e28c025ebe285fd94ab617bb5c653637b11f219b3332.jpg",
+      "ca1569edbc467d87046bac11aa14d1b59b24870509f3a5ce3abd80edc451a831.jpg",
+      "532df3c6550cef16f917e28c025ebe285fd94ab617bb5c653637b11f219b3332.jpg",
+      "ca1569edbc467d87046bac11aa14d1b59b24870509f3a5ce3abd80edc451a831.jpg",
+      "d756852fc7e0b925012fbe67caa0f5a64053f216cdd843dd0108af87fd231206.jpg"
+    ],
+    "lat": 37.5873551062344,
+    "lon": 127.029897648498
+  },
+  {
+    "naver_place_id": "1699152723",
+    "name": "아우반점",
+    "tags": ["중식당"],
+    "phone": "0507-1371-7435",
+    "address": "서울 성북구 고려대로24길 31 2층",
+    "images": [
+      "aa98871bbeaecfac58a7f8a5b08d38516618f8b68abc3277cdc035c709c31c8a.jpg",
+      "aa98871bbeaecfac58a7f8a5b08d38516618f8b68abc3277cdc035c709c31c8a.jpg",
+      "d804886a5e89bad9cbba18c6cbe777e25bfa6380eef0f97481beaf4498d555f3.jpg",
+      "aa98871bbeaecfac58a7f8a5b08d38516618f8b68abc3277cdc035c709c31c8a.jpg",
+      "d804886a5e89bad9cbba18c6cbe777e25bfa6380eef0f97481beaf4498d555f3.jpg",
+      "956c6e9a6637dc7e548fff383b31a859674329a0d22a2bbab56ac9e7d7ee8d11.jpg"
+    ],
+    "lat": 37.5847973626988,
+    "lon": 127.029559010133
+  },
+  {
+    "naver_place_id": "1883346300",
+    "name": "일층팔오",
+    "tags": ["중식당"],
+    "phone": null,
+    "address": "서울 성북구 고려대로28길 17",
+    "images": [
+      "5dd056771b796609c1db59dd0d22dcee08e8b10762428bad2fb48156ad5e8a7c.jpg",
+      "5dd056771b796609c1db59dd0d22dcee08e8b10762428bad2fb48156ad5e8a7c.jpg",
+      "e04156c9c01d5badb4c0962bd566c4708bd4819850cc530bd05f04f64ccbeddf.jpg",
+      "5dd056771b796609c1db59dd0d22dcee08e8b10762428bad2fb48156ad5e8a7c.jpg",
+      "e04156c9c01d5badb4c0962bd566c4708bd4819850cc530bd05f04f64ccbeddf.jpg",
+      "9247d89d9bc48abd4bc75d7217e0ed87aa22bc2409953e0437b0edcb73a35109.jpg"
+    ],
+    "lat": 37.5856669289677,
+    "lon": 127.030896584645
+  },
+  {
+    "naver_place_id": "1056709865",
+    "name": "성북향",
+    "tags": ["중식당"],
+    "phone": "0507-1498-1655",
+    "address": "서울 성북구 고려대로27길 25 지하1층",
+    "images": [
+      "6118f53a319d56860d4b8241fd10982e80bf8279f737dba1eb90ea432f463400.jpg",
+      "6118f53a319d56860d4b8241fd10982e80bf8279f737dba1eb90ea432f463400.jpg",
+      "bf8a9d16cfac8aaa2a476578fab28702f211684706337994c99ab52f7044e5f9.jpg",
+      "6118f53a319d56860d4b8241fd10982e80bf8279f737dba1eb90ea432f463400.jpg",
+      "bf8a9d16cfac8aaa2a476578fab28702f211684706337994c99ab52f7044e5f9.jpg",
+      "8b4ee7c083c95ab753c51a57542ff786d4f927a920dcd62297217c0fe5098cfd.jpg"
+    ],
+    "lat": 37.587494633502,
+    "lon": 127.029685300099
+  },
+  {
+    "naver_place_id": "1815217206",
+    "name": "량왕이자",
+    "tags": ["양꼬치"],
+    "phone": null,
+    "address": "서울 성북구 고려대로28길 2 지하1층",
+    "images": [
+      "e7f0a9416c5939b2872a78168d4d3d15aae771ca4307cd3a6ea53ba08fc1acee.jpg"
+    ],
+    "lat": 37.5861043559909,
+    "lon": 127.030220050981
+  },
+  {
+    "naver_place_id": "1488182319",
+    "name": "마일품마라탕 안암점",
+    "tags": ["중식당"],
+    "phone": "0507-1383-1413",
+    "address": "서울 성북구 고려대로28길 16 1층 6호",
+    "images": [
+      "996ac705356cb0be6a0f2f3397bfc0cf15a1f33e74ac4fcdfcba9998706935a0.jpg",
+      "996ac705356cb0be6a0f2f3397bfc0cf15a1f33e74ac4fcdfcba9998706935a0.jpg",
+      "595d89080cd46c553855a7d67354e90a27e957b9881b61eb575b178045f6dd65.jpg",
+      "996ac705356cb0be6a0f2f3397bfc0cf15a1f33e74ac4fcdfcba9998706935a0.jpg",
+      "595d89080cd46c553855a7d67354e90a27e957b9881b61eb575b178045f6dd65.jpg",
+      "4226b0f15e813fea685ca19efd86b8f6a49d31530b5cfb6004bf080e9ec3f454.jpg"
+    ],
+    "lat": 37.5855540150335,
+    "lon": 127.030625718323
+  },
+  {
+    "naver_place_id": "1130079813",
+    "name": "호왕죠",
+    "tags": ["중식당"],
+    "phone": null,
+    "address": "서울 성북구 고려대로27길 25 지하1층",
+    "images": [
+      "3d97411f8e49a9c66fbe5d1beb3a03a85e12365baa8b3f3620f956201ae39f0a.jpg",
+      "3d97411f8e49a9c66fbe5d1beb3a03a85e12365baa8b3f3620f956201ae39f0a.jpg",
+      "493f3612c29fd2ac81a7ad08c17eae00eaacd417ea1132d8eec1ac0ba5d48dac.jpg"
+    ],
+    "lat": 37.587494633502,
+    "lon": 127.029685300099
+  },
+  {
+    "naver_place_id": "1205234878",
+    "name": "안동반점",
+    "tags": ["중식당"],
+    "phone": "02-923-4448",
+    "address": "서울 성북구 고려대로1길 35-1",
+    "images": [
+      "2d1cf92c17e7c15df35a5bd450b514de8a1fbcf0d288447d15127182f851ec8a.jpg",
+      "2d1cf92c17e7c15df35a5bd450b514de8a1fbcf0d288447d15127182f851ec8a.jpg",
+      "6749944b7e1a752ade4309b90ce639cf4a7671d733628e376aa8bae2fd4554be.jpg",
+      "2d1cf92c17e7c15df35a5bd450b514de8a1fbcf0d288447d15127182f851ec8a.jpg",
+      "6749944b7e1a752ade4309b90ce639cf4a7671d733628e376aa8bae2fd4554be.jpg",
+      "9b5bab9def1a5031099cb6b9b9959dadbab1ede99ab554240b0ea89d5ad6448f.jpg"
+    ],
+    "lat": 37.5870507663948,
+    "lon": 127.018932734098
+  },
+  {
+    "naver_place_id": "18043515",
+    "name": "홍릉각",
+    "tags": ["중식당"],
+    "phone": "02-969-7787",
+    "address": "서울 동대문구 약령시로 90",
+    "images": [
+      "a605431bacce15f8c5477f2abfa598de70dea463071952757874e8f616723600.jpg",
+      "a605431bacce15f8c5477f2abfa598de70dea463071952757874e8f616723600.jpg",
+      "9975d1ea3a9e0cc44588e1bb93d40fab574faeca32d7f47e9d05e17923ad0f88.jpg",
+      "a605431bacce15f8c5477f2abfa598de70dea463071952757874e8f616723600.jpg",
+      "9975d1ea3a9e0cc44588e1bb93d40fab574faeca32d7f47e9d05e17923ad0f88.jpg",
+      "3736aa65f27282be3869612a8713690af925992ae6bf6b4adfcfb98f94bfd285.jpg"
+    ],
+    "lat": 37.58286058803,
+    "lon": 127.039960536943
+  },
+  {
+    "naver_place_id": "1266575304",
+    "name": "희객 2호점",
+    "tags": ["중식당"],
+    "phone": "0507-1343-3349",
+    "address": "서울 성북구 동소문로13가길 16 1층",
+    "images": [
+      "9f219b4e42642f7d965d7d39b178fc932edeec1796be6830b658c1b447779fbf.jpg",
+      "9f219b4e42642f7d965d7d39b178fc932edeec1796be6830b658c1b447779fbf.jpg",
+      "cb980e0d8eeb41aca658e87376fc33b92b52c53f76ccc01b8b84368826dfcbeb.jpg",
+      "9f219b4e42642f7d965d7d39b178fc932edeec1796be6830b658c1b447779fbf.jpg",
+      "cb980e0d8eeb41aca658e87376fc33b92b52c53f76ccc01b8b84368826dfcbeb.jpg",
+      "3a01a380ebb309d532a4df04479538b60c20541891988436d5044eeb54fbf8cd.jpg"
+    ],
+    "lat": 37.5919412653653,
+    "lon": 127.012051372627
+  },
+  {
+    "naver_place_id": "1353004075",
+    "name": "짬뽕선수",
+    "tags": ["중식당"],
+    "phone": "02-2039-1157",
+    "address": "서울 성북구 동소문로20가길 2 2층",
+    "images": [
+      "638be216c0e77156532de4c7afd6432afc2f0bff907a16e4084c48a17fa3c91b.jpg",
+      "638be216c0e77156532de4c7afd6432afc2f0bff907a16e4084c48a17fa3c91b.jpg",
+      "9d136e92e1c2a7457faa2a9d25172a2cbdf2f2238a7fc3389ab6560638314b73.jpg",
+      "638be216c0e77156532de4c7afd6432afc2f0bff907a16e4084c48a17fa3c91b.jpg",
+      "9d136e92e1c2a7457faa2a9d25172a2cbdf2f2238a7fc3389ab6560638314b73.jpg",
+      "f2c1f0fbac2c17f4837c81261ccbd5cf7c1d26ba7cc82125cc57ed8c7e04b19c.jpg"
+    ],
+    "lat": 37.5920940409929,
+    "lon": 127.016749714293
+  },
+  {
+    "naver_place_id": "1903257210",
+    "name": "창창",
+    "tags": ["중식당"],
+    "phone": "0507-1370-3548",
+    "address": "서울 종로구 창신12길 37 창창",
+    "images": [
+      "29ecdd0397bcd3cc2a942e34edd9dd0a214c248aecbc72bf8d7f1703b5c7ed08.jpg",
+      "29ecdd0397bcd3cc2a942e34edd9dd0a214c248aecbc72bf8d7f1703b5c7ed08.jpg",
+      "5509d8c3e7f1e39717604fc1273895d6cf5b6d2523f06283e3f7b574ab10538c.jpg",
+      "29ecdd0397bcd3cc2a942e34edd9dd0a214c248aecbc72bf8d7f1703b5c7ed08.jpg",
+      "5509d8c3e7f1e39717604fc1273895d6cf5b6d2523f06283e3f7b574ab10538c.jpg",
+      "8d9e197cf3e210de1a163c4c54930b19982bff14e97325e34ea51793b65268e5.jpg"
+    ],
+    "lat": 37.5784209825389,
+    "lon": 127.010925262971
+  },
+  {
+    "naver_place_id": "1075760962",
+    "name": "영순관",
+    "tags": ["중식당"],
+    "phone": "02-926-5479",
+    "address": "서울 성북구 지봉로24길 19",
+    "images": [
+      "84868b54a2cf525ea28fbd4b81be94172d70618976208976ebc0e733c241fdb5.jpg",
+      "84868b54a2cf525ea28fbd4b81be94172d70618976208976ebc0e733c241fdb5.jpg",
+      "05eb48c6f31670da4498145f6baa6c37c5783aec62483d3d3743ad13b3a13efb.jpg",
+      "84868b54a2cf525ea28fbd4b81be94172d70618976208976ebc0e733c241fdb5.jpg",
+      "05eb48c6f31670da4498145f6baa6c37c5783aec62483d3d3743ad13b3a13efb.jpg",
+      "dc4ff76c613d91b5ceba6c6d32d014dfd11b354d650266e55a8aca9665223c43.jpg"
+    ],
+    "lat": 37.5843087873652,
+    "lon": 127.019407551204
+  },
+  {
+    "naver_place_id": "1140604135",
+    "name": "미미가",
+    "tags": ["중식당"],
+    "phone": "02-928-9814",
+    "address": "서울 성북구 보문로13나길 18 1층",
+    "images": [
+      "6b37827f7b4fddc3e67062c9be2427e606c4d088bf16de9db7677fb67eb72d42.jpg",
+      "6b37827f7b4fddc3e67062c9be2427e606c4d088bf16de9db7677fb67eb72d42.jpg",
+      "138694783e8502764d9cd7286954985a1a4e21f1f39228cc27680b5803cfd40c.jpg",
+      "6b37827f7b4fddc3e67062c9be2427e606c4d088bf16de9db7677fb67eb72d42.jpg",
+      "138694783e8502764d9cd7286954985a1a4e21f1f39228cc27680b5803cfd40c.jpg",
+      "82387a0d6ca9e47d68e9c186bfceefef9acc1f4f219d3d1bdf5445a3e895432f.jpg"
+    ],
+    "lat": 37.5793055046842,
+    "lon": 127.021843538917
+  },
+  {
+    "naver_place_id": "1174063499",
+    "name": "짬뽕취향 신설동점",
+    "tags": ["중식당"],
+    "phone": "0507-1310-1018",
+    "address": "서울 동대문구 한빛로 13 1층",
+    "images": [
+      "8b396098b22a26d89cccc1d8b2de274bcd7247bb40a1e38aca41b74bad736c79.jpg",
+      "8b396098b22a26d89cccc1d8b2de274bcd7247bb40a1e38aca41b74bad736c79.jpg",
+      "84ce2f6f727a53f5e9538f13fbea79d43ff13c32a82fb628fd2210f581996a1c.jpg",
+      "8b396098b22a26d89cccc1d8b2de274bcd7247bb40a1e38aca41b74bad736c79.jpg",
+      "84ce2f6f727a53f5e9538f13fbea79d43ff13c32a82fb628fd2210f581996a1c.jpg",
+      "3d6db198d48acc43249de95def64cb17af964071009cd5a32bfaf92ebc217559.jpg"
+    ],
+    "lat": 37.5771200304861,
+    "lon": 127.024701355766
+  },
+  {
+    "naver_place_id": "1054493421",
+    "name": "스스쿠",
+    "tags": ["카페", "디저트"],
+    "phone": "0507-1322-3167",
+    "address": "서울 성북구 고려대로11길 65 1층 101호 susukuu",
+    "images": [
+      "8b5ca2bd260df2fd3114ad2c1e151ed1b1204e912446d6a53ac469a77c29908d.jpg",
+      "8b5ca2bd260df2fd3114ad2c1e151ed1b1204e912446d6a53ac469a77c29908d.jpg",
+      "2b1763d0d4946bf952554887861e00ce21461bdcfbe2bcf70ce7872db93b1485.jpg",
+      "8b5ca2bd260df2fd3114ad2c1e151ed1b1204e912446d6a53ac469a77c29908d.jpg",
+      "2b1763d0d4946bf952554887861e00ce21461bdcfbe2bcf70ce7872db93b1485.jpg",
+      "8b4d540a2742bd0e43bab57631fa7f2f58948cdc24fa2c1615368d507894fce7.jpg"
+    ],
+    "lat": 37.5888717948008,
+    "lon": 127.020363440247
+  },
+  {
+    "naver_place_id": "35084900",
+    "name": "설빙 서울고대점",
+    "tags": ["빙수"],
+    "phone": "0507-1311-5157",
+    "address": "서울 성북구 고려대로24길 14 2층 설빙 고대점",
+    "images": [
+      "421f0c39580c48c9e3b0f1404a597ec2c83ff500a553b952bc95d51255e55f49.jpg",
+      "421f0c39580c48c9e3b0f1404a597ec2c83ff500a553b952bc95d51255e55f49.jpg",
+      "8422237c37dc23dfc12b5a24a9f4933447bd542c5594bdbec8a2f55255b36cd6.jpg",
+      "421f0c39580c48c9e3b0f1404a597ec2c83ff500a553b952bc95d51255e55f49.jpg",
+      "8422237c37dc23dfc12b5a24a9f4933447bd542c5594bdbec8a2f55255b36cd6.jpg",
+      "f686ced9e8364f8ebbc8bb6bfb4458bee4bc455982c29356882bc7eda1e9dd02.jpg"
+    ],
+    "lat": 37.5856646572008,
+    "lon": 127.029202712951
+  },
+  {
+    "naver_place_id": "1801169889",
+    "name": "스타벅스 고대안암병원점",
+    "tags": ["카페"],
+    "phone": "1522-3232",
+    "address": "서울 성북구 고려대로 73 (안암동5가)",
+    "images": [
+      "2715fe0dee67628a5852f8b9fe6bba7e963f98f72acbbd867959747692ef10f4.jpg",
+      "2715fe0dee67628a5852f8b9fe6bba7e963f98f72acbbd867959747692ef10f4.jpg",
+      "2abb581bae7306512d9efe3270beeb866f9925a359dd11b9bd9d717616827611.jpg",
+      "2715fe0dee67628a5852f8b9fe6bba7e963f98f72acbbd867959747692ef10f4.jpg",
+      "2abb581bae7306512d9efe3270beeb866f9925a359dd11b9bd9d717616827611.jpg",
+      "f0c5b22c5a7a93fb57764a7e64a42ad54a48da0bcf8349e524384410d7658cb0.jpg"
+    ],
+    "lat": 37.5873771473625,
+    "lon": 127.026248862202
+  },
+  {
+    "naver_place_id": "1489621653",
+    "name": "보리수",
+    "tags": ["카페", "디저트"],
+    "phone": "0507-1336-4411",
+    "address": "서울 성북구 고려대로8길 25 1층",
+    "images": [
+      "a7b76ef973813664a1d7994a32d6c4f496b1f49f6d948737b36261b28f9dc099.jpg",
+      "a7b76ef973813664a1d7994a32d6c4f496b1f49f6d948737b36261b28f9dc099.jpg",
+      "5a49531c63916e492086f81304e64f955dea2b8e1c1b2ec14db254edc7dcc2c1.jpg",
+      "a7b76ef973813664a1d7994a32d6c4f496b1f49f6d948737b36261b28f9dc099.jpg",
+      "5a49531c63916e492086f81304e64f955dea2b8e1c1b2ec14db254edc7dcc2c1.jpg",
+      "722ceb56614711cae32529083aaf11949c09e185e98dfa787eef1a1bbd8155c0.jpg"
+    ],
+    "lat": 37.5847814136089,
+    "lon": 127.021678255901
+  },
+  {
+    "naver_place_id": "12971553",
+    "name": "커피빈 고대안암역점",
+    "tags": ["카페"],
+    "phone": "02-953-6652",
+    "address": "서울 성북구 개운사길 8 타이거빌딩",
+    "images": [
+      "d734d787aad9e78abe1af3d9e543576a3c7feb41a8cefc2731a8711f6e0ca813.jpg",
+      "d734d787aad9e78abe1af3d9e543576a3c7feb41a8cefc2731a8711f6e0ca813.jpg",
+      "5f35de577688e06c36938e62a8506c215f3fd8212cf771dfb8fded5d81643351.jpg",
+      "d734d787aad9e78abe1af3d9e543576a3c7feb41a8cefc2731a8711f6e0ca813.jpg",
+      "5f35de577688e06c36938e62a8506c215f3fd8212cf771dfb8fded5d81643351.jpg",
+      "d4df15e44a303416cbdb466575198dc9370b0849d4bdb9ba86a004ddf942dad8.jpg"
+    ],
+    "lat": 37.5869920871665,
+    "lon": 127.029576068606
+  },
+  {
+    "naver_place_id": "1719379816",
+    "name": "코무",
+    "tags": ["카페", "디저트"],
+    "phone": "0507-1352-6189",
+    "address": "서울 성북구 고려대로7가길 1 1층",
+    "images": [
+      "0e21ce15a184ca0d5c28e32860ee38ea2d4b333c9105fa08bc80de788e7b53f5.jpg",
+      "0e21ce15a184ca0d5c28e32860ee38ea2d4b333c9105fa08bc80de788e7b53f5.jpg",
+      "18b17762f93cc8834587f619562b3170b9759f776e2adfd78d40b101a398c4bf.jpg",
+      "0e21ce15a184ca0d5c28e32860ee38ea2d4b333c9105fa08bc80de788e7b53f5.jpg",
+      "18b17762f93cc8834587f619562b3170b9759f776e2adfd78d40b101a398c4bf.jpg",
+      "c25e528ee0778990629820bed355d08f9cc1832ebb0a4201bb5b294689838ce1.jpg"
+    ],
+    "lat": 37.5863999713471,
+    "lon": 127.021104472413
+  },
+  {
+    "naver_place_id": 33562525,
+    "name": "디어브레드 고대점",
+    "tags": ["카페"],
+    "phone": "070-7661-4129",
+    "address": "서울 성북구 개운사1길 29 디어브레드",
+    "images": [
+      "5d38ae7eb6ad1da7a066b403bf0470bf342c8494882b8cd499f0849ab43416c8.jpg",
+      "5d38ae7eb6ad1da7a066b403bf0470bf342c8494882b8cd499f0849ab43416c8.jpg",
+      "de974b0745cd8b42fe7a048e300b5753a9014b29ed3c5c2748e4db640e583ddb.jpg",
+      "5d38ae7eb6ad1da7a066b403bf0470bf342c8494882b8cd499f0849ab43416c8.jpg",
+      "de974b0745cd8b42fe7a048e300b5753a9014b29ed3c5c2748e4db640e583ddb.jpg",
+      "9ee0b8611355147ed472317381241333801ae3e7fd83e1f04dfbbb99be278563.jpg"
+    ],
+    "lat": 37.5873251285,
+    "lon": 127.0287067717
+  },
+  {
+    "naver_place_id": 1492118487,
+    "name": "카페 안암동",
+    "tags": ["카페"],
+    "phone": null,
+    "address": "서울 성북구 고려대로22길 5 1층",
+    "images": [
+      "e2aa10d73259fa4ee37c2b660849c0820fdf7fc9907c8febd212d6094eb5bef0.jpg",
+      "e2aa10d73259fa4ee37c2b660849c0820fdf7fc9907c8febd212d6094eb5bef0.jpg",
+      "3b808a0a8a76e403355d38debb9eece6341bfb837e7ebe24b39bda7871c55dfc.jpg",
+      "e2aa10d73259fa4ee37c2b660849c0820fdf7fc9907c8febd212d6094eb5bef0.jpg",
+      "3b808a0a8a76e403355d38debb9eece6341bfb837e7ebe24b39bda7871c55dfc.jpg",
+      "cd25c8f544e86ae0757526bc675854e86ae8cf83354dd8e5c49241040d58f09c.jpg"
+    ],
+    "lat": 37.585919696,
+    "lon": 127.0289681086
+  },
+  {
+    "naver_place_id": 1441852253,
+    "name": "카페 시소",
+    "tags": ["카페"],
+    "phone": null,
+    "address": "서울 성북구 고려대로10길 48 1층",
+    "images": [
+      "c2f769f1aa73a88e0852ec63d7e0ff18bd317a47c0125ea73de6543468852a88.jpg",
+      "c2f769f1aa73a88e0852ec63d7e0ff18bd317a47c0125ea73de6543468852a88.jpg",
+      "63d6bde52a51bd6c0a71f4c81092c82d55cb2240cbb63419b4345e89db9b17ea.jpg",
+      "c2f769f1aa73a88e0852ec63d7e0ff18bd317a47c0125ea73de6543468852a88.jpg",
+      "63d6bde52a51bd6c0a71f4c81092c82d55cb2240cbb63419b4345e89db9b17ea.jpg",
+      "7611388a3c03b29a11d647d9b666f6c6af9eb9a29b0d7fc8e8be193de9ba01ac.jpg"
+    ],
+    "lat": 37.5838781673,
+    "lon": 127.0221667491
+  },
+  {
+    "naver_place_id": 1021523035,
+    "name": "투썸플레이스 고대참살이길점",
+    "tags": ["카페"],
+    "phone": "0507-1446-1383",
+    "address": "서울 성북구 고려대로26길 42-15 1층, 2층, 3층",
+    "images": [
+      "9561691bd6dd00b0b9afa30b9be7ccc3b67c7502f4c8d79b5541e260152f75a1.jpg",
+      "9561691bd6dd00b0b9afa30b9be7ccc3b67c7502f4c8d79b5541e260152f75a1.jpg",
+      "866085e3cecc745e0e7e169904758e6c92273725a315a36787d95dbf70b5dd3b.jpg",
+      "9561691bd6dd00b0b9afa30b9be7ccc3b67c7502f4c8d79b5541e260152f75a1.jpg",
+      "866085e3cecc745e0e7e169904758e6c92273725a315a36787d95dbf70b5dd3b.jpg",
+      "9b19670784e8cfbcfca1c6c9e6d849fabfda5c24802cc04116c3af13367d987b.jpg"
+    ],
+    "lat": 37.5841747122,
+    "lon": 127.0290919709
+  },
+  {
+    "naver_place_id": 1033039478,
+    "name": "메이크미해피",
+    "tags": ["카페"],
+    "phone": "0507-1461-0136",
+    "address": "서울 성북구 고려대로26길 15 2층",
+    "images": [
+      "18808d4db9dfef4457533362da81f26e5bca36237c14220bd98c25e9fabac5d8.jpg",
+      "18808d4db9dfef4457533362da81f26e5bca36237c14220bd98c25e9fabac5d8.jpg",
+      "92e2915200a71ce353be7e1f88227bef3967934c66fed32718823854437f9db3.jpg",
+      "18808d4db9dfef4457533362da81f26e5bca36237c14220bd98c25e9fabac5d8.jpg",
+      "92e2915200a71ce353be7e1f88227bef3967934c66fed32718823854437f9db3.jpg",
+      "a4960c508422bc8c19a017fa8903e8b26b5d7fb3d23bca50b01bb6ae836f6706.jpg"
+    ],
+    "lat": 37.5855668715,
+    "lon": 127.0300324564
+  },
+  {
+    "naver_place_id": 31316673,
+    "name": "스타벅스 안암역점",
+    "tags": ["카페"],
+    "phone": "1522-3232",
+    "address": "서울 성북구 고려대로 102-2 (안암동5가)",
+    "images": [
+      "2715fe0dee67628a5852f8b9fe6bba7e963f98f72acbbd867959747692ef10f4.jpg",
+      "2715fe0dee67628a5852f8b9fe6bba7e963f98f72acbbd867959747692ef10f4.jpg",
+      "5d5cdd1e583af7fae0d42f193f467dbf7432f36a36a7312ef4b0bb0aa271318f.jpg",
+      "2715fe0dee67628a5852f8b9fe6bba7e963f98f72acbbd867959747692ef10f4.jpg",
+      "5d5cdd1e583af7fae0d42f193f467dbf7432f36a36a7312ef4b0bb0aa271318f.jpg",
+      "e3d0e2d28871e4ab3cf7cb94c6cb23ce5be0b816d91dc178f9f39b8222ad504c.jpg"
+    ],
+    "lat": 37.5861091703,
+    "lon": 127.0307665647
+  },
+  {
+    "naver_place_id": 1181652135,
+    "name": "코보",
+    "tags": ["카페"],
+    "phone": "0507-1339-2343",
+    "address": "서울 성북구 안암로5길 52 1층 카페 코보",
+    "images": [
+      "110cfe03d0f1fa976573b61841b37a2e463c020442726c26f0f188cfd60ff5b5.jpg",
+      "110cfe03d0f1fa976573b61841b37a2e463c020442726c26f0f188cfd60ff5b5.jpg",
+      "23165b0eb1db263d78c48ea11955644b08d56b9a96f36833f7eacd7f7281ffa2.jpg",
+      "110cfe03d0f1fa976573b61841b37a2e463c020442726c26f0f188cfd60ff5b5.jpg",
+      "23165b0eb1db263d78c48ea11955644b08d56b9a96f36833f7eacd7f7281ffa2.jpg",
+      "3819ad3bcdcccf518ca347f5b66c65a42da9d4a29a68b673e380d3f031aca094.jpg"
+    ],
+    "lat": 37.5813814078,
+    "lon": 127.0231904697
+  },
+  {
+    "naver_place_id": 11689826,
+    "name": "스타벅스 고대점",
+    "tags": ["카페"],
+    "phone": "1522-3232",
+    "address": "서울 성북구 고려대로24길 51 (안암동5가)",
+    "images": [
+      "2715fe0dee67628a5852f8b9fe6bba7e963f98f72acbbd867959747692ef10f4.jpg",
+      "2715fe0dee67628a5852f8b9fe6bba7e963f98f72acbbd867959747692ef10f4.jpg",
+      "5c12949e36bec9c4cca0eaf62c35d41373c74e9e1fec66685b5703c6b7932953.jpg",
+      "2715fe0dee67628a5852f8b9fe6bba7e963f98f72acbbd867959747692ef10f4.jpg",
+      "5c12949e36bec9c4cca0eaf62c35d41373c74e9e1fec66685b5703c6b7932953.jpg",
+      "cdbc6a1367f156bd6a8db523f326f0cfafd6051e5ca455d671611d3adb1982ee.jpg"
+    ],
+    "lat": 37.5839294884,
+    "lon": 127.0297090184
+  },
+  {
+    "naver_place_id": 1034991487,
+    "name": "롤링핀 고대병원신관점",
+    "tags": ["카페"],
+    "phone": "02-921-8757",
+    "address": "서울 성북구 고려대로 73 2층",
+    "images": [
+      "8f5a54db672600db7eb135460e935df107da7a98826b30440ddc9fcd07041324.jpg",
+      "8f5a54db672600db7eb135460e935df107da7a98826b30440ddc9fcd07041324.jpg",
+      "7a66135431bf1b8fc2456fc9b3621a2c08930fdd7283ee30778ffd08320aa595.jpg",
+      "8f5a54db672600db7eb135460e935df107da7a98826b30440ddc9fcd07041324.jpg",
+      "7a66135431bf1b8fc2456fc9b3621a2c08930fdd7283ee30778ffd08320aa595.jpg",
+      "c4659af7bd8a0d190f529abde22cfffaaa69c6da7215caf58eb0243cf4a55fba.jpg"
+    ],
+    "lat": 37.5873771474,
+    "lon": 127.0262488622
+  },
+  {
+    "naver_place_id": 61365634,
+    "name": "메가MGC커피 고대점",
+    "tags": ["카페"],
+    "phone": "0507-1414-7290",
+    "address": "서울 성북구 고려대로27길 15",
+    "images": [
+      "dff1a877655f5d079f200fb541783ff2e7b681eacd885fa7ddaa62a94a150a8d.jpg",
+      "dff1a877655f5d079f200fb541783ff2e7b681eacd885fa7ddaa62a94a150a8d.jpg",
+      "ab399e94d324702999e709bed49904963af2f42f90cef747fcd4901d92bc8c10.jpg",
+      "dff1a877655f5d079f200fb541783ff2e7b681eacd885fa7ddaa62a94a150a8d.jpg",
+      "ab399e94d324702999e709bed49904963af2f42f90cef747fcd4901d92bc8c10.jpg",
+      "b69b55d523b0cea0063238c53ac4c6520aa3171e2c7f7f92fccf5f7d2dee400c.jpg"
+    ],
+    "lat": 37.5869988103,
+    "lon": 127.0297126159
+  },
+  {
+    "naver_place_id": 38251812,
+    "name": "배스킨라빈스 고대안암",
+    "tags": ["카페"],
+    "phone": "0507-2093-9483",
+    "address": "서울 성북구 고려대로24길 31 1층",
+    "images": [
+      "970a8bfd656a30d1d21c345bbb37f4a033d7d5f584205ed5fbf94c555da7e542.jpg",
+      "970a8bfd656a30d1d21c345bbb37f4a033d7d5f584205ed5fbf94c555da7e542.jpg",
+      "e7ebf28696b1f91b541798b56963beb3e984b082c3e08b53e5e70134ed285abc.jpg",
+      "970a8bfd656a30d1d21c345bbb37f4a033d7d5f584205ed5fbf94c555da7e542.jpg",
+      "e7ebf28696b1f91b541798b56963beb3e984b082c3e08b53e5e70134ed285abc.jpg",
+      "b132044f97afcb1019319a60b2056f17983b13c19cf815a4e33377ae400c7796.jpg"
+    ],
+    "lat": 37.5847973627,
+    "lon": 127.0295590101
+  },
+  {
+    "naver_place_id": 1389847957,
+    "name": "밀크브라운",
+    "tags": ["카페"],
+    "phone": "0507-1350-6802",
+    "address": "서울 성북구 고려대로28길 21 1층, 2층",
+    "images": [
+      "613b1452855bf34a2e2c738bf8cbbc2e8178ff980fea2b7e70ec7626536abf33.jpg",
+      "613b1452855bf34a2e2c738bf8cbbc2e8178ff980fea2b7e70ec7626536abf33.jpg",
+      "546b3d5af6cb2de9fce494f703fdc6516a1ffbd1945d73ab8cc249d04f2350a6.jpg",
+      "613b1452855bf34a2e2c738bf8cbbc2e8178ff980fea2b7e70ec7626536abf33.jpg",
+      "546b3d5af6cb2de9fce494f703fdc6516a1ffbd1945d73ab8cc249d04f2350a6.jpg",
+      "558db8606e32b15bfc0dfc5d1ec9128f3c191725eb02d2b75839ff0cc2ef29b2.jpg"
+    ],
+    "lat": 37.5855158758,
+    "lon": 127.0310746155
+  },
+  {
+    "naver_place_id": 1883868613,
+    "name": "컴포즈커피 고대안암오거리점",
+    "tags": ["카페"],
+    "phone": "0507-1412-1012",
+    "address": "서울 성북구 안암로9가길 80-1 1층",
+    "images": [
+      "65777bb393fd5d56016f8b8a765915f59df27cdb7ea13991e2cdd3e0c7b1b29b.jpg",
+      "65777bb393fd5d56016f8b8a765915f59df27cdb7ea13991e2cdd3e0c7b1b29b.jpg",
+      "b452154b06c395f875bafde070eda976f994fb0416c867309692ccec7c5dc15e.jpg",
+      "65777bb393fd5d56016f8b8a765915f59df27cdb7ea13991e2cdd3e0c7b1b29b.jpg",
+      "b452154b06c395f875bafde070eda976f994fb0416c867309692ccec7c5dc15e.jpg",
+      "f15e4bd2588f34d1fa6a3d65d8b1cf3e3ca0bbfe6ac8d303c10ccc1775b3c3ad.jpg"
+    ],
+    "lat": 37.5825279552,
+    "lon": 127.0283992509
+  },
+  {
+    "naver_place_id": 1691176500,
+    "name": "커피스토어",
+    "tags": ["카페"],
+    "phone": null,
+    "address": "서울 성북구 안암로5길 72",
+    "images": [
+      "5cdd40b2f66e77dd462d540673e6f71bf4ec5b39fd562a62eb9b94b4bf85b66b.jpg",
+      "5cdd40b2f66e77dd462d540673e6f71bf4ec5b39fd562a62eb9b94b4bf85b66b.jpg",
+      "a45c4898e014a26390156fa4fa66c4ce9fe70a204cba7e85766fa69c2cbfa3ae.jpg",
+      "5cdd40b2f66e77dd462d540673e6f71bf4ec5b39fd562a62eb9b94b4bf85b66b.jpg",
+      "a45c4898e014a26390156fa4fa66c4ce9fe70a204cba7e85766fa69c2cbfa3ae.jpg",
+      "05da76fb83ce83ff728ac353d81b4d487efdb92aae078127cc4bd33baa806bf5.jpg"
+    ],
+    "lat": 37.5822241961,
+    "lon": 127.0227332338
+  },
+  {
+    "naver_place_id": 36297984,
+    "name": "커피명가 안암점",
+    "tags": ["카페"],
+    "phone": "02-928-0892",
+    "address": "서울 성북구 안암로5길 40",
+    "images": [
+      "3fc9d1a548fe3a89cbe06a42d52c5ea65aafbc5fe2d5c33293fe0ed23f55390b.jpg",
+      "3fc9d1a548fe3a89cbe06a42d52c5ea65aafbc5fe2d5c33293fe0ed23f55390b.jpg",
+      "3e0e8172af7aa05798dead53378f10cca2d7f1ec2a92ab9e89b20fdf54192758.jpg",
+      "3fc9d1a548fe3a89cbe06a42d52c5ea65aafbc5fe2d5c33293fe0ed23f55390b.jpg",
+      "3e0e8172af7aa05798dead53378f10cca2d7f1ec2a92ab9e89b20fdf54192758.jpg",
+      "d2dbcde4591aa7823991b93c056d2371744021697ac4299edc161bb7d8486cc2.jpg"
+    ],
+    "lat": 37.5808854397,
+    "lon": 127.0235000635
+  },
+  {
+    "naver_place_id": 1259664100,
+    "name": "콜렉트마이페이보릿",
+    "tags": ["카페"],
+    "phone": "0507-1489-0495",
+    "address": "서울 성북구 고려대로8길 33 1층",
+    "images": [
+      "1f5f4d51cbfaa6600744c4997e41c181ba76f15cce0ffc03d35082f143975b82.jpg",
+      "1f5f4d51cbfaa6600744c4997e41c181ba76f15cce0ffc03d35082f143975b82.jpg",
+      "46007651a90868918c56e7d9a4cd2072e14f3702de3a1545317448f6b64629c5.jpg",
+      "1f5f4d51cbfaa6600744c4997e41c181ba76f15cce0ffc03d35082f143975b82.jpg",
+      "46007651a90868918c56e7d9a4cd2072e14f3702de3a1545317448f6b64629c5.jpg",
+      "33e0bd8e1b81167af516321f550182ad535cd431238ac0d7094abd8c3461814e.jpg"
+    ],
+    "lat": 37.5844314435,
+    "lon": 127.0218106186
+  },
+  {
+    "naver_place_id": 1073277421,
+    "name": "요거트아이스크림의정석 안암점",
+    "tags": ["카페"],
+    "phone": "0507-1446-0649",
+    "address": "서울 성북구 보문로14길 39 지상 1층",
+    "images": [
+      "799e3eb074e4c1981680c3ca310822c6294a563f10ad3276e57d17e15f337a4e.jpg",
+      "799e3eb074e4c1981680c3ca310822c6294a563f10ad3276e57d17e15f337a4e.jpg",
+      "285c03a4cf63acaf07747c4a145f1af2e765843f85ace6a9740cd27f00db72e5.jpg",
+      "799e3eb074e4c1981680c3ca310822c6294a563f10ad3276e57d17e15f337a4e.jpg",
+      "285c03a4cf63acaf07747c4a145f1af2e765843f85ace6a9740cd27f00db72e5.jpg",
+      "91f9809a2cdbc5e51a15d3668dbc9860db09d9d934c477167428c7b5a7877498.jpg"
+    ],
+    "lat": 37.5807776877,
+    "lon": 127.0243550042
+  },
+  {
+    "naver_place_id": 1795536184,
+    "name": "정만빙수 본점",
+    "tags": ["카페"],
+    "phone": null,
+    "address": "서울 성북구 고려대로24가길 12 2층",
+    "images": [
+      "439d4292360bf9ccb2e1e94d22de89cfb2e93c1641f2529675c024be5449aa6e.jpg",
+      "439d4292360bf9ccb2e1e94d22de89cfb2e93c1641f2529675c024be5449aa6e.jpg",
+      "8f723b20b45456b77080a56e33278cc6858c3f24821ed246356c75a0c4acce51.jpg",
+      "439d4292360bf9ccb2e1e94d22de89cfb2e93c1641f2529675c024be5449aa6e.jpg",
+      "8f723b20b45456b77080a56e33278cc6858c3f24821ed246356c75a0c4acce51.jpg",
+      "baec30f43b1c119eca790f345ca4668d2a51110913b7cca5eae729183f848cdc.jpg"
+    ],
+    "lat": 37.5851850237,
+    "lon": 127.0300595886
+  },
+  {
+    "naver_place_id": 1554675223,
+    "name": "물",
+    "tags": ["카페"],
+    "phone": "0507-1466-3024",
+    "address": "서울 성북구 고려대로 23 1층",
+    "images": [
+      "bd156101191f413bc3190fe3ea90fe04227e2dfdc157194fb306107613e6618f.jpg",
+      "bd156101191f413bc3190fe3ea90fe04227e2dfdc157194fb306107613e6618f.jpg",
+      "f663e7e82e66c02ece2329ddd83bb37faa1bd22282e099fb650a12160365bed9.jpg",
+      "bd156101191f413bc3190fe3ea90fe04227e2dfdc157194fb306107613e6618f.jpg",
+      "f663e7e82e66c02ece2329ddd83bb37faa1bd22282e099fb650a12160365bed9.jpg",
+      "097b436b776183686a1c3022f3c8e0d0ee6d391e9a285914784df409c661f387.jpg"
+    ],
+    "lat": 37.5863149002,
+    "lon": 127.0216977216
+  },
+  {
+    "naver_place_id": 1893176323,
+    "name": "캐치카페 안암",
+    "tags": ["카페"],
+    "phone": "070-4077-3822",
+    "address": "서울 성북구 고려대로24길 51 6층 캐치카페 안암",
+    "images": [
+      "408e3f5602f2ccf8776f045f98b77c326ed4ceae323a917bd3ce0f7df29ed914.jpg",
+      "408e3f5602f2ccf8776f045f98b77c326ed4ceae323a917bd3ce0f7df29ed914.jpg",
+      "6e5bc9ff82b51d886cbf03a36150883c4bfeb4feb2541caf54271f5a83aa2db0.jpg",
+      "408e3f5602f2ccf8776f045f98b77c326ed4ceae323a917bd3ce0f7df29ed914.jpg",
+      "6e5bc9ff82b51d886cbf03a36150883c4bfeb4feb2541caf54271f5a83aa2db0.jpg",
+      "bbb2a43b22ec6c9baf8d6227326a0c67e66540f129d925c73c25faed9b2de589.jpg"
+    ],
+    "lat": 37.5839294884,
+    "lon": 127.0297090184
+  },
+  {
+    "naver_place_id": 1444281038,
+    "name": "커피날에",
+    "tags": ["카페"],
+    "phone": "02-929-3287",
+    "address": "서울 성북구 보문로26길 57-3 1층",
+    "images": [
+      "7bba2e3758f434ecea539a604394edb20e46712db217134dba42c9d98a0e5495.jpg",
+      "7bba2e3758f434ecea539a604394edb20e46712db217134dba42c9d98a0e5495.jpg",
+      "3ad884c88ba2727949077dadadc5f8c2958ace0890d744c22a94f05a5ec1f3b5.jpg",
+      "7bba2e3758f434ecea539a604394edb20e46712db217134dba42c9d98a0e5495.jpg",
+      "3ad884c88ba2727949077dadadc5f8c2958ace0890d744c22a94f05a5ec1f3b5.jpg",
+      "a3ab30640487f8c4d590a43d732f56ef83c209e4ce8a66b003955c4809836957.jpg"
+    ],
+    "lat": 37.5875580798,
+    "lon": 127.021753448
+  },
+  {
+    "naver_place_id": 38705679,
+    "name": "공차 고대 안암점",
+    "tags": ["카페"],
+    "phone": "02-953-5086",
+    "address": "서울 성북구 고려대로24길 17 1,2층",
+    "images": [
+      "244db65ae989d8e4fc9fdc340d41f5b57856dbb43c7850d8bb60cc224dd71fa1.jpg",
+      "244db65ae989d8e4fc9fdc340d41f5b57856dbb43c7850d8bb60cc224dd71fa1.jpg",
+      "3930c3339ff11fbc45bc3583a06d791afff0c0f8a2777f72de6e539f8068dcd3.jpg",
+      "244db65ae989d8e4fc9fdc340d41f5b57856dbb43c7850d8bb60cc224dd71fa1.jpg",
+      "3930c3339ff11fbc45bc3583a06d791afff0c0f8a2777f72de6e539f8068dcd3.jpg",
+      "5f06e30bf679c6069b281e090fc9cfd8b6a3b93a377c36a3ab679f24d8ab7515.jpg"
+    ],
+    "lat": 127.0295237143,
+    "lon": 37.5854417618
+  },
+  {
+    "naver_place_id": 1723667984,
+    "name": "더베이크 고려대점",
+    "tags": ["카페"],
+    "phone": "0507-1416-2077",
+    "address": "서울 성북구 안암로 145 고려대학교중앙광장 124호",
+    "images": [
+      "f7b4115461b35883258627c688136dbfd835ad5dbbf9fd8ba8651a77a3272e64.jpg",
+      "f7b4115461b35883258627c688136dbfd835ad5dbbf9fd8ba8651a77a3272e64.jpg",
+      "22b1699bbf7a971bcd9d4ae1a9b38cb0c1a86c34fb75e6b6603045fd39dffcda.jpg",
+      "f7b4115461b35883258627c688136dbfd835ad5dbbf9fd8ba8651a77a3272e64.jpg",
+      "22b1699bbf7a971bcd9d4ae1a9b38cb0c1a86c34fb75e6b6603045fd39dffcda.jpg",
+      "40d8c620457b10ef015de0523ccd15c87eda30a53998f54b25671f449c3e445e.jpg"
+    ],
+    "lat": 37.5887034224,
+    "lon": 127.0316983312
+  },
+  {
+    "naver_place_id": 1926843261,
+    "name": "안암당",
+    "tags": ["카페"],
+    "phone": "02-2135-6776",
+    "address": "서울 성북구 고려대로 100 1층",
+    "images": [
+      "d799e98d80806768106c34596798156ea7f9d7dea0baf2a414625ea1664aa25c.jpg",
+      "d799e98d80806768106c34596798156ea7f9d7dea0baf2a414625ea1664aa25c.jpg",
+      "052f9947ce7125fb69618410f52921e8069c6e78ba144d07f3713d50cb0d2727.jpg",
+      "d799e98d80806768106c34596798156ea7f9d7dea0baf2a414625ea1664aa25c.jpg",
+      "052f9947ce7125fb69618410f52921e8069c6e78ba144d07f3713d50cb0d2727.jpg",
+      "4a788ed8e3f52e7a8e01bf638e111817d64f23d61993c117d96d9c7939b6e95f.jpg"
+    ],
+    "lat": 37.5861941319,
+    "lon": 127.0304268268
+  },
+  {
+    "naver_place_id": 1432755206,
+    "name": "파운드커피 고대하나스퀘어점",
+    "tags": ["카페"],
+    "phone": "0507-1340-6848",
+    "address": "서울 성북구 고려대로22길 6-7 자연계캠퍼스 하나스퀘어건물 지하1층",
+    "images": [
+      "9afcee71bf037114466b827ac8d97ee14a9da32192ffd21f7ed5cb3befcfb959.jpg",
+      "9afcee71bf037114466b827ac8d97ee14a9da32192ffd21f7ed5cb3befcfb959.jpg",
+      "7c9388b632d44a4be588fd4ee768959db4ab5d175136b2a06f8fa43926fea014.jpg",
+      "9afcee71bf037114466b827ac8d97ee14a9da32192ffd21f7ed5cb3befcfb959.jpg",
+      "7c9388b632d44a4be588fd4ee768959db4ab5d175136b2a06f8fa43926fea014.jpg",
+      "c55444d7a0edb08a964272f365766d4070a1d4b65760a5b5b70aaa0d1c558043.jpg"
+    ],
+    "lat": 37.5859388603,
+    "lon": 127.0283365777
+  },
+  {
+    "naver_place_id": 1660576558,
+    "name": "마이버터드림",
+    "tags": ["카페"],
+    "phone": null,
+    "address": "서울 성북구 고려대로 43",
+    "images": [
+      "6abda7c65917033648acf3fa594076224250cb06482c907d9c2330cbe6dc138b.jpg",
+      "6abda7c65917033648acf3fa594076224250cb06482c907d9c2330cbe6dc138b.jpg",
+      "4349e84b45bbb570e95a38379385f6d02fddd52649fcc03a289a383006f47444.jpg",
+      "6abda7c65917033648acf3fa594076224250cb06482c907d9c2330cbe6dc138b.jpg",
+      "4349e84b45bbb570e95a38379385f6d02fddd52649fcc03a289a383006f47444.jpg",
+      "f1cad64629a70b6e288262d33c9475d70bc14f4f102f9d0cef0eaacd8ef26927.jpg"
+    ],
+    "lat": 37.5865648952,
+    "lon": 127.0241729064
+  },
+  {
+    "naver_place_id": 1049034946,
+    "name": "과일에반하다,프루타 고대점",
+    "tags": ["카페"],
+    "phone": "0507-1441-1031",
+    "address": "서울 성북구 고려대로24길 39 1층",
+    "images": [
+      "1398202ccb1a13a4cbf1ae94fcd66da8f72ffde114c4ea09d58d01a9828317e5.jpg",
+      "1398202ccb1a13a4cbf1ae94fcd66da8f72ffde114c4ea09d58d01a9828317e5.jpg",
+      "8155bcd50e2d1696654316693cfbf3698af9f9640b033ed973e9a7fbbdd571b2.jpg",
+      "1398202ccb1a13a4cbf1ae94fcd66da8f72ffde114c4ea09d58d01a9828317e5.jpg",
+      "8155bcd50e2d1696654316693cfbf3698af9f9640b033ed973e9a7fbbdd571b2.jpg",
+      "259b89a913beb31b74c0106a8bde133c39c83d9b15f36d1e273fb8d4273e7b29.jpg"
+    ],
+    "lat": 37.5844109223,
+    "lon": 127.0295765192
+  },
+  {
+    "naver_place_id": 1723629186,
+    "name": "카페J",
+    "tags": ["카페"],
+    "phone": "0507-1340-8320",
+    "address": "서울 성북구 개운사길 36 1층 B1층",
+    "images": [
+      "067d9a2327c0b5656f3c48c7b63ba0da96c4436401720b245b1eb2fed9c78a73.jpg",
+      "067d9a2327c0b5656f3c48c7b63ba0da96c4436401720b245b1eb2fed9c78a73.jpg",
+      "24dbf77b74e949155eb9b82228f097c70d7c58d174f30801375a0ba1b75d1b0d.jpg",
+      "067d9a2327c0b5656f3c48c7b63ba0da96c4436401720b245b1eb2fed9c78a73.jpg",
+      "24dbf77b74e949155eb9b82228f097c70d7c58d174f30801375a0ba1b75d1b0d.jpg",
+      "2e10da303dad21a274c83bf14fce86b2ea6134f397e3073a8dbddf3ce51cf391.jpg"
+    ],
+    "lat": 37.5880056463,
+    "lon": 127.0294464901
+  },
+  {
+    "naver_place_id": 1435551461,
+    "name": "크레페마스터 고려대점",
+    "tags": ["카페"],
+    "phone": "0507-1486-4979",
+    "address": "서울 성북구 안암로 69 1층 크레페마스터 고려대점",
+    "images": [
+      "9afc5c6fbb721b3d15b92f0879c867002dbfe51fe41acfb73bbdbd2b32a1788e.jpg",
+      "9afc5c6fbb721b3d15b92f0879c867002dbfe51fe41acfb73bbdbd2b32a1788e.jpg",
+      "1e727a5f33d28dbc483d30fa06afa9a43a679956bca07fcbfaa36becaf77d55b.jpg",
+      "9afc5c6fbb721b3d15b92f0879c867002dbfe51fe41acfb73bbdbd2b32a1788e.jpg",
+      "1e727a5f33d28dbc483d30fa06afa9a43a679956bca07fcbfaa36becaf77d55b.jpg",
+      "387a72afd55b37fc0b5781bc2c467aa5651e39a5044dc1affc05cc6340dd17f2.jpg"
+    ],
+    "lat": 37.5825477415,
+    "lon": 127.0289167613
+  },
+  {
+    "naver_place_id": 1454453212,
+    "name": "카페아이노우",
+    "tags": ["카페"],
+    "phone": null,
+    "address": "서울 성북구 고려대로7가길 6 102호",
+    "images": [
+      "2690e2c5706b5738f1666f6c4a09b72ab2618057d2a394a259bba77e02461066.jpg",
+      "2690e2c5706b5738f1666f6c4a09b72ab2618057d2a394a259bba77e02461066.jpg",
+      "b26c25e2b6826cebef4128c04146642bf56678a7d430d6087c1680dcc0eef8ea.jpg",
+      "2690e2c5706b5738f1666f6c4a09b72ab2618057d2a394a259bba77e02461066.jpg",
+      "b26c25e2b6826cebef4128c04146642bf56678a7d430d6087c1680dcc0eef8ea.jpg",
+      "a3785816e58431aebf3eac86bdb4d43f81e9f687724ae93ca5e68265a1931024.jpg"
+    ],
+    "lat": 37.5862581864,
+    "lon": 127.0214305059
+  },
+  {
+    "naver_place_id": 1903759225,
+    "name": "포레스트스터디카페 고대안암점",
+    "tags": ["카페"],
+    "phone": "0507-1376-1951",
+    "address": "서울 성북구 안암로 69-1 3층",
+    "images": [
+      "c0b487da08478f0f2ad5384120323b4be1adb98d1fd8e9a5176ec9890e08179b.jpg",
+      "c0b487da08478f0f2ad5384120323b4be1adb98d1fd8e9a5176ec9890e08179b.jpg",
+      "bee8ae16d2c7f0d07144ca447f9b585486e2ba49ec3b1ed7aa60e6b9a4f4a1e5.jpg",
+      "c0b487da08478f0f2ad5384120323b4be1adb98d1fd8e9a5176ec9890e08179b.jpg",
+      "bee8ae16d2c7f0d07144ca447f9b585486e2ba49ec3b1ed7aa60e6b9a4f4a1e5.jpg",
+      "bc78044b458bb91bb1f3f5fb8c2033455ae3b6a48dd053c6a1752edddf81156a.jpg"
+    ],
+    "lat": 37.5826556929,
+    "lon": 127.0288661961
+  },
+  {
+    "naver_place_id": 1564757858,
+    "name": "싱싱주스 고려대점",
+    "tags": ["카페"],
+    "phone": "0507-1328-1515",
+    "address": "서울 성북구 안암로 145 중앙광장 지하 101호",
+    "images": [
+      "11fd02fb3628d3fdfd87d037251e4ea673c3bc7a249b13ce3aa46a81a91d4e7f.jpg",
+      "11fd02fb3628d3fdfd87d037251e4ea673c3bc7a249b13ce3aa46a81a91d4e7f.jpg",
+      "97a1455136bb7cc308d9be2d4072c610e5591122efee9fe0509b4bd48688d24c.jpg",
+      "11fd02fb3628d3fdfd87d037251e4ea673c3bc7a249b13ce3aa46a81a91d4e7f.jpg",
+      "97a1455136bb7cc308d9be2d4072c610e5591122efee9fe0509b4bd48688d24c.jpg",
+      "b018915a5c3e2db69ea422318cce6dcd45ffd96bc862b86a02d66b21886296aa.jpg"
+    ],
+    "lat": 37.5887034224,
+    "lon": 127.0316983312
+  },
+  {
+    "naver_place_id": "1127439540",
+    "name": "르부아",
+    "tags": ["프랑스음식"],
+    "phone": "0507-1323-7722",
+    "address": "서울 성북구 고려대로7길 56-18 1층 102호",
+    "images": [
+      "9c74e12755ea6e9faeb213fc9e043ebc73d6b5b076f6cf935ad9d4e1f0913bd7.jpg",
+      "9c74e12755ea6e9faeb213fc9e043ebc73d6b5b076f6cf935ad9d4e1f0913bd7.jpg",
+      "29c342f8f9e623e0e373cb6782f94452bab98e088dd268d006a00d30992cacaf.jpg",
+      "9c74e12755ea6e9faeb213fc9e043ebc73d6b5b076f6cf935ad9d4e1f0913bd7.jpg",
+      "29c342f8f9e623e0e373cb6782f94452bab98e088dd268d006a00d30992cacaf.jpg",
+      "a67cf0ddf045064a57316a5934c244f8cf0905f1e968341a2d5da5cea0ea1f31.jpg"
+    ],
+    "lat": 37.588772297404,
+    "lon": 127.020524077706
+  },
+  {
+    "naver_place_id": "1456514659",
+    "name": "운치",
+    "tags": ["양식"],
+    "phone": "0507-1475-4644",
+    "address": "서울 성북구 고려대로7길 48 1층 Wnch",
+    "images": [
+      "d2833c30d048c932d77bbca7ac8facd64c4b23f872cf7b751d923e9aea71ee38.jpg",
+      "d2833c30d048c932d77bbca7ac8facd64c4b23f872cf7b751d923e9aea71ee38.jpg",
+      "a3bd15e53373e5197bbcb04c20b76fee9465815d3d838dae7eedcc870d03301d.jpg",
+      "d2833c30d048c932d77bbca7ac8facd64c4b23f872cf7b751d923e9aea71ee38.jpg",
+      "a3bd15e53373e5197bbcb04c20b76fee9465815d3d838dae7eedcc870d03301d.jpg",
+      "6499d917fb409fa91228d3d17473d5cbb7479cd07bb5941bf470a3d19b520901.jpg"
+    ],
+    "lat": 37.5880671533694,
+    "lon": 127.020159306903
+  },
+  {
+    "naver_place_id": "36733702",
+    "name": "무르무르드구스토",
+    "tags": ["양식"],
+    "phone": "0507-1354-0683",
+    "address": "서울 성북구 고려대로 102-2 4층",
+    "images": [
+      "50930ef6d64208d16c1d8203cfcc6be377ceddbc4fe89f9149a840a97c8f106c.jpg",
+      "50930ef6d64208d16c1d8203cfcc6be377ceddbc4fe89f9149a840a97c8f106c.jpg",
+      "901e58e5ed77965cb4b020fe32498b2b0fc343d5486c96bd9f74669ba7363c70.jpg",
+      "50930ef6d64208d16c1d8203cfcc6be377ceddbc4fe89f9149a840a97c8f106c.jpg",
+      "901e58e5ed77965cb4b020fe32498b2b0fc343d5486c96bd9f74669ba7363c70.jpg",
+      "b8c552f53d43caab8c3b1fef2b67245fbae893d8167addc65e80e78a3812431b.jpg"
+    ],
+    "lat": 37.5861091702702,
+    "lon": 127.030766564708
+  },
+  {
+    "naver_place_id": "37101699",
+    "name": "매스플레이트안암본점",
+    "tags": ["이탈리아음식"],
+    "phone": null,
+    "address": "서울 성북구 개운사길 18 2층",
+    "images": [
+      "c44f96f75434d7aaf8e6a41eb2ef6229f6aa7f280d3651e8b1e56fd7ca872a7d.jpg",
+      "c44f96f75434d7aaf8e6a41eb2ef6229f6aa7f280d3651e8b1e56fd7ca872a7d.jpg",
+      "ed1dc8c23d84cdadedcb1f192c7b91748fea32a769e9b852a4c816a006073b76.jpg",
+      "c44f96f75434d7aaf8e6a41eb2ef6229f6aa7f280d3651e8b1e56fd7ca872a7d.jpg",
+      "ed1dc8c23d84cdadedcb1f192c7b91748fea32a769e9b852a4c816a006073b76.jpg",
+      "cfe9616504dd7472ea93262a25a8f95791dd956a1aeeebafa27c62e166cbedbb.jpg"
+    ],
+    "lat": 37.5871292464272,
+    "lon": 127.029463467677
+  },
+  {
+    "naver_place_id": "1283728786",
+    "name": "KFC 고대안암",
+    "tags": ["햄버거"],
+    "phone": "02-923-8162",
+    "address": "서울 성북구 개운사길 5",
+    "images": [
+      "195ae758242a638e723937ed863459badb4683bd412221134f366db437a4e1a7.jpg",
+      "195ae758242a638e723937ed863459badb4683bd412221134f366db437a4e1a7.jpg",
+      "995e67e932251d3bc5f23fd6302f9f14f86d8907735549e0424e290e38768e3b.jpg",
+      "195ae758242a638e723937ed863459badb4683bd412221134f366db437a4e1a7.jpg",
+      "995e67e932251d3bc5f23fd6302f9f14f86d8907735549e0424e290e38768e3b.jpg",
+      "7850b567d7f258cb2033acab146cea42eb2fa21ab0da24df1e939354e8052732.jpg"
+    ],
+    "lat": 37.5866593622136,
+    "lon": 127.029166984176
+  },
+  {
+    "naver_place_id": "1401569103",
+    "name": "플랜티 브런치카페",
+    "tags": ["브런치"],
+    "phone": "02-953-8387",
+    "address": "서울 성북구 안암로 25",
+    "images": [
+      "655f20890b565243c3b23e3e1e331ccefff338f410d3a29d50f62d48aa720dd1.jpg",
+      "655f20890b565243c3b23e3e1e331ccefff338f410d3a29d50f62d48aa720dd1.jpg",
+      "6fa34c53df63181a2191df143ae517adbcb319c5332ad914e2c895ac596c0d94.jpg",
+      "655f20890b565243c3b23e3e1e331ccefff338f410d3a29d50f62d48aa720dd1.jpg",
+      "6fa34c53df63181a2191df143ae517adbcb319c5332ad914e2c895ac596c0d94.jpg",
+      "ed013b8e450f89fb7221b98cefdd9f2bb8f558f2e062c141fe4788ff9495da68.jpg"
+    ],
+    "lat": 37.5800172407441,
+    "lon": 127.025251610403
+  },
+  {
+    "naver_place_id": "11807368",
+    "name": "맥도날드 안암점",
+    "tags": ["햄버거"],
+    "phone": "02-6229-3400",
+    "address": "서울 성북구 고려대로24길 42 방주빌딩",
+    "images": [
+      "d91e48da61bc9ae349ad4b47bab9595f72089d1e2656084166653ef84124dfb2.jpg",
+      "d91e48da61bc9ae349ad4b47bab9595f72089d1e2656084166653ef84124dfb2.jpg",
+      "a131d2c41f35834ffe493b357b1ef6803ed530f79be5db8567568e5da5f33e92.jpg",
+      "d91e48da61bc9ae349ad4b47bab9595f72089d1e2656084166653ef84124dfb2.jpg",
+      "a131d2c41f35834ffe493b357b1ef6803ed530f79be5db8567568e5da5f33e92.jpg",
+      "47ea9bd99677b6337cfc6b48d2e6e30b2b10bfc48bfe3fbde6c8f9d39d2e5342.jpg"
+    ],
+    "lat": 37.5844192893674,
+    "lon": 127.029264043051
+  },
+  {
+    "naver_place_id": "1578720380",
+    "name": "퍽앤어니언",
+    "tags": ["햄버거"],
+    "phone": "0507-1429-0423",
+    "address": "서울 성북구 고려대로28길 17-3 101호 퍽앤어니언",
+    "images": [
+      "f3b13a8e80d1a10bbff082efb68b92a4a69f928d32df102a29e9e723f0b7068c.jpg",
+      "f3b13a8e80d1a10bbff082efb68b92a4a69f928d32df102a29e9e723f0b7068c.jpg",
+      "228054b5929c7969532dbf800d942e0513ad4fe7f588779a0240c88326c4caac.jpg",
+      "f3b13a8e80d1a10bbff082efb68b92a4a69f928d32df102a29e9e723f0b7068c.jpg",
+      "228054b5929c7969532dbf800d942e0513ad4fe7f588779a0240c88326c4caac.jpg",
+      "530a3b8048a09c3f8f8c8a05e721c6b77202b4f082aaad000444353b6614a086.jpg"
+    ],
+    "lat": 37.5856669289677,
+    "lon": 127.030896584645
+  },
+  {
+    "naver_place_id": "1916763154",
+    "name": "파쯔",
+    "tags": ["이탈리아음식"],
+    "phone": "0507-1428-6365",
+    "address": "서울 성북구 고려대로 19 1층",
+    "images": [
+      "b45fe17cbc3e708adedb3189e94730ddaffd4b8a0e1171bb3261b19754796dc7.jpg",
+      "b45fe17cbc3e708adedb3189e94730ddaffd4b8a0e1171bb3261b19754796dc7.jpg",
+      "6d1a02cbc110ec1feffb8fef09d36a8838deedd997f1b45c47319460a782f630.jpg",
+      "b45fe17cbc3e708adedb3189e94730ddaffd4b8a0e1171bb3261b19754796dc7.jpg",
+      "6d1a02cbc110ec1feffb8fef09d36a8838deedd997f1b45c47319460a782f630.jpg",
+      "9fb750ac55ebc24b86272bab6f6c701965608ef86fd73b54c2fcb1e0fb004e77.jpg"
+    ],
+    "lat": 37.5862186586475,
+    "lon": 127.021287837507
+  },
+  {
+    "naver_place_id": "1731935131",
+    "name": "써브웨이 고려대점",
+    "tags": ["샌드위치"],
+    "phone": "02-926-1269",
+    "address": "서울 성북구 고려대로24길 20",
+    "images": [
+      "9b664ff55f1a4f2fa76381e6a2208779e2ca86c66c1c639852ccf6cd2a411adc.jpg",
+      "9b664ff55f1a4f2fa76381e6a2208779e2ca86c66c1c639852ccf6cd2a411adc.jpg",
+      "15c5d9dc3361af12927c2d463eca2e8bbf019ba2efb41a8abf82531e789bc3e8.jpg",
+      "9b664ff55f1a4f2fa76381e6a2208779e2ca86c66c1c639852ccf6cd2a411adc.jpg",
+      "15c5d9dc3361af12927c2d463eca2e8bbf019ba2efb41a8abf82531e789bc3e8.jpg",
+      "a6a0e0232c28d7dbc9a140778da8a89b237e44dbc668fe332e8d46dba47ddd1f.jpg"
+    ],
+    "lat": 37.5853854391291,
+    "lon": 127.029204075717
+  },
+  {
+    "naver_place_id": "1638312330",
+    "name": "어흥식당 고대점",
+    "tags": ["스테이크", "립"],
+    "phone": "02-922-0426",
+    "address": "서울 성북구 고려대로27길 40",
+    "images": [
+      "b121464d7e1e90735ff0b29f9dd7dcf048b033fde90a5dffa03a5e8c3ec1bf20.jpg",
+      "b121464d7e1e90735ff0b29f9dd7dcf048b033fde90a5dffa03a5e8c3ec1bf20.jpg",
+      "8dd3a776335970ae58ce833db7384b9e23766269326ada165d53a1b150c35b48.jpg",
+      "b121464d7e1e90735ff0b29f9dd7dcf048b033fde90a5dffa03a5e8c3ec1bf20.jpg",
+      "8dd3a776335970ae58ce833db7384b9e23766269326ada165d53a1b150c35b48.jpg",
+      "5c915d754ac45da028e9d8da165ad127c3bf65d4c0c8c0c395874a9f66e82403.jpg"
+    ],
+    "lat": 37.5881167224302,
+    "lon": 127.02986964743
+  },
+  {
+    "naver_place_id": "675662492",
+    "name": "버거킹 안암오거리점",
+    "tags": ["햄버거"],
+    "phone": "02-922-0332",
+    "address": "서울 성북구 안암로 73",
+    "images": [
+      "fd678608541218be205138c7a0ade1c2dd8d6890bad85df17100aa9e18fee577.jpg",
+      "fd678608541218be205138c7a0ade1c2dd8d6890bad85df17100aa9e18fee577.jpg",
+      "16ee956b3a93e6ca321d18f38933e74b2e6674a7b923e86d5d368671a8fffdc7.jpg",
+      "fd678608541218be205138c7a0ade1c2dd8d6890bad85df17100aa9e18fee577.jpg",
+      "16ee956b3a93e6ca321d18f38933e74b2e6674a7b923e86d5d368671a8fffdc7.jpg",
+      "b5ba2f3e142f9bde295e54f13f8bd81bbe0002ed0b13f51057c5165780d12275.jpg"
+    ],
+    "lat": 37.5830403543572,
+    "lon": 127.029121644742
+  },
+  {
+    "naver_place_id": "1331163953",
+    "name": "히포크라테스 스프",
+    "tags": ["양식"],
+    "phone": "02-923-3932",
+    "address": "서울 성북구 고려대로28길 12-3",
+    "images": [
+      "cc75495f1edc22ab2559f7eddd59ad3050f0e2e30d389cd7365fb6450a7b264b.jpg",
+      "cc75495f1edc22ab2559f7eddd59ad3050f0e2e30d389cd7365fb6450a7b264b.jpg",
+      "06e15c34ecd3513f571216d36f3bc043cf4afa4cfe8362db055a03a3d99ecbfe.jpg",
+      "cc75495f1edc22ab2559f7eddd59ad3050f0e2e30d389cd7365fb6450a7b264b.jpg",
+      "06e15c34ecd3513f571216d36f3bc043cf4afa4cfe8362db055a03a3d99ecbfe.jpg",
+      "d3820b28577a6b50621861e973c077fe4466908f808c2b906bd42373b57a5789.jpg"
+    ],
+    "lat": 37.5857078581987,
+    "lon": 127.030456971595
+  },
+  {
+    "naver_place_id": "11624602",
+    "name": "피자헛 안암점",
+    "tags": ["피자"],
+    "phone": "02-926-9223",
+    "address": "서울 성북구 고려대로 28",
+    "images": [
+      "0d4825266bee5108b582eb0e3e7f1dbb7bb7406d7f358371ceded03fd6d70b88.jpg",
+      "0d4825266bee5108b582eb0e3e7f1dbb7bb7406d7f358371ceded03fd6d70b88.jpg",
+      "e1d5fb04a3670d3f98758a41f7133a9bc1174bf818948d85c5c0586c49ae3cea.jpg",
+      "0d4825266bee5108b582eb0e3e7f1dbb7bb7406d7f358371ceded03fd6d70b88.jpg",
+      "e1d5fb04a3670d3f98758a41f7133a9bc1174bf818948d85c5c0586c49ae3cea.jpg",
+      "a1e732de9b4ddcde8ae98a97cb5e0cbb6232b5e32cb8fc62a087a092b436c0ac.jpg"
+    ],
+    "lat": 37.5860793522352,
+    "lon": 127.02233292904
+  },
+  {
+    "naver_place_id": "1829727228",
+    "name": "밀플랜비 고려대점",
+    "tags": ["핫도그"],
+    "phone": "0507-1347-0773",
+    "address": "서울 성북구 개운사길 52 1층",
+    "images": [
+      "d9ccdf5039711005a4657bfd3b50070fa06ed3d0a8c5c8186af077e623cd151d.jpg",
+      "d9ccdf5039711005a4657bfd3b50070fa06ed3d0a8c5c8186af077e623cd151d.jpg",
+      "e0ba563091b92b8e97d0f6f2d2dd03cd56cf4a9dfc49e8c0046600c78070bf7a.jpg",
+      "d9ccdf5039711005a4657bfd3b50070fa06ed3d0a8c5c8186af077e623cd151d.jpg",
+      "e0ba563091b92b8e97d0f6f2d2dd03cd56cf4a9dfc49e8c0046600c78070bf7a.jpg",
+      "1c0e3a90816fb059745c5edbb9c4da935b8c20d9e0ac49de1ec20c7638f8b1f9.jpg"
+    ],
+    "lat": 37.5886754629264,
+    "lon": 127.029371120545
+  },
+  {
+    "naver_place_id": "1476501050",
+    "name": "샐러드로우 앤 트라타 고대본점",
+    "tags": ["멕시코", "남미음식"],
+    "phone": "02-921-0901",
+    "address": "서울 성북구 고려대로28길 14",
+    "images": [
+      "5e95de0c19010cd2fe25ef938d02e6f3ffdff650e567ba60a8ef4cb1350377a5.jpg",
+      "5e95de0c19010cd2fe25ef938d02e6f3ffdff650e567ba60a8ef4cb1350377a5.jpg",
+      "2ad1ec4a667e0c031f9f3c0ad7d7d6cd50fe5883a51d89d5feaa6730ceabfd8b.jpg",
+      "5e95de0c19010cd2fe25ef938d02e6f3ffdff650e567ba60a8ef4cb1350377a5.jpg",
+      "2ad1ec4a667e0c031f9f3c0ad7d7d6cd50fe5883a51d89d5feaa6730ceabfd8b.jpg",
+      "a97d7c5e5c7b11d9d396133d5e6df6aa5eac584cbcd1faeac80296dd576d46f7.jpg"
+    ],
+    "lat": 37.5857247566821,
+    "lon": 127.030612315192
+  },
+  {
+    "naver_place_id": "1923684672",
+    "name": "위치앤샐러",
+    "tags": ["샌드위치"],
+    "phone": "0507-1407-2534",
+    "address": "서울 성북구 개운사길 90 1층 101호",
+    "images": [
+      "cc2dd34dfa17e2876bff4d877eaf199365fb0058ddaf2b942cba9b5c761c26fa.jpg",
+      "cc2dd34dfa17e2876bff4d877eaf199365fb0058ddaf2b942cba9b5c761c26fa.jpg",
+      "90f9c066bc64789cf3eb7a0f6059bc534d36c23142a5067a02cb35e4f7b11fcf.jpg",
+      "cc2dd34dfa17e2876bff4d877eaf199365fb0058ddaf2b942cba9b5c761c26fa.jpg",
+      "90f9c066bc64789cf3eb7a0f6059bc534d36c23142a5067a02cb35e4f7b11fcf.jpg",
+      "488aa12181d0cfeee09ebd733dd789885edc7e3b5a1741a307642ba71736d18e.jpg"
+    ],
+    "lat": 37.5903896041507,
+    "lon": 127.02935832022
+  },
+  {
+    "naver_place_id": "1221785956",
+    "name": "효이당",
+    "tags": ["스파게티", "파스타전문"],
+    "phone": "0507-1343-6839",
+    "address": "서울 성북구 고려대로27길 30-2",
+    "images": [
+      "8dcdaff2043c8ddd66a5218efbe56b17c75ad2cf2f38874d11527117835b88de.jpg",
+      "8dcdaff2043c8ddd66a5218efbe56b17c75ad2cf2f38874d11527117835b88de.jpg",
+      "ab92b796f59d949c2ae851e255e9e591cd39bb128527b7699cd75ecd97f95231.jpg",
+      "8dcdaff2043c8ddd66a5218efbe56b17c75ad2cf2f38874d11527117835b88de.jpg",
+      "ab92b796f59d949c2ae851e255e9e591cd39bb128527b7699cd75ecd97f95231.jpg",
+      "3377c216e42869b2311dd70cb6a1bc7a806de82df0ee5da8ce28a0667bfaeead.jpg"
+    ],
+    "lat": 37.5876659618102,
+    "lon": 127.029845917103
+  },
+  {
+    "naver_place_id": "1999824181",
+    "name": "퀴즈노스 고대안암병원점",
+    "tags": ["샌드위치"],
+    "phone": "0507-1369-0129",
+    "address": "서울 성북구 고려대로 73 신관 1층",
+    "images": [
+      "1c98eec3a58fd11b8f063a92ca5dfac00dcb11d3f1823b199f17692d85adf554.jpg",
+      "1c98eec3a58fd11b8f063a92ca5dfac00dcb11d3f1823b199f17692d85adf554.jpg",
+      "05672779b0302c16d7279c8ca8ae600d554f4e800a768b386b3d2e10a72edc11.jpg",
+      "1c98eec3a58fd11b8f063a92ca5dfac00dcb11d3f1823b199f17692d85adf554.jpg",
+      "05672779b0302c16d7279c8ca8ae600d554f4e800a768b386b3d2e10a72edc11.jpg",
+      "52e414880cc3414c61b0761dc2ae031a2d0d05010bc7995347c9e81f983414db.jpg"
+    ],
+    "lat": 37.5873771473625,
+    "lon": 127.026248862202
+  },
+  {
+    "naver_place_id": "38495614",
+    "name": "모이리타",
+    "tags": ["이탈리아음식"],
+    "phone": "02-922-2292",
+    "address": "서울 성북구 고려대로24길 20 2층",
+    "images": [
+      "e2171a2f1a296e120723481d6118c7fc2aba32f4b60bfa66a274b03f2f678756.jpg",
+      "e2171a2f1a296e120723481d6118c7fc2aba32f4b60bfa66a274b03f2f678756.jpg",
+      "09257e5fe2cfab8bf1b088187e57123cecda2c4e8c1e7489af5e7d038f87e775.jpg",
+      "e2171a2f1a296e120723481d6118c7fc2aba32f4b60bfa66a274b03f2f678756.jpg",
+      "09257e5fe2cfab8bf1b088187e57123cecda2c4e8c1e7489af5e7d038f87e775.jpg",
+      "4dc41484fe3efd435eb0e85a7213fbcdcb06c036e45d292179cbf48b1b6cb7b1.jpg"
+    ],
+    "lat": 37.5853854391291,
+    "lon": 127.029204075717
+  },
+  {
+    "naver_place_id": "1953081807",
+    "name": "피자스톰 성북점",
+    "tags": ["피자"],
+    "phone": "02-923-4858",
+    "address": "서울 성북구 고려대로11길 50 1층",
+    "images": [
+      "ed9775ce175da25e5b7f0fcc655919541bf75b7df17ad156bd08d4368580f134.jpg",
+      "ed9775ce175da25e5b7f0fcc655919541bf75b7df17ad156bd08d4368580f134.jpg",
+      "7a11f1eacf0fd41581e40af6cfa5ec0480f14ae781d5f51a15f490c6b074fab2.jpg",
+      "ed9775ce175da25e5b7f0fcc655919541bf75b7df17ad156bd08d4368580f134.jpg",
+      "7a11f1eacf0fd41581e40af6cfa5ec0480f14ae781d5f51a15f490c6b074fab2.jpg",
+      "239fb75f8aadff99f982cfb2e86672625ef59cc9fe9150c92b798402d3a30809.jpg"
+    ],
+    "lat": 37.5884138396259,
+    "lon": 127.021275442008
+  },
+  {
+    "naver_place_id": "1233558902",
+    "name": "맘스터치 고대하나스퀘어점",
+    "tags": ["햄버거"],
+    "phone": "02-3290-2635",
+    "address": "서울 성북구 안암로 145 하나스퀘어 지하1층",
+    "images": [
+      "af2bd5d01d8c57d986310dee6794f6d63a9c8bc5666523e0a6be2033f3e0edb0.jpg",
+      "af2bd5d01d8c57d986310dee6794f6d63a9c8bc5666523e0a6be2033f3e0edb0.jpg",
+      "fe777d336728c88c6c22b514c8efb090ef9509e9af23dee92d1415031a010a1e.jpg",
+      "af2bd5d01d8c57d986310dee6794f6d63a9c8bc5666523e0a6be2033f3e0edb0.jpg",
+      "fe777d336728c88c6c22b514c8efb090ef9509e9af23dee92d1415031a010a1e.jpg",
+      "f1eb4c0967a22506e41e972f64a1c933349561c95d5b7066fb6c7755cf37538d.jpg"
+    ],
+    "lat": 37.5887034223667,
+    "lon": 127.031698331241
+  },
+  {
+    "naver_place_id": "11605560",
+    "name": "영철버거",
+    "tags": ["햄버거"],
+    "phone": "02-922-1668",
+    "address": "서울 성북구 안암로9가길 100 1층",
+    "images": [
+      "e89619e7b620765fc46e9e60b2a01c515fcd05ecde4aad0fbb5079327bcee03a.jpg",
+      "e89619e7b620765fc46e9e60b2a01c515fcd05ecde4aad0fbb5079327bcee03a.jpg",
+      "6e58099df543aed53dee8d46446a15d0b628eb5f101897580ad2c97dccb73052.jpg",
+      "e89619e7b620765fc46e9e60b2a01c515fcd05ecde4aad0fbb5079327bcee03a.jpg",
+      "6e58099df543aed53dee8d46446a15d0b628eb5f101897580ad2c97dccb73052.jpg",
+      "4e99d28bf93d036f0571324ad4804e533cc8d14c2ae17af4b16a1a0e56b16c9e.jpg"
+    ],
+    "lat": 37.5831855805828,
+    "lon": 127.028811151656
+  },
+  {
+    "naver_place_id": "1644385850",
+    "name": "공주와요리사",
+    "tags": ["양식"],
+    "phone": "0507-1475-4335",
+    "address": "서울 성북구 고려대로 114 1층 공주와요리사",
+    "images": [
+      "ef28d0079147aeece4e9ab18285a83eaa8d8c8ec7798607bf862e9e0c753d5e2.jpg",
+      "ef28d0079147aeece4e9ab18285a83eaa8d8c8ec7798607bf862e9e0c753d5e2.jpg",
+      "55df19a0f96db2ca53272bb635cbe3f64634e0af028cd80d8d210ddb280c6002.jpg",
+      "ef28d0079147aeece4e9ab18285a83eaa8d8c8ec7798607bf862e9e0c753d5e2.jpg",
+      "55df19a0f96db2ca53272bb635cbe3f64634e0af028cd80d8d210ddb280c6002.jpg",
+      "1cb58129423fa22474c0d65dd97028543482990edecfbdf1af5be222a07ec7b2.jpg"
+    ],
+    "lat": 37.5862547593259,
+    "lon": 127.032161381563
+  },
+  {
+    "naver_place_id": "1664302830",
+    "name": "어흥식당 안암2호점",
+    "tags": ["스테이크", "립"],
+    "phone": "0505-657-7319",
+    "address": "서울 성북구 고려대로22길 47 지하1층",
+    "images": [
+      "5baaa74a9bab5c74e58dea6985f91b21d4f37d14c821c342fc819d2ddaea2f23.jpg",
+      "5baaa74a9bab5c74e58dea6985f91b21d4f37d14c821c342fc819d2ddaea2f23.jpg",
+      "28428a26f37a52f1e8fce52b718006c1b1f94115c457ca8e354aee448ad512c1.jpg",
+      "5baaa74a9bab5c74e58dea6985f91b21d4f37d14c821c342fc819d2ddaea2f23.jpg",
+      "28428a26f37a52f1e8fce52b718006c1b1f94115c457ca8e354aee448ad512c1.jpg",
+      "4d5bd12562b43b56100994b1bfcb3785cd8edb1cef6a077532d283782e2e1613.jpg"
+    ],
+    "lat": 37.5839916402267,
+    "lon": 127.029052160693
+  },
+  {
+    "naver_place_id": "37393399",
+    "name": "맘스터치 고대타이거프라자점",
+    "tags": ["햄버거"],
+    "phone": "02-926-2622",
+    "address": "서울 성북구 안암로 145 타이거프라자 1층",
+    "images": [
+      "00c3b5c964e7b70b55f61e1b97f8479b9c7442f90ec807975dd460f75ad0541e.jpg",
+      "00c3b5c964e7b70b55f61e1b97f8479b9c7442f90ec807975dd460f75ad0541e.jpg",
+      "ac31559b32bd3d6b3756c05218253a8097ca333e0cd601b85a717af14757c511.jpg",
+      "00c3b5c964e7b70b55f61e1b97f8479b9c7442f90ec807975dd460f75ad0541e.jpg",
+      "ac31559b32bd3d6b3756c05218253a8097ca333e0cd601b85a717af14757c511.jpg",
+      "2cac9cdd5e6563dcda6a411b539315ac4634e9708bf3c64de1e2220b0fcb16b3.jpg"
+    ],
+    "lat": 37.5887034223667,
+    "lon": 127.031698331241
+  },
+  {
+    "naver_place_id": "1625855671",
+    "name": "동동 냉면 돈까스",
+    "tags": ["칼국수", "만두"],
+    "phone": "0507-1336-2732",
+    "address": "서울 성북구 고려대로27길 24-2 1층",
+    "images": [
+      "29a160a653760550ede34c372e5ecdf64165830b8c84e373f61dde064403b355.jpg",
+      "29a160a653760550ede34c372e5ecdf64165830b8c84e373f61dde064403b355.jpg",
+      "3835d8f0cab057fd444a2fca661e84e9d0d4cd0fb9b1e894b0bf7a105521c4eb.jpg",
+      "29a160a653760550ede34c372e5ecdf64165830b8c84e373f61dde064403b355.jpg",
+      "3835d8f0cab057fd444a2fca661e84e9d0d4cd0fb9b1e894b0bf7a105521c4eb.jpg",
+      "604fffa34a5b6fdd66d8d0eba2856fbeb8f62a7d0c88df386ad2e18623aa68a9.jpg"
+    ],
+    "lat": 37.5873551062344,
+    "lon": 127.029897648498
+  },
+  {
+    "naver_place_id": "1622051890",
+    "name": "제주고깃집",
+    "tags": ["육류", "고기요리"],
+    "phone": "0507-1403-3704",
+    "address": "서울 성북구 안암로 69-1",
+    "images": [
+      "c16272d7f0dc9592fd8afe6373f03d35e5f986fe9dc3bd350d30a1566696542f.jpg",
+      "c16272d7f0dc9592fd8afe6373f03d35e5f986fe9dc3bd350d30a1566696542f.jpg",
+      "e702deae5f2477cf8315a0c11272ef391c44b98cfdc605fc36226a8c9db2521d.jpg",
+      "c16272d7f0dc9592fd8afe6373f03d35e5f986fe9dc3bd350d30a1566696542f.jpg",
+      "e702deae5f2477cf8315a0c11272ef391c44b98cfdc605fc36226a8c9db2521d.jpg",
+      "23d829309804551d2e933eb934dd3346dd579e4a31dd47b0f70a7746d976064c.jpg"
+    ],
+    "lat": 37.5826556929093,
+    "lon": 127.028866196141
+  },
+  {
+    "naver_place_id": "31234445",
+    "name": "두부촌",
+    "tags": ["한식"],
+    "phone": "0507-1323-5269",
+    "address": "서울 성북구 안암로 43",
+    "images": [
+      "01cc838114129385affc6ee1116f834e31399c910a535731ffb208cb0e306ad7.jpg",
+      "01cc838114129385affc6ee1116f834e31399c910a535731ffb208cb0e306ad7.jpg",
+      "392b6001cadc84b6952b63541e33681013d6296d39963c75e38ceb66a3b02b1d.jpg",
+      "01cc838114129385affc6ee1116f834e31399c910a535731ffb208cb0e306ad7.jpg",
+      "392b6001cadc84b6952b63541e33681013d6296d39963c75e38ceb66a3b02b1d.jpg",
+      "00c34032ac7383eb237480f06f33e889f82d747e9bc42bbdae1961d86726acbb.jpg"
+    ],
+    "lat": 37.5812026890981,
+    "lon": 127.02683596449
+  },
+  {
+    "naver_place_id": "18241656",
+    "name": "서울쌈냉면",
+    "tags": ["냉면"],
+    "phone": "02-929-4610",
+    "address": "서울 성북구 개운사길 21-4",
+    "images": [
+      "95421f07f7ab15b1d4cf125f2d9b06a843dc597723241150958f26ae78b5c13d.jpg",
+      "95421f07f7ab15b1d4cf125f2d9b06a843dc597723241150958f26ae78b5c13d.jpg",
+      "6e32f0945c08f384f0227b670d8dfcaacedd49040b410f655fad90388a915ed3.jpg",
+      "95421f07f7ab15b1d4cf125f2d9b06a843dc597723241150958f26ae78b5c13d.jpg",
+      "6e32f0945c08f384f0227b670d8dfcaacedd49040b410f655fad90388a915ed3.jpg",
+      "120dafdcf5a7b7eeefd217b322a8a43078aa6c87ef5a4f50bac816b49458dc10.jpg"
+    ],
+    "lat": 37.5874810496549,
+    "lon": 127.028873607347
+  },
+  {
+    "naver_place_id": "19873792",
+    "name": "동우설렁탕 본점",
+    "tags": ["곰탕", "설렁탕"],
+    "phone": "0507-1332-5243",
+    "address": "서울 성북구 개운사길 45",
+    "images": [
+      "8f80b56e1520d511dec4c5dddcd461322bcc21bfe0e7225fe39a43abd4f31a0a.jpg",
+      "8f80b56e1520d511dec4c5dddcd461322bcc21bfe0e7225fe39a43abd4f31a0a.jpg",
+      "ce077827e17dc171448ee3360cfb2a9837f05427e6d79222193d8ee6a52b9d18.jpg",
+      "8f80b56e1520d511dec4c5dddcd461322bcc21bfe0e7225fe39a43abd4f31a0a.jpg",
+      "ce077827e17dc171448ee3360cfb2a9837f05427e6d79222193d8ee6a52b9d18.jpg",
+      "263e401d7b54e97b54c52bf9b8941ad06d0ad78674f51bab479c65f516c0a179.jpg"
+    ],
+    "lat": 37.5883895659037,
+    "lon": 127.029055907998
+  },
+  {
+    "naver_place_id": "1254309953",
+    "name": "토로생선구이",
+    "tags": ["한식"],
+    "phone": "02-923-3539",
+    "address": "서울 성북구 고려대로28길 14-1 토로생선구이",
+    "images": [
+      "5496f68e73db68db91c574be24197792c09d75b3350656ea08c64fdaf0e9c262.jpg",
+      "5496f68e73db68db91c574be24197792c09d75b3350656ea08c64fdaf0e9c262.jpg",
+      "d33f964f237a866ebfca5aaf8b5c524c79124511708394969791afd5b16cf632.jpg",
+      "5496f68e73db68db91c574be24197792c09d75b3350656ea08c64fdaf0e9c262.jpg",
+      "d33f964f237a866ebfca5aaf8b5c524c79124511708394969791afd5b16cf632.jpg",
+      "f410b781f728aa3b4f3393c2bdffba7f59e79f3fa2c8c13192cb6ba3c60075ee.jpg"
+    ],
+    "lat": 37.5857247566821,
+    "lon": 127.030612315192
+  },
+  {
+    "naver_place_id": "1024606281",
+    "name": "비양지식당",
+    "tags": ["한식"],
+    "phone": "02-926-4472",
+    "address": "서울 성북구 고려대로 47",
+    "images": [
+      "0794caca99a70b5c741937e48579bc4c98d360d6b085bc5e40af2e648eea4fd3.jpg",
+      "0794caca99a70b5c741937e48579bc4c98d360d6b085bc5e40af2e648eea4fd3.jpg",
+      "a56b6b9bca835ee2187e048232a1b6a78aee662552da8a358feac20c814a2701.jpg",
+      "0794caca99a70b5c741937e48579bc4c98d360d6b085bc5e40af2e648eea4fd3.jpg",
+      "a56b6b9bca835ee2187e048232a1b6a78aee662552da8a358feac20c814a2701.jpg",
+      "6f41f7faa0e7a2f8fd8bc60ab0f7f150e259f42f92433215238eff66a61960a3.jpg"
+    ],
+    "lat": 37.5865057517627,
+    "lon": 127.024792202697
+  },
+  {
+    "naver_place_id": "1131463947",
+    "name": "안암고깃집공간",
+    "tags": ["육류", "고기요리"],
+    "phone": null,
+    "address": "서울 성북구 고려대로28길 27 안암고깃집공간",
+    "images": [
+      "b300d630b42d691b532ae80462f089957a0af80cc6706825769c63eed184f285.jpg",
+      "b300d630b42d691b532ae80462f089957a0af80cc6706825769c63eed184f285.jpg",
+      "2ccc896ff68a3f8d41c108a6334fd11e6822a477a294c692d218da8e9b404267.jpg",
+      "b300d630b42d691b532ae80462f089957a0af80cc6706825769c63eed184f285.jpg",
+      "2ccc896ff68a3f8d41c108a6334fd11e6822a477a294c692d218da8e9b404267.jpg",
+      "be7ca6269d54ea85410fd1345b9f895d8c64b58f8398885cf57bdaf793f10057.jpg"
+    ],
+    "lat": 37.585310760671,
+    "lon": 127.031260661515
+  },
+  {
+    "naver_place_id": "20614983",
+    "name": "모심",
+    "tags": ["한정식"],
+    "phone": "02-924-5551",
+    "address": "서울 성북구 개운사길 8 타이거빌딩 3층",
+    "images": [
+      "ba74aaa9e3d471ae9e132be44b0c842c7b85317e334a6397ab9fb357368224cc.jpg",
+      "ba74aaa9e3d471ae9e132be44b0c842c7b85317e334a6397ab9fb357368224cc.jpg",
+      "c4d8500529bbd1181807f02ade5e2ae854b63f41819aa62f27369a6380fc817a.jpg",
+      "ba74aaa9e3d471ae9e132be44b0c842c7b85317e334a6397ab9fb357368224cc.jpg",
+      "c4d8500529bbd1181807f02ade5e2ae854b63f41819aa62f27369a6380fc817a.jpg",
+      "4c61401bdbd9625143100f4543f520f8a3f775e8b16ed15f172c6bd58beb9d74.jpg"
+    ],
+    "lat": 37.5869920871665,
+    "lon": 127.029576068606
+  },
+  {
+    "naver_place_id": "36535175",
+    "name": "미스터국밥",
+    "tags": ["국밥"],
+    "phone": "02-928-9938",
+    "address": "서울 성북구 고려대로 102",
+    "images": [
+      "f59eb3987ca9695d38ab2379a8315a96fca62e30d4fed2fd341f11fee6517e62.jpg",
+      "f59eb3987ca9695d38ab2379a8315a96fca62e30d4fed2fd341f11fee6517e62.jpg",
+      "4d0fe6389e010e13a0850803066bf94d00a043b5054955031b3a6841532d488f.jpg",
+      "f59eb3987ca9695d38ab2379a8315a96fca62e30d4fed2fd341f11fee6517e62.jpg",
+      "4d0fe6389e010e13a0850803066bf94d00a043b5054955031b3a6841532d488f.jpg",
+      "f84aed65bef36815eed12ff3ceafa9264b061f273206bbe18026033b92079f1b.jpg"
+    ],
+    "lat": 37.5861506714034,
+    "lon": 127.030553049203
+  },
+  {
+    "naver_place_id": "1027909046",
+    "name": "고대 어시장",
+    "tags": ["생선회"],
+    "phone": "0507-1487-7863",
+    "address": "서울 성북구 고려대로24길 44 2층",
+    "images": [
+      "fe49162e895ae7c20e6f5cc3b0c6eec1b7bfbeb65128e8b0c1c06cbdadb72594.jpg",
+      "fe49162e895ae7c20e6f5cc3b0c6eec1b7bfbeb65128e8b0c1c06cbdadb72594.jpg",
+      "b8fc55e1c802d6b2c2daca152abd2eb52ad2edff6dd65595500a65fbb489e5a1.jpg",
+      "fe49162e895ae7c20e6f5cc3b0c6eec1b7bfbeb65128e8b0c1c06cbdadb72594.jpg",
+      "b8fc55e1c802d6b2c2daca152abd2eb52ad2edff6dd65595500a65fbb489e5a1.jpg",
+      "0f49f8f00bad54b52aad1647b2cac57f08f86665e4a0ac07f1c80c1e42b14063.jpg"
+    ],
+    "lat": 37.5842070912736,
+    "lon": 127.029321247727
+  },
+  {
+    "naver_place_id": "1508271523",
+    "name": "옥두헌손두부",
+    "tags": ["두부요리"],
+    "phone": "02-928-2855",
+    "address": "서울 성북구 개운사길 18 1층",
+    "images": [
+      "eacaed2b93bda17c70650f1b29b1892894d7f0e720e08d6f184e7a847b17995a.jpg",
+      "eacaed2b93bda17c70650f1b29b1892894d7f0e720e08d6f184e7a847b17995a.jpg",
+      "e4ca49a8c8e93d7101b7be5dfc0a5067983270ec00cf774e9b530a52d8810052.jpg",
+      "eacaed2b93bda17c70650f1b29b1892894d7f0e720e08d6f184e7a847b17995a.jpg",
+      "e4ca49a8c8e93d7101b7be5dfc0a5067983270ec00cf774e9b530a52d8810052.jpg",
+      "c25546118a63e34cfa7b3542218dd147ed8a918592cb53b9802bc41a1150d46b.jpg"
+    ],
+    "lat": 127.029463467677,
+    "lon": 37.5871292464272
+  },
+  {
+    "naver_place_id": "1221206032",
+    "name": "팔백집",
+    "tags": ["돼지고기구이"],
+    "phone": "0507-1319-5573",
+    "address": "서울 성북구 고려대로27길 3 1층",
+    "images": [
+      "615c3724713ebd510245357784b308f23875d7a069c7d4364ec6d45e5f7df07c.jpg",
+      "615c3724713ebd510245357784b308f23875d7a069c7d4364ec6d45e5f7df07c.jpg",
+      "55442215d1d32f7e410c700b3f4ff223015d610dbc685e9961a2945dc0796c35.jpg",
+      "615c3724713ebd510245357784b308f23875d7a069c7d4364ec6d45e5f7df07c.jpg",
+      "55442215d1d32f7e410c700b3f4ff223015d610dbc685e9961a2945dc0796c35.jpg",
+      "3a233b04142d393d09d88f56118d3eb28a25bd8b5d05880a9f4431b8552a3116.jpg"
+    ],
+    "lat": 37.5864958618548,
+    "lon": 127.029769252619
+  },
+  {
+    "naver_place_id": "33876124",
+    "name": "전통만두국이상조",
+    "tags": ["칼국수", "만두"],
+    "phone": "02-926-8756",
+    "address": "서울 성북구 고려대로8길 67",
+    "images": [
+      "a9c9eae74f738a5b76efc31a3dd1b361fbaeedb2a9844a51209e48feac84fa37.jpg",
+      "a9c9eae74f738a5b76efc31a3dd1b361fbaeedb2a9844a51209e48feac84fa37.jpg",
+      "731c1bceb09bafde1f13d82e47c42de3ae6e3c2ed316de3081272a7f4e5229f0.jpg",
+      "a9c9eae74f738a5b76efc31a3dd1b361fbaeedb2a9844a51209e48feac84fa37.jpg",
+      "731c1bceb09bafde1f13d82e47c42de3ae6e3c2ed316de3081272a7f4e5229f0.jpg",
+      "9ec79dd6340421ba2555b0745e14fd89d60d545722ebc2fe2f4f799a0608536e.jpg"
+    ],
+    "lat": 37.5830233714194,
+    "lon": 127.022291485108
+  },
+  {
+    "naver_place_id": "1177915406",
+    "name": "나그네파전",
+    "tags": ["전", "빈대떡"],
+    "phone": "02-929-4838",
+    "address": "서울 성북구 고려대로28길 7-4 1층",
+    "images": [
+      "fa4a079ebbfcfe36e8e9d002bc847e4da1dbe215050b7d79cc128166277be1aa.jpg",
+      "fa4a079ebbfcfe36e8e9d002bc847e4da1dbe215050b7d79cc128166277be1aa.jpg",
+      "8d4640017158879212256fba6c61e513164c737b8cd0c8f5a3b201f9d61c857e.jpg",
+      "fa4a079ebbfcfe36e8e9d002bc847e4da1dbe215050b7d79cc128166277be1aa.jpg",
+      "8d4640017158879212256fba6c61e513164c737b8cd0c8f5a3b201f9d61c857e.jpg",
+      "a48fb79ff0a31f0102f1ae53736ad787ef90ca8a35fb27c861c04f1b33c632ba.jpg"
+    ],
+    "lat": 37.5859342842843,
+    "lon": 127.030779060092
+  },
+  {
+    "naver_place_id": "2041215006",
+    "name": "정동돼지국밥",
+    "tags": ["한식"],
+    "phone": "0507-1311-6479",
+    "address": "서울 성북구 고려대로28길 5 1층 정동 돼지국밥",
+    "images": [
+      "596950cc13b95c1a5584b118bd8c05b67c516bfc007339e768bed891bb930ba5.jpg",
+      "596950cc13b95c1a5584b118bd8c05b67c516bfc007339e768bed891bb930ba5.jpg",
+      "5fcf3af136f849ea828a2416a52459b8c0df25686f0572b8589fa6f9f2ddb61b.jpg",
+      "596950cc13b95c1a5584b118bd8c05b67c516bfc007339e768bed891bb930ba5.jpg",
+      "5fcf3af136f849ea828a2416a52459b8c0df25686f0572b8589fa6f9f2ddb61b.jpg",
+      "90d9675efa3da4d5f9910d3bf7f3bda1fc2e02c1280502fcef6ab11bc869fb32.jpg"
+    ],
+    "lat": 37.586040932118,
+    "lon": 127.030546664049
+  },
+  {
+    "naver_place_id": "359848229",
+    "name": "고품콩",
+    "tags": ["육류", "고기요리"],
+    "phone": "0507-1411-7217",
+    "address": "서울 성북구 안암로 87-5 1층",
+    "images": [
+      "03764a561f8b31b467a9000b6d406f58feaa3d1119b90c6baf9957d7ba72e328.jpg",
+      "03764a561f8b31b467a9000b6d406f58feaa3d1119b90c6baf9957d7ba72e328.jpg",
+      "30a6f0e91c70e541bf4c499cfcc5813cbb7976cb7d24799bdafdc8f1061c2987.jpg",
+      "03764a561f8b31b467a9000b6d406f58feaa3d1119b90c6baf9957d7ba72e328.jpg",
+      "30a6f0e91c70e541bf4c499cfcc5813cbb7976cb7d24799bdafdc8f1061c2987.jpg",
+      "64feb30d75b0ce81f7063f21bd1fa2c1ddca126de13ebd2d94f83dcb552e69f0.jpg"
+    ],
+    "lat": 37.5837658551136,
+    "lon": 127.030115512821
+  },
+  {
+    "naver_place_id": "36539998",
+    "name": "한사우순두부",
+    "tags": ["두부요리"],
+    "phone": "02-928-2866",
+    "address": "서울 성북구 고려대로 76",
+    "images": [
+      "23603d37a73a037b515089959ba9121a7da14d06c0eb4de735a05b97edcd27e7.jpg",
+      "23603d37a73a037b515089959ba9121a7da14d06c0eb4de735a05b97edcd27e7.jpg",
+      "de700f62e7035147cd98fd52fc76883d7406626e87751ea1f6a69e5372f65d02.jpg",
+      "23603d37a73a037b515089959ba9121a7da14d06c0eb4de735a05b97edcd27e7.jpg",
+      "de700f62e7035147cd98fd52fc76883d7406626e87751ea1f6a69e5372f65d02.jpg",
+      "5688f0fdb6db35e10d809ea722fde24aaa829e21adfc111f2c4ece07483f476c.jpg"
+    ],
+    "lat": 37.5860376561873,
+    "lon": 127.027759194883
+  },
+  {
+    "naver_place_id": "1500020764",
+    "name": "귀한족발 안암점",
+    "tags": ["족발", "보쌈"],
+    "phone": "02-922-4085",
+    "address": "서울 성북구 고려대로26길 49 1층 101, 102호",
+    "images": [
+      "b7e277158915ad09a7fed83669768424e671ec603a0d9e105354b20d9982e6b1.jpg",
+      "b7e277158915ad09a7fed83669768424e671ec603a0d9e105354b20d9982e6b1.jpg",
+      "94184bc93ae5e9813f4d542b88466e4222b4f20e6c11946412bc41e2c10b8b56.jpg",
+      "b7e277158915ad09a7fed83669768424e671ec603a0d9e105354b20d9982e6b1.jpg",
+      "94184bc93ae5e9813f4d542b88466e4222b4f20e6c11946412bc41e2c10b8b56.jpg",
+      "41de37c6406d35816d528e260c2822aaeb065e154529e7e283bb25c30943f717.jpg"
+    ],
+    "lat": 37.5839932402134,
+    "lon": 127.030215687855
+  },
+  {
+    "naver_place_id": "12977114",
+    "name": "본죽&비빔밥cafe 고려대점",
+    "tags": ["죽"],
+    "phone": "02-921-7921",
+    "address": "서울 성북구 고려대로 90",
+    "images": [
+      "31f5d8d8c108ca08217b73c1ef4c11c74434879d403f39531a31309024f6420f.jpg",
+      "31f5d8d8c108ca08217b73c1ef4c11c74434879d403f39531a31309024f6420f.jpg",
+      "c66093afe64ffd4b8c3a46b26051eb79ff84c1c3041680ff4791e7f21dd2de5e.jpg",
+      "31f5d8d8c108ca08217b73c1ef4c11c74434879d403f39531a31309024f6420f.jpg",
+      "c66093afe64ffd4b8c3a46b26051eb79ff84c1c3041680ff4791e7f21dd2de5e.jpg",
+      "31f0bca93cc769e0c4aa2e5dbbd7c755a837cc77f13985f7de92e2c8b0f8e35d.jpg"
+    ],
+    "lat": 37.5861330768919,
+    "lon": 127.029229162935
+  },
+  {
+    "naver_place_id": "38229291",
+    "name": "육쌈냉면 고대점",
+    "tags": ["냉면"],
+    "phone": "02-921-4470",
+    "address": "서울 성북구 고려대로24길 6 2층",
+    "images": [
+      "b6cfe9485ccbbc6fdcfc0aecf5d52cf20d473e6fc997a553e88735a0cb22de3f.jpg",
+      "b6cfe9485ccbbc6fdcfc0aecf5d52cf20d473e6fc997a553e88735a0cb22de3f.jpg",
+      "14c88e43ee780da391e8a6a3b11f0b5504d59c745f7a6d3876656307f965687f.jpg",
+      "b6cfe9485ccbbc6fdcfc0aecf5d52cf20d473e6fc997a553e88735a0cb22de3f.jpg",
+      "14c88e43ee780da391e8a6a3b11f0b5504d59c745f7a6d3876656307f965687f.jpg",
+      "7d77390582c816b9e5ff7a09c249c398a6325d51609f082398d2f3a0d3e092a7.jpg"
+    ],
+    "lat": 37.5859712626691,
+    "lon": 127.02921256961
+  },
+  {
+    "naver_place_id": "18240738",
+    "name": "등촌샤브칼국수 안암점",
+    "tags": ["칼국수", "만두"],
+    "phone": "0507-1321-7824",
+    "address": "서울 성북구 개운사길 11 2층",
+    "images": [
+      "7f8b4fedc687438fc8d3599721e4b3679d1ea7302ae67831a902ecbb935d5f61.jpg",
+      "7f8b4fedc687438fc8d3599721e4b3679d1ea7302ae67831a902ecbb935d5f61.jpg",
+      "b385fcbf290bfcc60a906a85cf4835b2a8242fb97264c1a201afd2166187bcd3.jpg",
+      "7f8b4fedc687438fc8d3599721e4b3679d1ea7302ae67831a902ecbb935d5f61.jpg",
+      "b385fcbf290bfcc60a906a85cf4835b2a8242fb97264c1a201afd2166187bcd3.jpg",
+      "0352ff4b449386716a6c86043c78b602c1efafe09617631dc824ce75687a19e7.jpg"
+    ],
+    "lat": 37.5869962535146,
+    "lon": 127.029126129588
+  },
+  {
+    "naver_place_id": "1814450134",
+    "name": "한반도",
+    "tags": ["육류", "고기요리"],
+    "phone": "0507-1416-5022",
+    "address": "서울 성북구 고려대로24가길 14 1층",
+    "images": [
+      "b3b61f28d24744b020c8d56f696f208df863afe27192200d1fee1c67e9fb5e95.jpg",
+      "b3b61f28d24744b020c8d56f696f208df863afe27192200d1fee1c67e9fb5e95.jpg",
+      "789fefb2d948491dba5ffcf87adb9154a5b8ca61013ca1e2d2b0a37617218bd1.jpg",
+      "b3b61f28d24744b020c8d56f696f208df863afe27192200d1fee1c67e9fb5e95.jpg",
+      "789fefb2d948491dba5ffcf87adb9154a5b8ca61013ca1e2d2b0a37617218bd1.jpg",
+      "875e9e07b552702f4dc80ddc8b7e945d174776f15155e1acd63ddcbadb973da9.jpg"
+    ],
+    "lat": 37.5851836380108,
+    "lon": 127.03019363855
+  },
+  {
+    "naver_place_id": "20616845",
+    "name": "장위동유성집 고대점",
+    "tags": ["소고기구이"],
+    "phone": "02-922-5443",
+    "address": "서울 성북구 안암로 81",
+    "images": [
+      "ec2adbb91a4c66b691e878400cfcf22466cc55e818188605dafe02f07e6e402d.jpg",
+      "ec2adbb91a4c66b691e878400cfcf22466cc55e818188605dafe02f07e6e402d.jpg",
+      "2990dfcc58f87b8be2bc61a51767081b756852d613b43784c5b6fbb1347ea47a.jpg",
+      "ec2adbb91a4c66b691e878400cfcf22466cc55e818188605dafe02f07e6e402d.jpg",
+      "2990dfcc58f87b8be2bc61a51767081b756852d613b43784c5b6fbb1347ea47a.jpg",
+      "4e750e1fadd65f4e2b228ccefe67c8dee00ef342c2ffe543fa1fea37341c7427.jpg"
+    ],
+    "lat": 37.5834398353907,
+    "lon": 127.029919857946
+  },
+  {
+    "naver_place_id": "1529458633",
+    "name": "큰맘할매순대국 고려대점",
+    "tags": ["순대", "순댓국"],
+    "phone": "02-921-9194",
+    "address": "서울 성북구 안암동5가 104-292",
+    "images": [
+      "8e0190295e46c4f91867c12f53b23573f0dec7bd32f1ecf7cb6efc00b8927f1e.jpg",
+      "8e0190295e46c4f91867c12f53b23573f0dec7bd32f1ecf7cb6efc00b8927f1e.jpg",
+      "88def1bd422c6c5ab35064371a70a530f2e6b1f86a648c2223ef5e64e7281efa.jpg",
+      "8e0190295e46c4f91867c12f53b23573f0dec7bd32f1ecf7cb6efc00b8927f1e.jpg",
+      "88def1bd422c6c5ab35064371a70a530f2e6b1f86a648c2223ef5e64e7281efa.jpg",
+      "8aa673a6632effca3663535f1bb7ae62b987a93401b2025964bc1adee8b7f1bd.jpg"
+    ],
+    "lat": 37.5829907275627,
+    "lon": 127.029048828142
+  },
+  {
+    "naver_place_id": "1818322592",
+    "name": "오봉집 고려대점",
+    "tags": ["한식"],
+    "phone": "0507-1467-9118",
+    "address": "서울 성북구 개운사길 28 1층",
+    "images": [
+      "8bf6670d4bb06b9309c87df12387fafcd74a2c89bf5b9c58d161632b9a897d89.jpg",
+      "8bf6670d4bb06b9309c87df12387fafcd74a2c89bf5b9c58d161632b9a897d89.jpg",
+      "d113e8b6b87f7fd36e2cf63a9244b587f96b7356c90194a0dc77f7e0564badf4.jpg",
+      "8bf6670d4bb06b9309c87df12387fafcd74a2c89bf5b9c58d161632b9a897d89.jpg",
+      "d113e8b6b87f7fd36e2cf63a9244b587f96b7356c90194a0dc77f7e0564badf4.jpg",
+      "81fe2d4789a2d6f5c2c33272d076d1e9e93d8dd406a7293bc9d3204373cd8d6f.jpg"
+    ],
+    "lat": 37.587583983855,
+    "lon": 127.029437832304
+  },
+  {
+    "naver_place_id": "1855055717",
+    "name": "늘안암",
+    "tags": ["한식"],
+    "phone": "0507-1329-1748",
+    "address": "서울 성북구 고려대로24가길 13-2 1F",
+    "images": [
+      "5b8ccb37248fa08ad3eee2c495df16cc796ae5cc01edc113f3402f5836cd4f41.jpg",
+      "5b8ccb37248fa08ad3eee2c495df16cc796ae5cc01edc113f3402f5836cd4f41.jpg",
+      "a4d60c93203e50f69677f2f03a1ea53c42708b56f11c8a226897b103dd6d2ac8.jpg",
+      "5b8ccb37248fa08ad3eee2c495df16cc796ae5cc01edc113f3402f5836cd4f41.jpg",
+      "a4d60c93203e50f69677f2f03a1ea53c42708b56f11c8a226897b103dd6d2ac8.jpg",
+      "3ffcde519bc9ca99633c8d053cbe76be44aad3cebe93c141e7c697e42143e066.jpg"
+    ],
+    "lat": 37.5853376752738,
+    "lon": 127.030320618807
+  },
+  {
+    "naver_place_id": "1114286662",
+    "name": "봉구가래떡볶이 고대점",
+    "tags": ["한식"],
+    "phone": "0507-1445-7746",
+    "address": "서울 성북구 고려대로26길 63 1층(안암동5가)",
+    "images": [
+      "2df92f5bd06c69d10b67938bcd0d21531e31e72d0a5a63bfca8696d968e9d435.jpg",
+      "2df92f5bd06c69d10b67938bcd0d21531e31e72d0a5a63bfca8696d968e9d435.jpg",
+      "57281a73959b63c6ff3ff00813dd653f2a3e0c6a4684ef2fb3d48c9767e4a8ed.jpg",
+      "2df92f5bd06c69d10b67938bcd0d21531e31e72d0a5a63bfca8696d968e9d435.jpg",
+      "57281a73959b63c6ff3ff00813dd653f2a3e0c6a4684ef2fb3d48c9767e4a8ed.jpg",
+      "c0b045197754276009d92c1d15dcdf9f8b298c2f4cf5aac5cff7df3623b50cb3.jpg"
+    ],
+    "lat": 37.5834650178221,
+    "lon": 127.029742911798
+  },
+  {
+    "naver_place_id": "32875309",
+    "name": "용초수",
+    "tags": ["중식당"],
+    "phone": "02-922-7991",
+    "address": "서울 성북구 고려대로27길 20",
+    "images": [
+      "b98f5856a40600ba605877f0c6dd11ad230710a34e630ba136f70910e8018589.jpg",
+      "b98f5856a40600ba605877f0c6dd11ad230710a34e630ba136f70910e8018589.jpg",
+      "702e446ed46b336ca57faf96bdf5f6d149d440e2f6389b25a6b76344fbdf812b.jpg",
+      "b98f5856a40600ba605877f0c6dd11ad230710a34e630ba136f70910e8018589.jpg",
+      "702e446ed46b336ca57faf96bdf5f6d149d440e2f6389b25a6b76344fbdf812b.jpg",
+      "7e638cfc643d56c0ffddc329d03df9348d66cd9a2b402057f43169e7b3cc4118.jpg"
+    ],
+    "lat": 37.5872216665266,
+    "lon": 127.029908237942
+  },
+  {
+    "naver_place_id": "1644340985",
+    "name": "수저가",
+    "tags": ["중식당"],
+    "phone": "0507-1397-6878",
+    "address": "서울 성북구 안암로 89-3 1층",
+    "images": [
+      "16031052b6e0f6c6e49670b71adbe37f8c2949f5cf8417a4d42cb314255c8bb9.jpg",
+      "16031052b6e0f6c6e49670b71adbe37f8c2949f5cf8417a4d42cb314255c8bb9.jpg",
+      "afee7b318dcecf13b823a3f5835eab1d6c723691729095e98752fcdff7bb0497.jpg",
+      "16031052b6e0f6c6e49670b71adbe37f8c2949f5cf8417a4d42cb314255c8bb9.jpg",
+      "afee7b318dcecf13b823a3f5835eab1d6c723691729095e98752fcdff7bb0497.jpg",
+      "1e4ac6415184780e0acd6be5c788417d40645a1702874033e924d56ed7cc1997.jpg"
+    ],
+    "lat": 37.5840001178719,
+    "lon": 127.030449143193
+  },
+  {
+    "naver_place_id": "1983896799",
+    "name": "탱글이문어",
+    "tags": ["요리주점"],
+    "phone": "0507-1444-7849",
+    "address": "서울 성북구 고려대로26길 42-2 2층",
+    "images": [
+      "e995a0c86c5dd61eae5de8fe005e7e0d17043f9e3924a0536a54b84ced208879.jpg",
+      "e995a0c86c5dd61eae5de8fe005e7e0d17043f9e3924a0536a54b84ced208879.jpg",
+      "436d95cf91781d381b6946f16d6eda77d174f023d5fe299d5b6990255d8c40d8.jpg",
+      "e995a0c86c5dd61eae5de8fe005e7e0d17043f9e3924a0536a54b84ced208879.jpg",
+      "436d95cf91781d381b6946f16d6eda77d174f023d5fe299d5b6990255d8c40d8.jpg",
+      "4635ff6530be6615eba09c597b210850733e237e7ffa5c94c4b9e2ab6d4b1c47.jpg"
+    ],
+    "lat": 37.5844262540334,
+    "lon": 127.029875531935
+  },
+  {
+    "naver_place_id": "37425678",
+    "name": "만리향 안암동2가",
+    "tags": ["중식당"],
+    "phone": "0507-1336-5449",
+    "address": "서울 성북구 고려대로 37 1층",
+    "images": [
+      "9194d8ef6cc608c8cc9daa6cd197aa89080cefa24cbb4b543d43446ec984065a.jpg",
+      "9194d8ef6cc608c8cc9daa6cd197aa89080cefa24cbb4b543d43446ec984065a.jpg",
+      "7d0ce3bb119765a1f5295b6085f518440079ef754f84cd902639ffec797245a9.jpg",
+      "9194d8ef6cc608c8cc9daa6cd197aa89080cefa24cbb4b543d43446ec984065a.jpg",
+      "7d0ce3bb119765a1f5295b6085f518440079ef754f84cd902639ffec797245a9.jpg",
+      "43e724e96ed5c28c1e4a0b77da022f0f8f167933823bfa6468232e53ab1dfd31.jpg"
+    ],
+    "lat": 37.586661446449,
+    "lon": 127.023454326531
+  },
+  {
+    "naver_place_id": "18240904",
+    "name": "더씨",
+    "tags": ["중식당"],
+    "phone": "02-928-1259",
+    "address": "서울 성북구 개운사길 8 2층",
+    "images": [
+      "3f713faa385bf8c21a69804e615f99ec1d90c14e2a6509a595599c598881836b.jpg",
+      "3f713faa385bf8c21a69804e615f99ec1d90c14e2a6509a595599c598881836b.jpg",
+      "9801e77e4b6cef0ba6ec9653dda01f348fd472c6ae75684a4658ce6590c23f34.jpg",
+      "3f713faa385bf8c21a69804e615f99ec1d90c14e2a6509a595599c598881836b.jpg",
+      "9801e77e4b6cef0ba6ec9653dda01f348fd472c6ae75684a4658ce6590c23f34.jpg",
+      "902696202f755597de6d70830aa8947fc6cba39fe65b0824c1b93db140e49dc7.jpg"
+    ],
+    "lat": 37.5869920871665,
+    "lon": 127.029576068606
+  },
+  {
+    "naver_place_id": "1640032413",
+    "name": "후퉁반점",
+    "tags": ["중식당"],
+    "phone": "02-6339-2227",
+    "address": "서울 성북구 개운사길 4-4 1, 2층",
+    "images": [
+      "82e0df83380487ec4980b325b304d2b54a0303315fe72b4a5d9ec725f03f0819.jpg",
+      "82e0df83380487ec4980b325b304d2b54a0303315fe72b4a5d9ec725f03f0819.jpg",
+      "e59ecb31e18c47d9c99bbaa3748a1c82064383e19480c13e129667a12dbfe76f.jpg",
+      "82e0df83380487ec4980b325b304d2b54a0303315fe72b4a5d9ec725f03f0819.jpg",
+      "e59ecb31e18c47d9c99bbaa3748a1c82064383e19480c13e129667a12dbfe76f.jpg",
+      "2947cdd43ba39133dbff6145073e9078fd85c55b470500ccc692a6ea006cf1a6.jpg"
+    ],
+    "lat": 37.5865118447219,
+    "lon": 127.029628978946
+  },
+  {
+    "naver_place_id": "1388815131",
+    "name": "명진원",
+    "tags": ["중식당"],
+    "phone": "02-6080-1130",
+    "address": "서울 성북구 안암로 19 1층 103호",
+    "images": [
+      "53a62b3157d65a970f998e3e4e9530bda81ea8f46cebfba1377be9a2fae1c4cc.jpg",
+      "53a62b3157d65a970f998e3e4e9530bda81ea8f46cebfba1377be9a2fae1c4cc.jpg",
+      "daa5282891876c879f54130470932160383d99796ef04bb97d5f427918a953ec.jpg",
+      "53a62b3157d65a970f998e3e4e9530bda81ea8f46cebfba1377be9a2fae1c4cc.jpg",
+      "daa5282891876c879f54130470932160383d99796ef04bb97d5f427918a953ec.jpg",
+      "0ece82a4d0a5907ca6f83b3cbd68f00c1d63bc78b056d232ed87abd9ffc95a80.jpg"
+    ],
+    "lat": 37.5796889231629,
+    "lon": 127.02480499913
+  },
+  {
+    "naver_place_id": "678416961",
+    "name": "언니네반점",
+    "tags": ["중식당"],
+    "phone": "02-953-7878",
+    "address": "서울 성북구 고려대로27길 6 2층 언니네반점",
+    "images": [
+      "85937d1e33a9c3932485540591283cfc7c963e2ed03ac6dd2a4469b8ac3a9933.jpg",
+      "85937d1e33a9c3932485540591283cfc7c963e2ed03ac6dd2a4469b8ac3a9933.jpg",
+      "38befe57e4fcb10482a771bfbd16c20766fcca4a40d1f0a3b6991340e8c9312f.jpg",
+      "85937d1e33a9c3932485540591283cfc7c963e2ed03ac6dd2a4469b8ac3a9933.jpg",
+      "38befe57e4fcb10482a771bfbd16c20766fcca4a40d1f0a3b6991340e8c9312f.jpg",
+      "1c187724d7e3bc8b0a14309fe7ff3ae15e94e0852213445afbcf3be6d307f36b.jpg"
+    ],
+    "lat": 37.5866521972541,
+    "lon": 127.03007285926
+  },
+  {
+    "naver_place_id": "1218087192",
+    "name": "춘리마라탕 고려대점",
+    "tags": ["마라탕"],
+    "phone": "02-6465-3528",
+    "address": "서울 성북구 고려대로24길 5 2층",
+    "images": [
+      "5bd4766356f78f47788c9e8d54594c1e9fd66478306101000e04eac0526e3e2d.jpg",
+      "5bd4766356f78f47788c9e8d54594c1e9fd66478306101000e04eac0526e3e2d.jpg",
+      "8d8d6669472d37351e5a19873c20e7ece379816d380034420e65dfa7d8d317a2.jpg",
+      "5bd4766356f78f47788c9e8d54594c1e9fd66478306101000e04eac0526e3e2d.jpg",
+      "8d8d6669472d37351e5a19873c20e7ece379816d380034420e65dfa7d8d317a2.jpg",
+      "7fc32c2b27dc1d3521e8fcba5b7a7c82a5cf25d7cc51011a0a080d46bebec66b.jpg"
+    ],
+    "lat": 37.5859685792597,
+    "lon": 127.029496183527
+  },
+  {
+    "naver_place_id": "1933469691",
+    "name": "화궁방마라탕&양꼬치 고려대점",
+    "tags": ["중식당"],
+    "phone": "02-928-0888",
+    "address": "서울 성북구 안암로9가길 80-17 1층 1호",
+    "images": [
+      "76107e8d7ae1be9c21690b6975ed56868eaf25c8cf5dea68387d6d1c579d2d31.jpg",
+      "76107e8d7ae1be9c21690b6975ed56868eaf25c8cf5dea68387d6d1c579d2d31.jpg",
+      "bda5a4bbc66a3e222fc4097c1b02112f659399cbe98d0e36111ce389a31ed457.jpg",
+      "76107e8d7ae1be9c21690b6975ed56868eaf25c8cf5dea68387d6d1c579d2d31.jpg",
+      "bda5a4bbc66a3e222fc4097c1b02112f659399cbe98d0e36111ce389a31ed457.jpg",
+      "4520d4d8e535445a16801fa22d513966274121550b0cc62783601da2ff75fd65.jpg"
+    ],
+    "lat": 37.582811067799,
+    "lon": 127.028687263589
+  }
 ]
