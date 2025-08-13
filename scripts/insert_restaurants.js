@@ -49,11 +49,11 @@ async function main() {
   for (const restaurant of restaurantsData) {
     // 필수 필드 유효성 검사 (JSON 데이터 기준)
     if (
-      !restaurant.id ||
-      !restaurant.place_name ||
-      !restaurant.road_address_name ||
-      !restaurant.x ||
-      !restaurant.y
+      !restaurant.naver_place_id ||
+      !restaurant.address ||
+      !restaurant.name ||
+      !restaurant.lat ||
+      !restaurant.lon
     ) {
       console.warn(
         `Skipping restaurant due to missing required fields (id, place_name, road_address_name, x, y): ${JSON.stringify(restaurant)}`,
@@ -64,19 +64,21 @@ async function main() {
 
     try {
       const result = await prisma.restaurant.upsert({
-        where: { placeId: restaurant.id }, // 고유 식별자인 placeId (JSON의 id 필드 사용)
+        where: { placeId: restaurant.naver_place_id.toString() }, // 고유 식별자인 placeId (JSON의 id 필드 사용)
         update: {
-          name: restaurant.place_name,
-          address: restaurant.road_address_name, // 도로명 주소 사용
-          latitude: parseFloat(restaurant.y), // 문자열 좌표를 숫자로 변환
-          longitude: parseFloat(restaurant.x), // 문자열 좌표를 숫자로 변환
+          name: restaurant.name,
+          address: restaurant.address, // 도로명 주소 사용
+          latitude: restaurant.lat, // 문자열 좌표를 숫자로 변환
+          longitude: restaurant.lon, // 문자열 좌표를 숫자로 변환
+          tags: restaurant.tags || [],
         },
         create: {
-          placeId: restaurant.id,
-          name: restaurant.place_name,
-          address: restaurant.road_address_name,
-          latitude: parseFloat(restaurant.y),
-          longitude: parseFloat(restaurant.x),
+          placeId: restaurant.naver_place_id.toString(),
+          name: restaurant.name,
+          address: restaurant.address,
+          latitude: restaurant.lat,
+          longitude: restaurant.lon,
+          tags: restaurant.tags || [],
         },
       });
       console.log(
@@ -103,6 +105,46 @@ async function main() {
           `  -> Failed to upsert SearchRestaurantTag: ${tagErr.message}`,
         );
       }
+
+      const tagsToProcess = new Set();
+
+      if (Array.isArray(restaurant.tags)) {
+        restaurant.tags.forEach((tag) => {
+          if (typeof tag === 'string' && tag.length > 0) {
+            tagsToProcess.add(tag);
+          }
+        });
+      }
+      for (const tag of tagsToProcess) {
+        try {
+          const tagName = decomposeHangul(tag);
+          const existingTag = await prisma.searchRestaurantTag.findFirst({
+            where: {
+              restaurantId: result.id,
+              name: tagName,
+            },
+          });
+
+          if (!existingTag) {
+            await prisma.searchRestaurantTag.create({
+              data: {
+                id: uuid(),
+                restaurantId: result.id,
+                name: tagName,
+              },
+            });
+            console.log(`  -> Created search tag: ${tagName} (from: ${tag})`);
+          } else
+            console.log(
+              `  -> Search tag already exists: ${tagName} (from: ${tag})`,
+            );
+        } catch (tagErr) {
+          console.error(
+            `  -> Failed to process tag '${tag}': ${tagErr.message}`,
+          );
+        }
+      }
+
       upsertedCount++;
     } catch (error) {
       console.error(

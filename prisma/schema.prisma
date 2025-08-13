@@ -118,6 +118,7 @@ model Restaurant {
   latitude  Float
   longitude Float
   createdAt DateTime          @default(now())
+  tags      String[]
   savedBy   SavedRestaurant[]
 }
 
