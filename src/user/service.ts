@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
-import { MypageResponse, RestaurantListResponse, RestaurantResponse, SimpleTreeResponse } from './dto';
+import { 
+  MypageResponse, 
+  RestaurantListResponse, 
+  RestaurantResponse, 
+  MypageTreeResponse 
+} from './dto';
 import { Restaurant } from '@prisma/client';
 import { UserParam } from './params/user';
 import { TreeRepository } from '@/tree/repository';
@@ -49,19 +54,19 @@ export class UserService {
       username: user.username,
       nickname: user.nickname,
       profileImage: user.profileImageUrl,
-      tags: user.tags,
+      tags: user.tag,
       mbti: user.mbti,
       followerCount,
       followingCount,
       treeCount,
-      biggestTree: biggestTree ? new SimpleTreeResponse(biggestTree) : null,
+      biggestTree: biggestTree ? new MypageTreeResponse(biggestTree) : null,
       myTrees: userTree ? 
         userTree.map(
-          (e) => new SimpleTreeResponse(e)
+          (e) => new MypageTreeResponse(e)
         ) : [],
       wateredTrees: wateredTrees ? 
         wateredTrees.map(
-          (e) => new SimpleTreeResponse(e)
+          (e) => new MypageTreeResponse(e)
         ) : [],
     };
   }

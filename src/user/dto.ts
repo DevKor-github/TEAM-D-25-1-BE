@@ -326,7 +326,7 @@ export class FollowerResponse {
   createdAt: Date;
 }
 
-export class SimpleTreeResponse {
+export class MypageTreeResponse {
   @ApiProperty({
     description: '트리 ID',
     example: '123e4567-e89b-12d3-a456-426614174000',
@@ -451,29 +451,29 @@ export class MypageResponse {
 
   @ApiProperty({
     description: '가장 큰 트리',
-    type: SimpleTreeResponse,
+    type: MypageTreeResponse,
   })
   @IsNotEmpty()
   @ValidateNested()
-  biggestTree: SimpleTreeResponse;
+  biggestTree: MypageTreeResponse;
   
   @ApiProperty({
     description: '내 트리 목록',
-    type: [SimpleTreeResponse],
+    type: [MypageTreeResponse],
   })
   @IsArray()
   @IsNotEmpty()
   @ValidateNested({ each: true })
-  @Type(() => SimpleTreeResponse)
-  myTrees: SimpleTreeResponse[];
+  @Type(() => MypageTreeResponse)
+  myTrees: MypageTreeResponse[];
 
   @ApiProperty({
     description: '물을 준 트리 목록',
-    type: [SimpleTreeResponse],
+    type: [MypageTreeResponse],
   })
   @IsArray()
   @IsNotEmpty()
   @ValidateNested({ each: true })
-  @Type(() => SimpleTreeResponse)
-  wateredTrees: SimpleTreeResponse[];
+  @Type(() => MypageTreeResponse)
+  wateredTrees: MypageTreeResponse[];
 }
