@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SearchUserTagRepository } from '../repositories/searchUserTag';
 import { UserRepository } from '@/user/repositories/user';
 import { UserParam } from '@/user/params/user';
+import { decomposeHangul } from '@/utils/search';
 
 @Injectable()
 export class SearchUserUseCase {
@@ -17,8 +18,10 @@ export class SearchUserUseCase {
     page: number,
     perPage: number,
   ): Promise<UserParam[]> {
+    const decomposedQuery = decomposeHangul(query);
+
     const userIds: string[] = await this.searchUserTagRepository.getIdList(
-      query,
+      decomposedQuery,
       page,
       perPage,
     );

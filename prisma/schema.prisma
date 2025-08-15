@@ -190,3 +190,22 @@ model SearchUserTag {
   @@index([userId])
   @@index([name])
 }
+
+enum NotificationType {
+  WATER
+  FOLLOW
+  GROW
+}
+
+model Notification { 
+  id String @id @db.Uuid
+  userId String @db.Uuid
+  thumbnailUrl String?
+  type NotificationType
+  displayContent String
+  deeplink String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([userId])
+}

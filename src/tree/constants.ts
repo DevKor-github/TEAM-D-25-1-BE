@@ -39,7 +39,7 @@ export const TAG_KOREAN_MAP: { [key in Tag]: string } = {
   KIMCHI_JJIGAE: '김치찌개',
   PIZZA: '피자',
   RAMEN: '라면',
-  DONKATSU: '돈까스'
+  DONKATSU: '돈까스',
 };
 
 export const STYLE_TAGS: Tag[] = [
@@ -63,7 +63,7 @@ export const STYLE_TAGS: Tag[] = [
   'BIG_EATER',
   'SOLO_DINER',
   'SEAFOOD_LOVER',
-  'HEARTY_EATER'
+  'HEARTY_EATER',
 ];
 
 export const FOOD_TAGS: Tag[] = [
@@ -82,12 +82,11 @@ export const FOOD_TAGS: Tag[] = [
   'KIMCHI_JJIGAE',
   'PIZZA',
   'RAMEN',
-  'DONKATSU'
+  'DONKATSU',
 ];
 
-export const STYLE_TAG_KOREAN_MAP: Partial<{ [key in Tag]: string }> = Object.fromEntries(
-  STYLE_TAGS.map(tag => [tag, TAG_KOREAN_MAP[tag]])
-);
+export const STYLE_TAG_KOREAN_MAP: Partial<{ [key in Tag]: string }> =
+  Object.fromEntries(STYLE_TAGS.map((tag) => [tag, TAG_KOREAN_MAP[tag]]));
 
 export const FOOD_TAG_KOREAN_MAP: Partial<{ [key in Tag]: string }> = Object.fromEntries(
   FOOD_TAGS.map(tag => [tag, TAG_KOREAN_MAP[tag]])
