@@ -75,19 +75,16 @@ export class UserController {
     return res.status(HttpStatus.OK).json(result);
   }
 
-  @Get('mypage')
+  @Get('me/mypage')
   @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 200,
     description: '마이페이지 불러오기',
-    type: MypageResponse
+    type: MypageResponse,
   })
-  async getMypage(
-    @User() user: UserParam,
-    @Res() res: Response
-  ){
+  async getMypage(@User() user: UserParam, @Res() res: Response) {
     const result = await this.userService.getMypage(user);
-    return res.status(HttpStatus.OK).json(result)
+    return res.status(HttpStatus.OK).json(result);
   }
 
   @Get('me/restaurants')

@@ -18,6 +18,8 @@ import { UpdateProfileUseCase } from './usecases/updateProfile';
 import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
 
 import { TreeModule } from '@/tree/module';
+import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
+import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
 
 @Module({
   imports: [PrismaModule, TreeModule],
@@ -38,6 +40,8 @@ import { TreeModule } from '@/tree/module';
     AccessTokenGuard,
     UpdateProfileUseCase,
     UpdateMbtiAndTagsUseCase,
+    GetFollowerCountUsecase,
+    GetFollowingCountUsecase,
   ],
 })
 export class UserModule {}
