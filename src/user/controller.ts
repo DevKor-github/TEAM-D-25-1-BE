@@ -46,6 +46,7 @@ import { UpdateProfileUseCase } from './usecases/updateProfile';
 import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
 import { ProfileResponseDto } from './dtos/profile.response';
 import { GetUserProfileUseCase } from './usecases/getUserProfile';
+import { UnfollowUserUseCase } from './usecases/unfollowUser';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -63,6 +64,7 @@ export class UserController {
     private readonly getMyProfileUseCase: GetMyProfileUseCase,
     private readonly updateProfileUseCase: UpdateProfileUseCase,
     private readonly updateMbtiAndTagsUseCase: UpdateMbtiAndTagsUseCase,
+    private readonly unfollowUserUseCase: UnfollowUserUseCase,
   ) {}
 
   @Get('me')
@@ -171,6 +173,22 @@ export class UserController {
   ) {
     const result = await this.followUserUseCase.execute(user.id, userId);
     return res.status(HttpStatus.CREATED).json(result); // TODO: into FollowerResponse
+  }
+
+  @Post(':userId/unfollow')
+  @UseGuards(AccessTokenGuard) // TODO: fix to jwt guard
+  @ApiResponse({
+    status: 200,
+    description: 'Unfollow User',
+    type: FollowerResponse,
+  })
+  async handleUnfollowUser(
+    @Param('userId') userId: string,
+    @User() user: any,
+    @Res() res: Response,
+  ) {
+    await this.unfollowUserUseCase.execute(user.id, userId);
+    return res.status(HttpStatus.NO_CONTENT).json({}); // TODO: into FollowerResponse
   }
 
   @Get('me/followers/pending')
