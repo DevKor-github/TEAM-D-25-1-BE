@@ -1,5 +1,6 @@
-import { SocialProvider } from '@prisma/client';
+import { SocialProvider, Tag } from '@prisma/client';
 import {
+  IsArray,
   IsBoolean,
   IsDate,
   IsEmail,
@@ -126,4 +127,12 @@ export class UserParam {
   @IsDate()
   @IsOptional()
   lastWatered?: Date;
+
+  @IsString()
+  @IsOptional()
+  mbti?: string;
+
+  @IsArray()
+  @IsOptional()
+  tags?: Tag[];
 }

@@ -17,5 +17,6 @@ import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
     UserRepository,
     AccessTokenGuard,
   ],
+  exports: [TreeRepository],
 })
 export class TreeModule {}

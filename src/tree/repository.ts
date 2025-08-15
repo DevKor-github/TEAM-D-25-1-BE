@@ -208,4 +208,21 @@ export class TreeRepository {
     });
     return followerTreeData.map((e) => this.toTreeDetail(e));
   }
+
+  async getMyTrees(userId: string): Promise<(SavedRestaurant & { restaurant: Restaurant })[]> {
+    const res = await this.prisma.savedRestaurant.findMany({
+      where: { userId },
+      include: { restaurant: true }
+    }); 
+    return res;
+  }
+
+  // TODO: Relation 추가
+  async getWateredTrees(userId: string): Promise<(SavedRestaurant & { restaurant: Restaurant })[]> {
+    const res = await this.prisma.savedRestaurant.findMany({
+      where: { recommendedByUsers: { has: userId } },
+      include: { restaurant: true },
+    });
+    return res;
+  }
 }
