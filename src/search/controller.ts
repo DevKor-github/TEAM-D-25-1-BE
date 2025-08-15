@@ -55,6 +55,7 @@ export class SearchController {
       page,
       perPage,
     );
+
     const items = result.map(SearchRestaurantResponse.from);
     return {
       items,

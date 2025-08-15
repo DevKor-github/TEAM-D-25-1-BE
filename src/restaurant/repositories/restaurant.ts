@@ -58,4 +58,11 @@ export class RestaurantRepository {
   async getRestaurantsCount(): Promise<number> {
     return this.prisma.restaurant.count();
   }
+
+  async findById(id: string): Promise<RestaurantEntity | null> {
+    const restaurant = await this.prisma.restaurant.findUnique({
+      where: { id },
+    });
+    return restaurant ? this.mapToRestaurantEntity(restaurant) : null;
+  }
 }
