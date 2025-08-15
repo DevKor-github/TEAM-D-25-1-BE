@@ -26,7 +26,7 @@ export class GetFollowingListUseCase {
 
     // ensure following instance order
     const userIds: string[] = followingList.map(
-      (following) => following.followerId,
+      (following) => following.userId,
     );
     const users: UserParam[] = await this.userRepository.findByIdList(userIds);
     const userMaps = users.reduce(
@@ -38,7 +38,7 @@ export class GetFollowingListUseCase {
     );
 
     const followingUsers = followingList.map((following) => {
-      const user = userMaps[following.followerId];
+      const user = userMaps[following.userId];
       return FollowingUserResponse.from(user);
     });
 

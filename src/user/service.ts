@@ -1,24 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
-import { 
-  MypageResponse, 
-  RestaurantListResponse, 
-  RestaurantResponse, 
-  MypageTreeResponse 
+import {
+  MypageResponse,
+  RestaurantListResponse,
+  RestaurantResponse,
+  MypageTreeResponse,
 } from './dto';
 import { Restaurant } from '@prisma/client';
 import { UserParam } from './params/user';
 import { TreeRepository } from '@/tree/repository';
 import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
 import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
+import { UserRepository } from './repositories/user';
 
 @Injectable()
 export class UserService {
   constructor(
+    private readonly userRepository: UserRepository,
     private readonly restaurantRepository: RestaurantRepository,
     private readonly treeRepository: TreeRepository,
     private readonly getFollowerCount: GetFollowerCountUsecase,
-    private readonly getFollowingCount: GetFollowingCountUsecase
+    private readonly getFollowingCount: GetFollowingCountUsecase,
   ) {}
 
   async getRestaurantList(
@@ -46,7 +48,9 @@ export class UserService {
 
     let biggestTree = null;
     if (userTree && userTree.length > 0) {
-      biggestTree = userTree.sort((a, b) => b.recommendedByUsers.length - a.recommendedByUsers.length)[0];
+      biggestTree = userTree.sort(
+        (a, b) => b.recommendedByUsers.length - a.recommendedByUsers.length,
+      )[0];
     }
 
     return {
@@ -60,14 +64,18 @@ export class UserService {
       followingCount,
       treeCount,
       biggestTree: biggestTree ? new MypageTreeResponse(biggestTree) : null,
-      myTrees: userTree ? 
-        userTree.map(
-          (e) => new MypageTreeResponse(e)
-        ) : [],
-      wateredTrees: wateredTrees ? 
-        wateredTrees.map(
-          (e) => new MypageTreeResponse(e)
-        ) : [],
+      myTrees: userTree ? userTree.map((e) => new MypageTreeResponse(e)) : [],
+      wateredTrees: wateredTrees
+        ? wateredTrees.map((e) => new MypageTreeResponse(e))
+        : [],
     };
+  }
+
+  async getUser(userId: string): Promise<UserParam> {
+    const user = await this.userRepository.findById(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
   }
 }

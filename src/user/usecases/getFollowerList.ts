@@ -24,7 +24,9 @@ export class GetFollowerListUseCase {
       perPage,
     });
 
-    const userIds: string[] = followerList.map((follower) => follower.userId);
+    const userIds: string[] = followerList.map(
+      (follower) => follower.followerId,
+    );
     const users: UserParam[] = await this.userRepository.findByIdList(userIds);
     const userMaps = users.reduce(
       (acc, user) => {
@@ -35,7 +37,7 @@ export class GetFollowerListUseCase {
     );
 
     const followerUsers = followerList.map((follower) => {
-      const user = userMaps[follower.userId];
+      const user = userMaps[follower.followerId];
       return FollowerUserResponse.from(user);
     });
 

@@ -63,7 +63,6 @@ export class UserController {
     private readonly getMyProfileUseCase: GetMyProfileUseCase,
     private readonly updateProfileUseCase: UpdateProfileUseCase,
     private readonly updateMbtiAndTagsUseCase: UpdateMbtiAndTagsUseCase,
-    private readonly getUserProfileUseCase: GetUserProfileUseCase,
   ) {}
 
   @Get('me')
@@ -82,10 +81,11 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Get user profile',
-    type: ProfileResponseDto,
+    type: MypageResponse,
   })
   async getUserProfile(@Param('userId') userId: string, @Res() res: Response) {
-    const result = await this.getUserProfileUseCase.execute(userId);
+    const user = await this.userService.getUser(userId);
+    const result = await this.userService.getMypage(user);
     return res.status(HttpStatus.OK).json(result);
   }
 
