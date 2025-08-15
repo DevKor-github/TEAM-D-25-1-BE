@@ -186,6 +186,8 @@ export class TreeService {
   }
 
   stripImageUrlPrefix(urlList: string[]): string[] {
+    if (urlList === undefined || urlList === null) return [];
+
     return urlList.map((url) =>
       url.replace(`https://${config().s3.cloudfrontUrl}/`, ''),
     );
