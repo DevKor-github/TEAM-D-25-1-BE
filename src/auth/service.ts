@@ -165,6 +165,7 @@ export class AuthService {
         return { accessToken, user };
       }
     } catch (error) {
+      console.error('Error in AuthService.firebaseLoginOrRegister:', error);
       throw new HttpException(
         `firebase 로그인/회원가입 실패: ${error.message || '알 수 없는 오류'}`,
         HttpStatus.BAD_REQUEST,
