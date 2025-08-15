@@ -47,6 +47,7 @@ enum Mbti {
 }
 
 enum Tag {
+  // StyleTag
   DRINKER
   VEGAN_OR_VEGETARIAN
   SPICY_FOOD_LOVER
@@ -68,6 +69,24 @@ enum Tag {
   SOLO_DINER
   SEAFOOD_LOVER
   HEARTY_EATER
+
+  // FoodTag
+  STEAK
+  BREAD
+  HAMBURGER
+  CHICKEN
+  GOPCHANG
+  PASTA
+  SHABU_SHABU
+  SOJU
+  SUSHI
+  GUKBAP
+  DESSERT
+  COFFEE
+  KIMCHI_JJIGAE
+  PIZZA
+  RAMEN
+  DONKATSU
 }
 
 model User {
