@@ -5,6 +5,8 @@ import { CreateWaterNotificationUseCase } from './usecases/createWaterNotificati
 import { CreateFollowNotificationUseCase } from './usecases/createFollowNotification';
 import { CreateGrowNotificationUseCase } from './usecases/createGrowNotification';
 import { GetUserNotificationsUseCase } from './usecases/getUserNotifications';
+import { UserRepository } from '@/user/repositories/user';
+import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
 
 @Module({
   imports: [],
@@ -12,6 +14,8 @@ import { GetUserNotificationsUseCase } from './usecases/getUserNotifications';
   providers: [
     FCMService,
     NotificationRepository,
+    UserRepository,
+    RestaurantRepository,
     CreateWaterNotificationUseCase,
     CreateFollowNotificationUseCase,
     CreateGrowNotificationUseCase,

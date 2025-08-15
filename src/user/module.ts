@@ -20,6 +20,7 @@ import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
 import { TreeModule } from '@/tree/module';
 import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
 import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
+import { SearchUserTagRepository } from '@/search/repositories/searchUserTag';
 
 @Module({
   imports: [PrismaModule, TreeModule],
@@ -28,6 +29,7 @@ import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
     UserService,
     UserRepository,
     FollowerRepository,
+    SearchUserTagRepository,
     FollowUserUseCase,
     GetFollowingListUseCase,
     GetPendingFollowListUseCase,
