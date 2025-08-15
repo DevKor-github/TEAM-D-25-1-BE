@@ -106,7 +106,6 @@ model User {
   savedRestaurants SavedRestaurant[]
   socialLogin      SocialLogin[]
   isOnboarded      Boolean
-  description      String?
   profileImageUrl  String?
   fcmToken         String?
   fcmTokenUpdatedAt DateTime?
@@ -198,7 +197,7 @@ enum NotificationType {
   GROW
 }
 
-model Notifications { 
+model Notification { 
   id String @id @db.Uuid
   userId String @db.Uuid
   thumbnailUrl String?
