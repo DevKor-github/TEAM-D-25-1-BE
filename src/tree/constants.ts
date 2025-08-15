@@ -93,7 +93,7 @@ export const FOOD_TAG_KOREAN_MAP: Partial<{ [key in Tag]: string }> = Object.fro
   FOOD_TAGS.map(tag => [tag, TAG_KOREAN_MAP[tag]])
 );
 
-export const TREE_TYPES: TreeType[] = [
+export const TREE_TYPES_MAP: TreeType[] = [
   {
     key: 0,
     name: '참나무',

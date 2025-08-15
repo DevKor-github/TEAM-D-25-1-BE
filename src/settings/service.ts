@@ -3,7 +3,7 @@ import {
   FOOD_TAG_KOREAN_MAP, 
   STYLE_TAG_KOREAN_MAP, 
   TAG_KOREAN_MAP, 
-  TREE_TYPES
+  TREE_TYPES_MAP
 } from '@/tree/constants';
 import { AppSettings, Tag } from './dto';
 import { Mbti } from '@prisma/client';
@@ -22,7 +22,7 @@ export class SettingsService {
     const foodTags = this.convertMapToArray(FOOD_TAG_KOREAN_MAP)
     const styleTags = this.convertMapToArray(STYLE_TAG_KOREAN_MAP)
     const mbti = Object.values(Mbti);
-    const treeType = TREE_TYPES
+    const treeType = TREE_TYPES_MAP
 
     return {
       maintenance: false,
