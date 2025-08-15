@@ -13,9 +13,7 @@ export class UpdateProfileUseCase {
       nickname: dto.nickname,
       description: dto.description,
       isPrivate: dto.isPrivate,
-      status: dto.status,
       profileImageUrl: undefined,
-      password: dto.password,
     };
 
     Object.keys(param).forEach((k) =>
