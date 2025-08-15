@@ -20,6 +20,7 @@ import {
   FollowerResponse,
   FollowingListResponse,
   HandleFollowRequest,
+  MypageResponse,
   RestaurantListResponse,
 } from './dto';
 import { GetFollowingListUseCase } from './usecases/getFollowingList';
@@ -71,6 +72,18 @@ export class UserController {
   })
   async getMyProfile(@User('id') userId: string, @Res() res: Response) {
     const result = await this.getMyProfileUseCase.execute(userId);
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Get('me/mypage')
+  @UseGuards(AccessTokenGuard)
+  @ApiResponse({
+    status: 200,
+    description: '마이페이지 불러오기',
+    type: MypageResponse,
+  })
+  async getMypage(@User() user: UserParam, @Res() res: Response) {
+    const result = await this.userService.getMypage(user);
     return res.status(HttpStatus.OK).json(result);
   }
 

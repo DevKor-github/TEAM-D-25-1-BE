@@ -27,10 +27,14 @@ export class MyProfileResponseDto {
   @ApiProperty()
   profileImageUrl: string;
 
-  static from(user: UserParam, cloudfrontUrl: string): MyProfileResponseDto {
+  @ApiProperty()
+  treeCount: number;
+
+  static from(user: UserParam, cloudfrontUrl: string, treeCount: number): MyProfileResponseDto {
     return {
       id: user.id,
       email: user.email,
+      treeCount,
       username: user.username,
       nickname: user.nickname,
       socialProvider: user.socialProvider,

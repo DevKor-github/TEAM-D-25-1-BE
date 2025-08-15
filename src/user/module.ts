@@ -17,8 +17,12 @@ import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 import { UpdateProfileUseCase } from './usecases/updateProfile';
 import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
 
+import { TreeModule } from '@/tree/module';
+import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
+import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
+
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, TreeModule],
   controllers: [UserController],
   providers: [
     UserService,
@@ -36,6 +40,8 @@ import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
     AccessTokenGuard,
     UpdateProfileUseCase,
     UpdateMbtiAndTagsUseCase,
+    GetFollowerCountUsecase,
+    GetFollowingCountUsecase,
   ],
 })
 export class UserModule {}

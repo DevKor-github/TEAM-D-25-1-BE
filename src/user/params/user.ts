@@ -1,5 +1,6 @@
 import { SocialProvider, Mbti, Tag } from '@prisma/client';
 import {
+  IsArray,
   IsBoolean,
   IsDate,
   IsEmail,

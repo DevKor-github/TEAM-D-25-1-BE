@@ -26,6 +26,19 @@ export class AccessTokenGuard implements CanActivate {
       throw new UnauthorizedException('No token provided');
     }
     const token = authHeader.split(' ')[1];
+
+    // only for test in local environment
+    if (token.startsWith('uid:') && process.env.NODE_ENV === 'local') {
+      const uid = token.split(':')[1];
+      const user = await this.userRepository.findById(uid);
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
+
+      request.user = user;
+      return true;
+    }
+
     try {
       const secret = this.configService.get<string>('jwt.secret');
 
