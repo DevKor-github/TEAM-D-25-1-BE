@@ -26,18 +26,4 @@ export class SettingsController {
       settings,
     });
   }
-
-  @Patch()
-  @ApiResponse({
-    status: 200,
-    description: 'Update app settings',
-    type: UpdateSettingsResponse,
-  })
-  async updateSettings(
-    @Body() updateSettingsDto: UpdateSettingsRequest,
-    @Res() res: Response,
-  ) {
-    const result = await this.settingsService.updateSettings(updateSettingsDto);
-    return res.status(HttpStatus.OK).json(result);
-  }
 }
