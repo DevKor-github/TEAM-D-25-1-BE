@@ -225,4 +225,10 @@ export class TreeRepository {
     });
     return res;
   }
+
+  async getTreeCounts(userId: string): Promise<number> {
+    return await this.prisma.savedRestaurant.count({
+      where: { userId }
+    })
+  }
 }

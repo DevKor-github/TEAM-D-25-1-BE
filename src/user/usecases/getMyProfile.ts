@@ -2,12 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { UserRepository } from '../repositories/user';
 import { MyProfileResponseDto } from '../dtos/my-profile.response.dto';
+import { TreeRepository } from '@/tree/repository';
 
 @Injectable()
 export class GetMyProfileUseCase {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly configService: ConfigService,
+    private readonly treeRepository: TreeRepository
   ) {}
 
   async execute(userId: string): Promise<MyProfileResponseDto> {
@@ -18,7 +20,8 @@ export class GetMyProfileUseCase {
     }
 
     const cloudfrontUrl = this.configService.get<string>('s3.cloudfrontUrl');
+    const treeCount = await this.treeRepository.getTreeCounts(userId)
 
-    return MyProfileResponseDto.from(user, cloudfrontUrl);
+    return MyProfileResponseDto.from(user, cloudfrontUrl, treeCount);
   }
 }
