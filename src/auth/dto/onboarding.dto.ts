@@ -33,7 +33,7 @@ export class OnboardingInfoRequest {
 
   @IsOptional()
   @IsArray()
-  @ArrayMaxSize(3, { message: "태그는 최대 3개까지 입력할 수 있습니다." })
+  @ArrayMaxSize(6, { message: "태그는 최대 6개까지 입력할 수 있습니다." })
   @IsEnum(Tag, {
     each: true,
     message: "올바르지 않은 태그가 존재합니다."
