@@ -39,6 +39,7 @@ import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 import {
   UpdateProfileDto,
   UpdateMbtiAndTagsDto,
+  UpdateProfileResponseDto,
 } from './dtos/updateProfile.dto';
 import { UpdateProfileUseCase } from './usecases/updateProfile';
 import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
@@ -225,7 +226,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Update my profile (basic fields)',
-    type: UserParam,
+    type: UpdateProfileResponseDto,
   })
   async updateMyProfile(
     @User('id') userId: string,
@@ -241,7 +242,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Update my preferences (mbti, tags)',
-    type: UserParam,
+    type: UpdateProfileResponseDto,
   })
   async updateMyPreferences(
     @User('id') userId: string,

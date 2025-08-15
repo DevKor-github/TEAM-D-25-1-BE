@@ -67,3 +67,64 @@ export class UpdateMbtiAndTagsDto {
   @IsString({ each: true })
   tags?: string[];
 }
+
+export class UpdateProfileResponseDto {
+  @ApiProperty({
+    description: '사용자 ID',
+    example: 'user-id-123',
+  })
+  id: string;
+
+  @ApiProperty({
+    description: '이메일',
+    example: 'user@example.com',
+  })
+  email: string;
+
+  @ApiProperty({
+    description: '사용자명',
+    example: 'username',
+  })
+  username: string;
+
+  @ApiProperty({
+    description: '닉네임',
+    example: '닉네임',
+    required: false,
+  })
+  nickname?: string;
+
+  @ApiProperty({
+    description: '자기소개',
+    example: '자기소개입니다.',
+    required: false,
+  })
+  description?: string;
+
+  @ApiProperty({
+    description: '비공개 계정 여부',
+    example: false,
+  })
+  isPrivate: boolean;
+
+  @ApiProperty({
+    description: '프로필 이미지 URL',
+    example: '/images/profile/abc.jpg',
+    required: false,
+  })
+  profileImageUrl?: string;
+
+  @ApiProperty({
+    description: 'MBTI',
+    example: 'ENFP',
+    required: false,
+  })
+  mbti?: string;
+
+  @ApiProperty({
+    description: '음식 태그',
+    example: ['DRINKER', 'SPICY_FOOD_LOVER'],
+    required: false,
+  })
+  tag?: string[];
+}
