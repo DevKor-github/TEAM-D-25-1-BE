@@ -401,6 +401,30 @@ export class MypageResponse {
   nickname: string;
 
   @ApiProperty({
+    description: '팔로워 수',
+    example: 100,
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  followerCount: number
+
+  @ApiProperty({
+    description: '팔로잉 수',
+    example: 100,
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  followingCount: number
+
+  @ApiProperty({
+    description: '내가 심은 나무 수',
+    example: 30
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  treeCount: number
+
+  @ApiProperty({
     description: '프로필 이미지',
     example: 'https://example.com/profile.jpg',
   })

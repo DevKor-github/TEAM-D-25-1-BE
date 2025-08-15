@@ -4,12 +4,16 @@ import { MypageResponse, RestaurantListResponse, RestaurantResponse, SimpleTreeR
 import { Restaurant } from '@prisma/client';
 import { UserParam } from './params/user';
 import { TreeRepository } from '@/tree/repository';
+import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
+import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly restaurantRepository: RestaurantRepository,
     private readonly treeRepository: TreeRepository,
+    private readonly getFollowerCount: GetFollowerCountUsecase,
+    private readonly getFollowingCount: GetFollowingCountUsecase
   ) {}
 
   async getRestaurantList(
@@ -31,7 +35,10 @@ export class UserService {
   async getMypage(user: UserParam): Promise<MypageResponse> {
     const userTree = await this.treeRepository.getMyTrees(user.id);
     const wateredTrees = await this.treeRepository.getWateredTrees(user.id);
-    
+    const followerCount = await this.getFollowerCount.execute(user.id);
+    const followingCount = await this.getFollowingCount.execute(user.id);
+    const treeCount = await this.treeRepository.getTreeCounts(user.id);
+
     let biggestTree = null;
     if (userTree && userTree.length > 0) {
       biggestTree = userTree.sort((a, b) => b.recommendedByUsers.length - a.recommendedByUsers.length)[0];
@@ -44,6 +51,9 @@ export class UserService {
       profileImage: user.profileImageUrl,
       tags: user.tags,
       mbti: user.mbti,
+      followerCount,
+      followingCount,
+      treeCount,
       biggestTree: biggestTree ? new SimpleTreeResponse(biggestTree) : null,
       myTrees: userTree ? 
         userTree.map(
