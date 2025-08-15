@@ -37,6 +37,13 @@ import { UpdateProfileImageDto } from './dtos/updateProfileImage.dto';
 import { GetMyProfileUseCase } from './usecases/getMyProfile';
 import { MyProfileResponseDto } from './dtos/my-profile.response.dto';
 import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
+import {
+  UpdateProfileDto,
+  UpdateMbtiAndTagsDto,
+  UpdateProfileResponseDto,
+} from './dtos/updateProfile.dto';
+import { UpdateProfileUseCase } from './usecases/updateProfile';
+import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -52,6 +59,8 @@ export class UserController {
     private readonly updateFcmTokenUseCase: UpdateFcmTokenUseCase,
     private readonly updateProfileImageUseCase: UpdateProfileImageUseCase,
     private readonly getMyProfileUseCase: GetMyProfileUseCase,
+    private readonly updateProfileUseCase: UpdateProfileUseCase,
+    private readonly updateMbtiAndTagsUseCase: UpdateMbtiAndTagsUseCase,
   ) {}
 
   @Get('me')
@@ -225,6 +234,38 @@ export class UserController {
     @Res() res: Response,
   ) {
     const result = await this.updateProfileImageUseCase.execute(userId, body);
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Patch('me')
+  @UseGuards(AccessTokenGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'Update my profile (basic fields)',
+    type: UpdateProfileResponseDto,
+  })
+  async updateMyProfile(
+    @User('id') userId: string,
+    @Body() body: UpdateProfileDto,
+    @Res() res: Response,
+  ) {
+    const result = await this.updateProfileUseCase.execute(userId, body);
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Patch('me/preferences')
+  @UseGuards(AccessTokenGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'Update my preferences (mbti, tags)',
+    type: UpdateProfileResponseDto,
+  })
+  async updateMyPreferences(
+    @User('id') userId: string,
+    @Body() body: UpdateMbtiAndTagsDto,
+    @Res() res: Response,
+  ) {
+    const result = await this.updateMbtiAndTagsUseCase.execute(userId, body);
     return res.status(HttpStatus.OK).json(result);
   }
 }

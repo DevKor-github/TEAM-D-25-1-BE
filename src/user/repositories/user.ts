@@ -78,6 +78,15 @@ export class UserRepository {
     return this.mapToUserParam(user);
   }
 
+  // 통합 partial 업데이트 메서드 (mbti, tag, profileImageUrl 포함)
+  async updatePartial(id: string, param: UpdateUserParam): Promise<UserParam> {
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: param,
+    });
+    return this.mapToUserParam(user);
+  }
+
   // 사용자를 삭제합니다.
   async delete(id: string): Promise<UserParam> {
     const user = await this.prisma.user.delete({
@@ -127,7 +136,9 @@ export class UserRepository {
       profileImageUrl: user.profileImageUrl,
       fcmToken: user.fcmToken,
       fcmTokenUpdatedAt: user.fcmTokenUpdatedAt,
-      lastWatered: user.lastWatered
+      lastWatered: user.lastWatered,
+      tag: user.tag,
+      mbti: user.mbti ?? undefined,
     };
   }
 }

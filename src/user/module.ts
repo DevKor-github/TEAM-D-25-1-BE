@@ -14,6 +14,8 @@ import { UpdateFcmTokenUseCase } from './usecases/updateFcmToken';
 import { UpdateProfileImageUseCase } from './usecases/updateProfileImage';
 import { GetMyProfileUseCase } from './usecases/getMyProfile';
 import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
+import { UpdateProfileUseCase } from './usecases/updateProfile';
+import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
 
 import { TreeModule } from '@/tree/module';
 
@@ -34,6 +36,8 @@ import { TreeModule } from '@/tree/module';
     UpdateProfileImageUseCase,
     GetMyProfileUseCase,
     AccessTokenGuard,
+    UpdateProfileUseCase,
+    UpdateMbtiAndTagsUseCase,
   ],
 })
 export class UserModule {}

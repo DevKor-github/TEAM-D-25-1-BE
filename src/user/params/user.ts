@@ -1,4 +1,4 @@
-import { SocialProvider, Tag } from '@prisma/client';
+import { SocialProvider, Mbti, Tag } from '@prisma/client';
 import {
   IsArray,
   IsBoolean,
@@ -58,6 +58,18 @@ export class UpdateUserParam {
   @IsOptional()
   password?: string;
 
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @IsString()
+  @IsOptional()
+  status?: string;
+
+  @IsString()
+  @IsOptional()
+  profileImageUrl?: string;
+
   @IsEnum(SocialProvider)
   @IsOptional()
   socialProvider?: SocialProvider;
@@ -69,12 +81,30 @@ export class UpdateUserParam {
   @IsBoolean()
   @IsOptional()
   isPrivate?: boolean;
+
+  @IsEnum(Mbti)
+  @IsOptional()
+  mbti?: Mbti;
+
+  @IsEnum(Tag, { each: true })
+  @IsOptional()
+  tag?: Tag[];
 }
 
 export class UpdateFcmTokenParam {
   @IsString()
   @IsOptional()
   fcmToken?: string;
+}
+
+export class UpdateMbtiAndTagsParam {
+  @IsEnum(Mbti)
+  @IsOptional()
+  mbti?: Mbti;
+
+  @IsEnum(Tag, { each: true })
+  @IsOptional()
+  tags?: Tag[];
 }
 
 export class UserParam {
@@ -128,11 +158,11 @@ export class UserParam {
   @IsOptional()
   lastWatered?: Date;
 
-  @IsString()
+  @IsEnum(Tag, { each: true })
   @IsOptional()
-  mbti?: string;
+  tag?: Tag[];
 
-  @IsArray()
+  @IsEnum(Mbti)
   @IsOptional()
-  tags?: Tag[];
+  mbti?: Mbti;
 }
