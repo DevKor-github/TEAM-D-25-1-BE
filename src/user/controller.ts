@@ -20,6 +20,7 @@ import {
   FollowerResponse,
   FollowingListResponse,
   HandleFollowRequest,
+  MypageResponse,
   RestaurantListResponse,
 } from './dto';
 import { GetFollowingListUseCase } from './usecases/getFollowingList';
@@ -68,7 +69,9 @@ export class UserController {
   @Get('mypage')
   @UseGuards(AccessTokenGuard)
   @ApiResponse({
-    
+    status: 200,
+    description: '마이페이지 불러오기',
+    type: MypageResponse
   })
   async getMypage(
     @User() user: UserParam,
