@@ -106,6 +106,7 @@ model User {
   savedRestaurants SavedRestaurant[]
   socialLogin      SocialLogin[]
   isOnboarded      Boolean
+  description      String?
   profileImageUrl  String?
   fcmToken         String?
   fcmTokenUpdatedAt DateTime?
@@ -189,4 +190,22 @@ model SearchUserTag {
 
   @@index([userId])
   @@index([name])
+}
+
+enum NotificationType {
+  WATER
+  FOLLOW
+  GROW
+}
+
+model Notifications { 
+  id String @id @db.Uuid
+  userId String @db.Uuid
+  thumbnailUrl String?
+  type NotificationType
+  displayContent String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([userId])
 }
