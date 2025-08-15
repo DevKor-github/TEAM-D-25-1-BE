@@ -44,6 +44,8 @@ import {
 } from './dtos/updateProfile.dto';
 import { UpdateProfileUseCase } from './usecases/updateProfile';
 import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
+import { ProfileResponseDto } from './dtos/profile.response';
+import { GetUserProfileUseCase } from './usecases/getUserProfile';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -61,6 +63,7 @@ export class UserController {
     private readonly getMyProfileUseCase: GetMyProfileUseCase,
     private readonly updateProfileUseCase: UpdateProfileUseCase,
     private readonly updateMbtiAndTagsUseCase: UpdateMbtiAndTagsUseCase,
+    private readonly getUserProfileUseCase: GetUserProfileUseCase,
   ) {}
 
   @Get('me')
@@ -72,6 +75,17 @@ export class UserController {
   })
   async getMyProfile(@User('id') userId: string, @Res() res: Response) {
     const result = await this.getMyProfileUseCase.execute(userId);
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Get('profile/:userId')
+  @ApiResponse({
+    status: 200,
+    description: 'Get user profile',
+    type: ProfileResponseDto,
+  })
+  async getUserProfile(@Param('userId') userId: string, @Res() res: Response) {
+    const result = await this.getUserProfileUseCase.execute(userId);
     return res.status(HttpStatus.OK).json(result);
   }
 
