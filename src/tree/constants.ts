@@ -1,6 +1,6 @@
 import { Tag } from "@prisma/client";
 
-export const FOOD_TAG_KOREAN_MAP: { [key in Tag]: string } = {
+export const TAG_KOREAN_MAP: { [key in Tag]: string } = {
   DRINKER: '애주가',
   VEGAN_OR_VEGETARIAN: '비건/채식',
   SPICY_FOOD_LOVER: '맵부심',
@@ -22,4 +22,72 @@ export const FOOD_TAG_KOREAN_MAP: { [key in Tag]: string } = {
   SOLO_DINER: '혼밥러',
   SEAFOOD_LOVER: '해산물파',
   HEARTY_EATER: '든든파',
+
+  STEAK: '스테이크',
+  BREAD: '빵',
+  HAMBURGER: '햄버거',
+  CHICKEN: '치킨',
+  GOPCHANG: '곱창',
+  PASTA: '파스타',
+  SHABU_SHABU: '샤브샤브',
+  SOJU: '소주',
+  SUSHI: '스시',
+  GUKBAP: '국밥',
+  COFFEE: '커피',
+  DESSERT: '디저트',
+  KIMCHI_JJIGAE: '김치찌개',
+  PIZZA: '피자',
+  RAMEN: '라면',
+  DONKATSU: '돈까스'
 };
+
+export const STYLE_TAGS: Tag[] = [
+  'DRINKER',
+  'VEGAN_OR_VEGETARIAN',
+  'SPICY_FOOD_LOVER',
+  'PICKY_EATER',
+  'DESSERT_LOVER',
+  'DIETER',
+  'LATE_NIGHT_EATER',
+  'SWEET_TOOTH',
+  'HEALTH_CONSCIOUS',
+  'VALUE_SEEKER',
+  'MEAT_LOVER',
+  'DIET_PLANNER',
+  'CAFFEINE_ADDICT',
+  'CLASSIC_TASTE',
+  'STREET_FOOD_FAN',
+  'TTEOKBOKKI_LOVER',
+  'SMALL_EATER',
+  'BIG_EATER',
+  'SOLO_DINER',
+  'SEAFOOD_LOVER',
+  'HEARTY_EATER'
+];
+
+export const FOOD_TAGS: Tag[] = [
+  'STEAK',
+  'BREAD',
+  'HAMBURGER',
+  'CHICKEN',
+  'GOPCHANG',
+  'PASTA',
+  'SHABU_SHABU',
+  'SOJU',
+  'SUSHI',
+  'GUKBAP',
+  'DESSERT',
+  'COFFEE',
+  'KIMCHI_JJIGAE',
+  'PIZZA',
+  'RAMEN',
+  'DONKATSU'
+];
+
+export const STYLE_TAG_KOREAN_MAP: Partial<{ [key in Tag]: string }> = Object.fromEntries(
+  STYLE_TAGS.map(tag => [tag, TAG_KOREAN_MAP[tag]])
+);
+
+export const FOOD_TAG_KOREAN_MAP: Partial<{ [key in Tag]: string }> = Object.fromEntries(
+  FOOD_TAGS.map(tag => [tag, TAG_KOREAN_MAP[tag]])
+);
