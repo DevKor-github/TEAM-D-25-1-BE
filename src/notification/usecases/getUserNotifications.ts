@@ -1,17 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { NotificationRepository } from '../repository';
-import { NotificationParam } from '../params';
-
-export interface GetUserNotificationsParam {
-  userId: string;
-  page?: number;
-  limit?: number;
-}
-
-export interface GetUserNotificationsResult {
-  notifications: NotificationParam[];
-  total: number;
-}
+import {
+  GetUserNotificationsParam,
+  GetUserNotificationsResult,
+} from '../params';
 
 @Injectable()
 export class GetUserNotificationsUseCase {

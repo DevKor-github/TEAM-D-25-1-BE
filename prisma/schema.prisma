@@ -203,6 +203,7 @@ model Notification {
   thumbnailUrl String?
   type NotificationType
   displayContent String
+  deeplink String?
   createdAt DateTime @default(now())
 
   @@index([createdAt])
