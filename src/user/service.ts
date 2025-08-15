@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from '@/user/repositories/user';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
-import { RestaurantListResponse, RestaurantResponse } from './dto';
+import { MypageResponse, RestaurantListResponse, RestaurantResponse, SimpleTreeResponse } from './dto';
 import { Restaurant } from '@prisma/client';
+import { UserParam } from './params/user';
+import { TreeRepository } from '@/tree/repository';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly restaurantRepository: RestaurantRepository) {}
+  constructor(
+    private readonly restaurantRepository: RestaurantRepository,
+    private readonly treeRepository: TreeRepository,
+  ) {}
 
   async getRestaurantList(
     perPage: number,
@@ -22,5 +26,33 @@ export class UserService {
       items: pageContents.map(RestaurantResponse.from),
       totalPages,
     } satisfies RestaurantListResponse;
+  }
+
+  async getMypage(user: UserParam): Promise<MypageResponse> {
+    const userTree = await this.treeRepository.getMyTrees(user.id);
+    const wateredTrees = await this.treeRepository.getWateredTrees(user.id);
+    
+    let biggestTree = null;
+    if (userTree && userTree.length > 0) {
+      biggestTree = userTree.sort((a, b) => b.recommendedByUsers.length - a.recommendedByUsers.length)[0];
+    }
+
+    return {
+      userId: user.id,
+      username: user.username,
+      nickname: user.nickname,
+      profileImage: user.profileImageUrl,
+      tags: user.tags,
+      mbti: user.mbti,
+      biggestTree: biggestTree ? new SimpleTreeResponse(biggestTree) : null,
+      myTrees: userTree ? 
+        userTree.map(
+          (e) => new SimpleTreeResponse(e)
+        ) : [],
+      wateredTrees: wateredTrees ? 
+        wateredTrees.map(
+          (e) => new SimpleTreeResponse(e)
+        ) : [],
+    };
   }
 }

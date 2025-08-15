@@ -1,4 +1,4 @@
-import { Restaurant, FollowerStatus } from '@prisma/client';
+import { Restaurant, FollowerStatus, Tag, $Enums, SavedRestaurant } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -10,6 +10,7 @@ import {
   ValidateNested,
   IsBoolean,
   IsEnum,
+  IsOptional,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -323,4 +324,132 @@ export class FollowerResponse {
   @IsDate()
   @IsNotEmpty()
   createdAt: Date;
+}
+
+export class SimpleTreeResponse {
+  @ApiProperty({
+    description: '트리 ID',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+  })
+  @IsString()
+  @IsNotEmpty()
+  treeId: string;
+
+  @ApiProperty({
+    description: '식당 ID',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+  })
+  @IsString()
+  @IsNotEmpty()
+  restaurantId: string;
+
+  @ApiProperty({
+    description: '식당 이름',
+    example: '맛있는 식당',
+  })
+  @IsString()
+  @IsNotEmpty()
+  restaurantName: string;
+
+  @ApiProperty({
+    description: '나무 높이',
+    example: 38
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  recommendationCount: number;
+
+  @ApiProperty({
+    description: '트리 위치(구까지만)',
+    example: '서울시 강남구',
+  })
+  @IsString()
+  @IsNotEmpty()
+  location: string;
+
+  constructor(savedRestaurant: (SavedRestaurant & { restaurant: Restaurant })){
+    this.restaurantId = savedRestaurant.restaurant.id
+    this.restaurantName = savedRestaurant.restaurant.name
+    this.recommendationCount = savedRestaurant.recommendedByUsers.length
+    this.location = savedRestaurant.restaurant.address
+  }
+}
+
+export class MypageResponse {
+  @ApiProperty({
+    description: '유저 고유 ID',
+    example: 'user-uuid-1234'
+  })
+  @IsString()
+  @IsNotEmpty()
+  userId: string;
+
+  @ApiProperty({
+    description: '사용자 이름',
+    example: 'johndoe',
+  })
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
+  @ApiProperty({
+    description: '사용자 닉네임',
+    example: 'John Doe',
+  })
+  @IsString()
+  @IsNotEmpty()
+  nickname: string;
+
+  @ApiProperty({
+    description: '프로필 이미지',
+    example: 'https://example.com/profile.jpg',
+  })
+  @IsString()
+  @IsNotEmpty()
+  profileImage: string;
+
+  @ApiProperty({
+    description: '태그 목록',
+    enum: [Tag],
+  })
+  @IsArray()
+  @IsOptional()
+  @ValidateNested({ each: true })
+  tags: Tag[];
+  
+  @ApiProperty({
+    description: 'MBTI',
+    example: 'ENFP',
+  })
+  @IsString()
+  @IsOptional()
+  mbti?: string;
+
+  @ApiProperty({
+    description: '가장 큰 트리',
+    type: SimpleTreeResponse,
+  })
+  @IsNotEmpty()
+  @ValidateNested()
+  biggestTree: SimpleTreeResponse;
+  
+  @ApiProperty({
+    description: '내 트리 목록',
+    type: [SimpleTreeResponse],
+  })
+  @IsArray()
+  @IsNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => SimpleTreeResponse)
+  myTrees: SimpleTreeResponse[];
+
+  @ApiProperty({
+    description: '물을 준 트리 목록',
+    type: [SimpleTreeResponse],
+  })
+  @IsArray()
+  @IsNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => SimpleTreeResponse)
+  wateredTrees: SimpleTreeResponse[];
 }

@@ -65,6 +65,19 @@ export class UserController {
     return res.status(HttpStatus.OK).json(result);
   }
 
+  @Get('mypage')
+  @UseGuards(AccessTokenGuard)
+  @ApiResponse({
+    
+  })
+  async getMypage(
+    @User() user: UserParam,
+    @Res() res: Response
+  ){
+    const result = await this.userService.getMypage(user);
+    return res.status(HttpStatus.OK).json(result)
+  }
+
   @Get('me/restaurants')
   @ApiResponse({
     status: 200,

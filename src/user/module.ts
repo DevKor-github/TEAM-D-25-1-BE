@@ -15,8 +15,10 @@ import { UpdateProfileImageUseCase } from './usecases/updateProfileImage';
 import { GetMyProfileUseCase } from './usecases/getMyProfile';
 import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 
+import { TreeModule } from '@/tree/module';
+
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, TreeModule],
   controllers: [UserController],
   providers: [
     UserService,
