@@ -1,5 +1,6 @@
 import { TreeType } from "@/settings/dto";
 import { Tag } from "@prisma/client";
+import config from '@/config';
 
 export const TAG_KOREAN_MAP: { [key in Tag]: string } = {
   DRINKER: '애주가',
@@ -97,18 +98,18 @@ export const TREE_TYPES_MAP: TreeType[] = [
     key: 0,
     name: '참나무',
     levels: [
-      { level: 1, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chamnamu_1.png' },
-      { level: 2, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chamnamu_2.png' },
-      { level: 3, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chamnamu_3.png' },
+      { level: 1, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chamnamu_1.png` },
+      { level: 2, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chamnamu_2.png` },
+      { level: 3, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chamnamu_3.png` },
     ],
   },
   {
     key: 1,
     name: '침엽수',
     levels: [
-      { level: 1, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chimyeopsu_1.png' },
-      { level: 2, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chimyeopsu_1.png' },
-      { level: 3, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chimyeopsu_1.png' },
+      { level: 1, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chimyeopsu_1.png` },
+      { level: 2, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chimyeopsu_2.png` },
+      { level: 3, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chimyeopsu_3.png` },
     ],
   },
 ];
