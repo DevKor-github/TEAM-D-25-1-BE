@@ -7,7 +7,7 @@ import {
   CreateWaterNotificationParam,
 } from '../params';
 import { stripHtmlTags } from '../libs/handleTag';
-import { TREE_TYPE_MAP } from '@/tree/constants';
+import { TREE_TYPES_MAP } from '@/tree/constants';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
 
 @Injectable()
@@ -30,7 +30,7 @@ export class CreateWaterNotificationUseCase {
     );
     if (!restaurant) return;
 
-    const treeTypeName = TREE_TYPE_MAP[param.treeType];
+    const treeTypeName = TREE_TYPES_MAP[param.treeType];
     const displayContent = `<b>${user.nickname}</b>님이 ${param.restaurantId}의 <b>${treeTypeName}</b> 물주기를 했습니다.`;
     const deeplink = `groo://restaurant/${param.restaurantId}`;
     const notificationParam: CreateNotificationParam = {
