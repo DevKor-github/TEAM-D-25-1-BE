@@ -367,6 +367,22 @@ export class MypageTreeResponse {
   @IsNotEmpty()
   location: string;
 
+  @ApiProperty({
+    description: '사용자가 보유한 전체 나무 개수에 따른 종합 요약 메시지',
+    example: '뒷산이 부럽지 않을 만큼 풍성해졌어요',
+  })
+  @IsString()
+  @IsNotEmpty()
+  recapMessage: string;
+
+  @ApiProperty({
+    description: '사용자가 보유한 전체 트리 개수에 따른 종합 요약 이미지 URL',
+    example: 'https://example.com/images/level_2.png',
+  })
+  @IsString()
+  @IsNotEmpty()
+  recapImageUrl: string | null;
+
   constructor(savedRestaurant: (SavedRestaurant & { restaurant: Restaurant })){
     this.restaurantId = savedRestaurant.restaurant.id
     this.restaurantName = savedRestaurant.restaurant.name
@@ -450,12 +466,25 @@ export class MypageResponse {
   mbti?: string;
 
   @ApiProperty({
+    description: '전체 트리 개수에 따른 종합 요약 메시지',
+    example: '울창한 숲을 통째로 옮겨놓은 기분이에요',
+  })
+  @IsString()
+  recapMessage: string;
+
+  @ApiProperty({
+    description: '전체 트리 개수에 따른 종합 요약 이미지 URL',
+    example: 'https://example.com/images/level_2.png',
+  })
+  @IsString()
+  recapImageUrl: string;
+
+  @ApiProperty({
     description: '가장 큰 트리',
     type: MypageTreeResponse,
   })
   @IsNotEmpty()
-  @ValidateNested()
-  biggestTree: MypageTreeResponse;
+  biggestTrees: MypageTreeResponse[];
   
   @ApiProperty({
     description: '내 트리 목록',

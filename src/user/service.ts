@@ -12,6 +12,7 @@ import { TreeRepository } from '@/tree/repository';
 import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
 import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
 import { UserRepository } from './repositories/user';
+import { getBiggestTrees, getRecapDescription } from './tree.util';
 
 @Injectable()
 export class UserService {
@@ -40,18 +41,13 @@ export class UserService {
   }
 
   async getMypage(user: UserParam): Promise<MypageResponse> {
-    const userTree = await this.treeRepository.getMyTrees(user.id);
-    const wateredTrees = await this.treeRepository.getWateredTrees(user.id);
+    const userTree = await this.treeRepository.getMyTrees(user.id) || [];
+    const wateredTrees = await this.treeRepository.getWateredTrees(user.id) || [];
     const followerCount = await this.getFollowerCount.execute(user.id);
     const followingCount = await this.getFollowingCount.execute(user.id);
     const treeCount = await this.treeRepository.getTreeCounts(user.id);
-
-    let biggestTree = null;
-    if (userTree && userTree.length > 0) {
-      biggestTree = userTree.sort(
-        (a, b) => b.recommendedByUsers.length - a.recommendedByUsers.length,
-      )[0];
-    }
+    const { recapMessage, recapImageUrl } = getRecapDescription(treeCount);
+    const biggestTrees = getBiggestTrees(userTree)
 
     return {
       userId: user.id,
@@ -63,11 +59,16 @@ export class UserService {
       followerCount,
       followingCount,
       treeCount,
-      biggestTree: biggestTree ? new MypageTreeResponse(biggestTree) : null,
-      myTrees: userTree ? userTree.map((e) => new MypageTreeResponse(e)) : [],
-      wateredTrees: wateredTrees
+      recapMessage, recapImageUrl,
+      biggestTrees: biggestTrees.length > 0
+        ? biggestTrees.map((e) => new MypageTreeResponse(e))
+        : null,
+      myTrees: userTree.length > 0
+        ? userTree.map((e) => new MypageTreeResponse(e)) 
+        : null,
+      wateredTrees: wateredTrees.length > 0
         ? wateredTrees.map((e) => new MypageTreeResponse(e))
-        : [],
+        : null,
     };
   }
 
