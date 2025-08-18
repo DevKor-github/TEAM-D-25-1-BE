@@ -35,6 +35,6 @@ export class RestaurantController {
       });
     }
 
-    return RestaurantResponse.fromEntity(resp);
+    return res.status(HttpStatus.OK).json(RestaurantResponse.fromEntity(resp));
   }
 }
