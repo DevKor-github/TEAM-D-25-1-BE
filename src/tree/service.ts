@@ -142,18 +142,23 @@ export class TreeService {
     treeId: string,
     user: UserParam,
   ): Promise<TreeDetailResponse> {
-    const lastWatered = user.lastWatered || new Date(0);
+    /* const lastWatered = user.lastWatered || new Date(0);
 
     if (Date.now() - lastWatered.getTime() < 4 * 60 * 60 * 1000) {
       throw new BadRequestException({
         message: '아직 물을 줄 수 없습니다.',
         lastWatered,
       });
-    }
+    } */
     const parts = treeId.split('_');
     const [ownerId, restaurantId] = parts;
     if (ownerId === user.id)
       throw new BadRequestException('자신의 나무에는 물을 줄 수 없습니다.');
+
+    const recommendationData = await this.treeRepository.getRecommendedByUsersByTreeId(ownerId, restaurantId)
+
+    if (!recommendationData) throw new NotFoundException('해당하는 나무를 찾을 수 없습니다.');
+    if (recommendationData.recommendedByUsers.includes(user.id)) throw new ConflictException('이미 물을 준 나무입니다.')
 
     const result = await this.treeRepository.waterTree(
       ownerId,
