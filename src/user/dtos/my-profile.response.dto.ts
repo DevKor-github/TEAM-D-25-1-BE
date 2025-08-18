@@ -10,6 +10,9 @@ export class MyProfileResponseDto {
   email: string;
 
   @ApiProperty()
+  description?: string;
+
+  @ApiProperty()
   username: string;
 
   @ApiProperty()
@@ -33,6 +36,7 @@ export class MyProfileResponseDto {
   static from(user: UserParam, cloudfrontUrl: string, treeCount: number): MyProfileResponseDto {
     return {
       id: user.id,
+      description: user.description,
       email: user.email,
       treeCount,
       username: user.username,

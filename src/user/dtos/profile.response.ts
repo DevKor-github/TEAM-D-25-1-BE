@@ -13,6 +13,9 @@ export class ProfileResponseDto {
   nickname: string;
 
   @ApiProperty()
+  description: string;
+
+  @ApiProperty()
   socialProvider: SocialProvider;
 
   @ApiProperty()
@@ -37,6 +40,7 @@ export class ProfileResponseDto {
       treeCount,
       username: user.username,
       nickname: user.nickname,
+      description: user.description,
       socialProvider: user.socialProvider,
       isPrivate: user.isPrivate,
       createdAt: user.createdAt,
