@@ -14,6 +14,7 @@ import { FirebaseModule } from './firebase.module';
 import { ImagesModule } from './images/module';
 import { LoggerMiddleware } from './logger.middleware';
 import { SettingsModule } from './settings/module';
+import { RestaurantModule } from './restaurant/module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { SettingsModule } from './settings/module';
     SearchModule,
     NotificationModule,
     ImagesModule,
+    RestaurantModule,
     SettingsModule,
   ],
   controllers: [AppController],
