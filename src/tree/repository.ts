@@ -50,7 +50,10 @@ export class TreeRepository {
   ): TreeDetail {
     const { user, restaurant, ...tree } = prismaRes;
     const { recommendedByUsers, treeType } = tree
-    const treeData = TREE_TYPES_MAP[treeType ?? 0];
+    
+    let treeData = TREE_TYPES_MAP[treeType];
+    if (!treeData) treeData = TREE_TYPES_MAP[0];
+
     const height = recommendedByUsers?.length ?? 0
     const treeLevelData = treeData.levels[getTreeLevel(height + 1) - 1]
 
