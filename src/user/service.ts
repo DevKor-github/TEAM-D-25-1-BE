@@ -60,6 +60,7 @@ export class UserService {
       userId: user.id,
       username: user.username,
       nickname: user.nickname,
+      description: user.description,
       profileImage: user.profileImageUrl,
       tags: user.tag,
       mbti: user.mbti,

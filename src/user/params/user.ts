@@ -114,6 +114,10 @@ export class UserParam {
   @IsString()
   firebaseUid: string;
 
+  @IsString()
+  @IsOptional()
+  description?: string;
+
   @IsEmail()
   email: string;
 

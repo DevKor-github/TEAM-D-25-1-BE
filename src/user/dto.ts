@@ -435,6 +435,15 @@ export class MypageResponse {
   userId: string;
 
   @ApiProperty({
+    description: '자기소개',
+    example: '맛있는 음식을 찾아다니는 여행자입니다.',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @ApiProperty({
     description: '사용자 이름',
     example: 'johndoe',
   })
