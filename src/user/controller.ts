@@ -83,14 +83,19 @@ export class UserController {
   }
 
   @Get('profile/:userId')
+  @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 200,
     description: 'Get user profile',
     type: MypageResponse,
   })
-  async getUserProfile(@Param('userId') userId: string, @Res() res: Response) {
-    const user = await this.userService.getUser(userId);
-    const result = await this.userService.getMypage(user);
+  async getUserProfile(
+    @User() user: UserParam,
+    @Param('userId') userId: string, 
+    @Res() res: Response
+  ) {
+    const targetUser = await this.userService.getUser(userId);
+    const result = await this.userService.getMypage(targetUser, user);
     return res.status(HttpStatus.OK).json(result);
   }
 
