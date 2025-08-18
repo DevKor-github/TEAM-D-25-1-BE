@@ -51,9 +51,10 @@ export class UserService {
     const treeCount = await this.treeRepository.getTreeCounts(user.id);
     const { recapMessage, recapImageUrl } = getRecapDescription(treeCount);
     const biggestTrees = getBiggestTrees(userTree)
-    const followStatus: CheckFollowingStatusDto | null = user === currentUser
-      ? null
-      : await this.checkFollowingStatus.execute(currentUser.id, user.id);
+    let followStatus: CheckFollowingStatusDto | null = null;
+    if (currentUser && currentUser.id !== user.id) {
+      followStatus = await this.checkFollowingStatus.execute(currentUser.id, user.id);
+    }
 
     return {
       userId: user.id,
