@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { Restaurant, SavedRestaurant, User } from '@prisma/client';
 import { Coordinate, PlantTreeDto } from './dto';
 import { TreeDetail } from './types';
+import { getTreeLevel, TREE_TYPES_MAP } from './constants';
 
 const MIN_ZOOM_LEVEL = 11;
 
@@ -48,10 +49,20 @@ export class TreeRepository {
     prismaRes: SavedRestaurant & { user: User; restaurant: Restaurant },
   ): TreeDetail {
     const { user, restaurant, ...tree } = prismaRes;
+    const { recommendedByUsers, treeType } = tree
+    const treeData = TREE_TYPES_MAP[treeType ?? 0];
+    const height = recommendedByUsers?.length ?? 0
+    const treeLevelData = treeData.levels[getTreeLevel(height + 1)]
+
     return {
       user,
       restaurant,
-      tree,
+      tree: {
+        ...tree,
+        level: treeLevelData.level,
+        imageUrl: treeLevelData.imageUrl,
+        treeTypeName: treeData.name
+      }
     };
   }
 

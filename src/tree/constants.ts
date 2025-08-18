@@ -113,3 +113,9 @@ export const TREE_TYPES_MAP: TreeType[] = [
     ],
   },
 ];
+
+export function getTreeLevel(recommendationCount: number): number{
+  if (recommendationCount <= 10) return 1
+  if (recommendationCount <= 20) return 2
+  else return 3
+}
