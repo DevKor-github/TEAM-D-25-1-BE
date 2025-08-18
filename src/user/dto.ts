@@ -506,3 +506,18 @@ export class MypageResponse {
   @Type(() => MypageTreeResponse)
   wateredTrees: MypageTreeResponse[];
 }
+
+export class CheckFollowingStatusDto {
+  @ApiProperty({
+    description: '팔로우 신청이 있는지 여부를 나타냅니다.',
+    example: true,
+  })
+  isFollowing: boolean;
+
+  @ApiProperty({
+    description: '팔로우 신청의 상태를 나타냅니다.',
+    enum: FollowerStatus,
+    example: FollowerStatus.PENDING,
+  })
+  followRequestStatus: FollowerStatus;
+}
