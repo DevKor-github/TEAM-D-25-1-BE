@@ -16,6 +16,7 @@ import { Response } from 'express';
 import { UserService } from './service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
+  CheckFollowingStatusDto,
   FollowerListResponse,
   FollowerResponse,
   FollowingListResponse,
@@ -47,6 +48,7 @@ import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
 import { ProfileResponseDto } from './dtos/profile.response';
 import { GetUserProfileUseCase } from './usecases/getUserProfile';
 import { UnfollowUserUseCase } from './usecases/unfollowUser';
+import { CheckFollowingStatusUseCase } from './usecases/checkFollowingStatus';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -65,6 +67,7 @@ export class UserController {
     private readonly updateProfileUseCase: UpdateProfileUseCase,
     private readonly updateMbtiAndTagsUseCase: UpdateMbtiAndTagsUseCase,
     private readonly unfollowUserUseCase: UnfollowUserUseCase,
+    private readonly checkFollowingStatusUsecase: CheckFollowingStatusUseCase,
   ) {}
 
   @Get('me')
@@ -296,5 +299,21 @@ export class UserController {
   ) {
     const result = await this.updateMbtiAndTagsUseCase.execute(userId, body);
     return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Get(':userId/follow-status/')
+  @UseGuards(AccessTokenGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'userId에 따라 FollowingStatus 반환',
+    type: CheckFollowingStatusDto
+  })
+  async checkFollowingStatus(
+    @User('id') userId: string,
+    @Param('userId') targetUserId: string,
+    @Res() res: Response,
+  ){
+    const result = await this.checkFollowingStatusUsecase.execute(userId, targetUserId)
+    return res.status(HttpStatus.OK).json(result)
   }
 }
