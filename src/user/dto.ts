@@ -1,4 +1,10 @@
-import { Restaurant, FollowerStatus, Tag, $Enums, SavedRestaurant } from '@prisma/client';
+import {
+  Restaurant,
+  FollowerStatus,
+  Tag,
+  $Enums,
+  SavedRestaurant,
+} from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -13,6 +19,7 @@ import {
   IsOptional,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { RestaurantEntity } from '@/restaurant/entity';
 
 export class RestaurantResponse {
   @ApiProperty({
@@ -81,6 +88,18 @@ export class RestaurantResponse {
     response.longitude = restaurant.longitude.toString();
     response.createdAt = restaurant.createdAt;
     return response;
+  }
+
+  static fromEntity(restaurant: RestaurantEntity): RestaurantResponse {
+    return {
+      id: restaurant.id,
+      placeId: restaurant.placeId,
+      name: restaurant.name,
+      address: restaurant.address,
+      latitude: restaurant.latitude,
+      longitude: restaurant.longitude,
+      createdAt: restaurant.createdAt,
+    };
   }
 }
 
@@ -353,7 +372,7 @@ export class MypageTreeResponse {
 
   @ApiProperty({
     description: '나무 높이',
-    example: 38
+    example: 38,
   })
   @IsNumber()
   @IsNotEmpty()
@@ -367,11 +386,27 @@ export class MypageTreeResponse {
   @IsNotEmpty()
   location: string;
 
-  constructor(savedRestaurant: (SavedRestaurant & { restaurant: Restaurant })){
-    this.restaurantId = savedRestaurant.restaurant.id
-    this.restaurantName = savedRestaurant.restaurant.name
-    this.recommendationCount = savedRestaurant.recommendedByUsers.length
-    this.location = savedRestaurant.restaurant.address
+  @ApiProperty({
+    description: '사용자가 보유한 전체 나무 개수에 따른 종합 요약 메시지',
+    example: '뒷산이 부럽지 않을 만큼 풍성해졌어요',
+  })
+  @IsString()
+  @IsNotEmpty()
+  recapMessage: string;
+
+  @ApiProperty({
+    description: '사용자가 보유한 전체 트리 개수에 따른 종합 요약 이미지 URL',
+    example: 'https://example.com/images/level_2.png',
+  })
+  @IsString()
+  @IsNotEmpty()
+  recapImageUrl: string | null;
+
+  constructor(savedRestaurant: SavedRestaurant & { restaurant: Restaurant }) {
+    this.restaurantId = savedRestaurant.restaurant.id;
+    this.restaurantName = savedRestaurant.restaurant.name;
+    this.recommendationCount = savedRestaurant.recommendedByUsers.length;
+    this.location = savedRestaurant.restaurant.address;
   }
 }
 
@@ -393,7 +428,7 @@ export class CheckFollowingStatusDto {
 export class MypageResponse {
   @ApiProperty({
     description: '유저 고유 ID',
-    example: 'user-uuid-1234'
+    example: 'user-uuid-1234',
   })
   @IsString()
   @IsNotEmpty()
@@ -421,7 +456,7 @@ export class MypageResponse {
   })
   @IsNumber()
   @IsNotEmpty()
-  followerCount: number
+  followerCount: number;
 
   @ApiProperty({
     description: '팔로잉 수',
@@ -429,15 +464,15 @@ export class MypageResponse {
   })
   @IsNumber()
   @IsNotEmpty()
-  followingCount: number
+  followingCount: number;
 
   @ApiProperty({
     description: '내가 심은 나무 수',
-    example: 30
+    example: 30,
   })
   @IsNumber()
   @IsNotEmpty()
-  treeCount: number
+  treeCount: number;
 
   @ApiProperty({
     description: '프로필 이미지',
@@ -455,7 +490,7 @@ export class MypageResponse {
   @IsOptional()
   @ValidateNested({ each: true })
   tags: Tag[];
-  
+
   @ApiProperty({
     description: 'MBTI',
     example: 'ENFP',
@@ -484,7 +519,7 @@ export class MypageResponse {
   })
   @IsNotEmpty()
   biggestTrees: MypageTreeResponse[];
-  
+
   @ApiProperty({
     description: '내 트리 목록',
     type: [MypageTreeResponse],
@@ -510,3 +545,4 @@ export class MypageResponse {
   })
   followStatus: CheckFollowingStatusDto | null;
 }
+

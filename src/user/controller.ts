@@ -311,14 +311,17 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'userId에 따라 FollowingStatus 반환',
-    type: CheckFollowingStatusDto
+    type: CheckFollowingStatusDto,
   })
   async checkFollowingStatus(
     @User('id') userId: string,
     @Param('userId') targetUserId: string,
     @Res() res: Response,
-  ){
-    const result = await this.checkFollowingStatusUsecase.execute(userId, targetUserId)
-    return res.status(HttpStatus.OK).json(result)
+  ) {
+    const result = await this.checkFollowingStatusUsecase.execute(
+      userId,
+      targetUserId,
+    );
+    return res.status(HttpStatus.OK).json(result);
   }
 }
