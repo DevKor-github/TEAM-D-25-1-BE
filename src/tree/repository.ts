@@ -52,7 +52,7 @@ export class TreeRepository {
     const { recommendedByUsers, treeType } = tree
     const treeData = TREE_TYPES_MAP[treeType ?? 0];
     const height = recommendedByUsers?.length ?? 0
-    const treeLevelData = treeData.levels[getTreeLevel(height + 1)]
+    const treeLevelData = treeData.levels[getTreeLevel(height + 1) - 1]
 
     return {
       user,
