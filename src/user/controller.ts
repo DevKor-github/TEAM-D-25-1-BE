@@ -174,7 +174,7 @@ export class UserController {
     @User() user: any,
     @Res() res: Response,
   ) {
-    const result = await this.followUserUseCase.execute(userId, user.id);
+    const result = await this.followUserUseCase.execute(user.id, userId);
     return res.status(HttpStatus.CREATED).json(result); // TODO: into FollowerResponse
   }
 
