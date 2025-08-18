@@ -9,7 +9,7 @@ export class GetFollowingCountUsecase {
   async execute(userId: string): Promise<number> {
     return await this.prisma.follower.count({
       where: {
-        userId: userId,
+        followerId: userId,
         status: FollowerStatus.ACCEPTED,
       },
     });
