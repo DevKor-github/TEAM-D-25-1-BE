@@ -23,6 +23,7 @@ import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
 import { SearchUserTagRepository } from '@/search/repositories/searchUserTag';
 import { GetUserProfileUseCase } from './usecases/getUserProfile';
 import { UnfollowUserUseCase } from './usecases/unfollowUser';
+import { CheckFollowingStatusUseCase } from './usecases/checkFollowingStatus';
 
 @Module({
   imports: [PrismaModule, TreeModule],
@@ -48,6 +49,7 @@ import { UnfollowUserUseCase } from './usecases/unfollowUser';
     GetFollowingCountUsecase,
     GetUserProfileUseCase,
     UnfollowUserUseCase,
+    CheckFollowingStatusUseCase,
   ],
 })
 export class UserModule {}
