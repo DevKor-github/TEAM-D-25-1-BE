@@ -1,11 +1,11 @@
-import { Restaurant, SavedRestaurant } from "@prisma/client";
+import { Restaurant, SavedRestaurant } from '@prisma/client';
 import config from '@/config';
 
-type UserTreeType = SavedRestaurant & { restaurant: Restaurant }
+type UserTreeType = SavedRestaurant & { restaurant: Restaurant };
 
 export interface TreeDescriptionResult {
-    recapMessage: string;
-    recapImageUrl: string;
+  recapMessage: string;
+  recapImageUrl: string;
 }
 
 export function getRecapDescription(treeCount: number): TreeDescriptionResult {
@@ -44,22 +44,27 @@ export function getRecapDescription(treeCount: number): TreeDescriptionResult {
 }
 
 export function getBiggestTrees(trees: UserTreeType[]): UserTreeType[] {
-    if (!trees || trees.length === 0) {
-        return [];
-    }
+  if (!trees || trees.length === 0) {
+    return [];
+  }
 
-    let maxRecommendations = 0;
-    for (const tree of trees) {
-        if (tree.recommendedByUsers && tree.recommendedByUsers.length > maxRecommendations) {
-            maxRecommendations = tree.recommendedByUsers.length;
-        }
+  let maxRecommendations = 0;
+  for (const tree of trees) {
+    if (
+      tree.recommendedByUsers &&
+      tree.recommendedByUsers.length > maxRecommendations
+    ) {
+      maxRecommendations = tree.recommendedByUsers.length;
     }
+  }
 
-    if (maxRecommendations === 0) {
-        return [];
-    }
+  if (maxRecommendations === 0) {
+    return [];
+  }
 
-    return trees.filter(
-        (tree) => tree.recommendedByUsers && tree.recommendedByUsers.length === maxRecommendations
-    );
+  return trees.filter(
+    (tree) =>
+      tree.recommendedByUsers &&
+      tree.recommendedByUsers.length === maxRecommendations,
+  );
 }

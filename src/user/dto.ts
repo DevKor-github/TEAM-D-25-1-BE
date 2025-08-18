@@ -405,7 +405,7 @@ export class MypageTreeResponse {
   constructor(savedRestaurant: SavedRestaurant & { restaurant: Restaurant }) {
     this.restaurantId = savedRestaurant.restaurant.id;
     this.restaurantName = savedRestaurant.restaurant.name;
-    this.recommendationCount = savedRestaurant.recommendedByUsers.length;
+    this.recommendationCount = savedRestaurant.recommendedByUsers.length + 1;
     this.location = savedRestaurant.restaurant.address;
   }
 }
@@ -554,4 +554,3 @@ export class MypageResponse {
   })
   followStatus: CheckFollowingStatusDto | null;
 }
-

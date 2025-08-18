@@ -36,7 +36,7 @@ const toTreeDetailResponse = (detail: TreeDetail): TreeDetailResponse => {
     tags: detail.tree.tag,
     createdAt: detail.tree.createdAt,
     updatedAt: detail.tree.updatedAt,
-    recommendationCount: detail.tree.recommendedByUsers.length,
+    recommendationCount: detail.tree.recommendedByUsers.length + 1,
     images,
   };
 };
