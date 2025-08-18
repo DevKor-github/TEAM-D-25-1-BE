@@ -179,7 +179,7 @@ export class TreeRepository {
         review,
         tag: tags,
         images,
-        recommendedByUsers: [userId]
+        recommendedByUsers: [userId],
       },
     });
   }
@@ -210,16 +210,20 @@ export class TreeRepository {
     return followerTreeData.map((e) => this.toTreeDetail(e));
   }
 
-  async getMyTrees(userId: string): Promise<(SavedRestaurant & { restaurant: Restaurant })[]> {
+  async getMyTrees(
+    userId: string,
+  ): Promise<(SavedRestaurant & { restaurant: Restaurant })[]> {
     const res = await this.prisma.savedRestaurant.findMany({
       where: { userId },
-      include: { restaurant: true }
-    }); 
+      include: { restaurant: true },
+    });
     return res;
   }
 
   // TODO: Relation 추가
-  async getWateredTrees(userId: string): Promise<(SavedRestaurant & { restaurant: Restaurant })[]> {
+  async getWateredTrees(
+    userId: string,
+  ): Promise<(SavedRestaurant & { restaurant: Restaurant })[]> {
     const res = await this.prisma.savedRestaurant.findMany({
       where: { recommendedByUsers: { has: userId } },
       include: { restaurant: true },
@@ -229,7 +233,7 @@ export class TreeRepository {
 
   async getTreeCounts(userId: string): Promise<number> {
     return await this.prisma.savedRestaurant.count({
-      where: { userId }
-    })
+      where: { userId },
+    });
   }
 }

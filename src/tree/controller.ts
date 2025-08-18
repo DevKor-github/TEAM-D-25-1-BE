@@ -16,6 +16,8 @@ import {
   PlantTreeDto,
   TreeDetailListResponse,
   TreeDetailResponse,
+  TreeDetailWithUserListResponse,
+  TreeDetailWithUserResponse,
   TreeListResponse,
 } from './dto';
 import { User } from '../decorators/user.decorator';
@@ -115,7 +117,9 @@ export class TreeController {
     @Res() res: Response,
   ) {
     const result = await this.tree.getTreesByRestaurantId(restaurantId, user);
-    return res.status(HttpStatus.OK).json(TreeDetailListResponse.from(result));
+    return res
+      .status(HttpStatus.OK)
+      .json(TreeDetailWithUserListResponse.from(result));
   }
 
   @Post(':treeId/water')

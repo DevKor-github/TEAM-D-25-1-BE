@@ -6,11 +6,17 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { TreeRepository } from './repository';
-import { Coordinate, PlantTreeDto, TreeDetailResponse } from './dto';
+import {
+  Coordinate,
+  PlantTreeDto,
+  TreeDetailResponse,
+  TreeDetailWithUserResponse,
+} from './dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { TreeDetail } from './types';
 import { UserParam } from '@/user/params/user';
 import config from '@/config';
+import { UserResponse } from '@/user/dtos/user';
 
 const toTreeDetailResponse = (detail: TreeDetail): TreeDetailResponse => {
   if (!detail.tree || !detail.restaurant) return null;
@@ -32,6 +38,17 @@ const toTreeDetailResponse = (detail: TreeDetail): TreeDetailResponse => {
     updatedAt: detail.tree.updatedAt,
     recommendationCount: detail.tree.recommendedByUsers.length,
     images,
+  };
+};
+
+const toTreeDetailWithUserResponse = (
+  detail: TreeDetail,
+): TreeDetailWithUserResponse => {
+  const treeResp = toTreeDetailResponse(detail);
+
+  return {
+    ...treeResp,
+    user: detail.user,
   };
 };
 
@@ -106,7 +123,7 @@ export class TreeService {
   async getTreesByRestaurantId(
     restaurantId: string,
     user: UserParam,
-  ): Promise<TreeDetailResponse[]> {
+  ): Promise<TreeDetailWithUserResponse[]> {
     const followings = await this.prisma.follower.findMany({
       where: { followerId: user.id, status: 'ACCEPTED' },
       select: { userId: true },
@@ -117,7 +134,8 @@ export class TreeService {
       restaurantId,
       targetUids,
     );
-    return treeDatas.map(toTreeDetailResponse);
+
+    return treeDatas.map(toTreeDetailWithUserResponse);
   }
 
   async waterTree(
