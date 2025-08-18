@@ -179,6 +179,7 @@ export class TreeRepository {
         review,
         tag: tags,
         images,
+        recommendedByUsers: [userId]
       },
     });
   }
