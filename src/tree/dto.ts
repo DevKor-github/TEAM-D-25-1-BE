@@ -179,6 +179,20 @@ export class TreeDetailResponse {
   images: string[];
 }
 
+export class TreeDetailListResponse {
+  @ApiProperty({
+    description: '나무 목록',
+    type: [TreeDetailResponse],
+  })
+  items: TreeDetailResponse[];
+
+  static from(trees: TreeDetailResponse[]): TreeDetailListResponse {
+    return {
+      items: trees,
+    };
+  }
+}
+
 export class TreeListResponse {
   @ApiProperty({
     description: '나무 목록',

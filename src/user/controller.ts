@@ -45,8 +45,6 @@ import {
 } from './dtos/updateProfile.dto';
 import { UpdateProfileUseCase } from './usecases/updateProfile';
 import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
-import { ProfileResponseDto } from './dtos/profile.response';
-import { GetUserProfileUseCase } from './usecases/getUserProfile';
 import { UnfollowUserUseCase } from './usecases/unfollowUser';
 import { CheckFollowingStatusUseCase } from './usecases/checkFollowingStatus';
 
@@ -91,8 +89,8 @@ export class UserController {
   })
   async getUserProfile(
     @User() user: UserParam,
-    @Param('userId') userId: string, 
-    @Res() res: Response
+    @Param('userId') userId: string,
+    @Res() res: Response,
   ) {
     const targetUser = await this.userService.getUser(userId);
     const result = await this.userService.getMypage(targetUser, user);

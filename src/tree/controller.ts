@@ -14,6 +14,7 @@ import { Response } from 'express';
 import {
   Coordinate,
   PlantTreeDto,
+  TreeDetailListResponse,
   TreeDetailResponse,
   TreeListResponse,
 } from './dto';
@@ -106,7 +107,7 @@ export class TreeController {
   @ApiResponse({
     status: 200,
     description: '나무들 상세 정보 반환',
-    type: TreeDetailResponse,
+    type: TreeDetailListResponse,
   })
   async getTreeByRestaurantId(
     @Param('restaurantId') restaurantId: string,
@@ -114,7 +115,7 @@ export class TreeController {
     @Res() res: Response,
   ) {
     const result = await this.tree.getTreesByRestaurantId(restaurantId, user);
-    return res.status(HttpStatus.OK).json(result);
+    return res.status(HttpStatus.OK).json(TreeDetailListResponse.from(result));
   }
 
   @Post(':treeId/water')
