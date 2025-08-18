@@ -16,7 +16,7 @@ const toTreeDetailResponse = (detail: TreeDetail): TreeDetailResponse => {
   if (!detail.tree || !detail.restaurant) return null;
 
   const images = (detail.tree.images ?? []).map(
-    (key) => `https://${config().s3.cloudfrontUrl}/images/review/${key}`,
+    (key) => `https://${config().s3.cloudfrontUrl}/${key}`,
   );
 
   return {
