@@ -17,4 +17,3 @@ export class UpdateMbtiAndTagsUseCase {
     return this.userRepository.updatePartial(userId, param);
   }
 }
-

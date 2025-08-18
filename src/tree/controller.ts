@@ -95,7 +95,7 @@ export class TreeController {
     return res.status(HttpStatus.OK).json(result);
   }
 
-  @Get(':restaurantId')
+  @Get('restaurants/:restaurantId')
   @ApiOperation({ summary: '식당에 대한 나무 목록 반환' })
   @ApiParam({
     name: 'restaurantId',
