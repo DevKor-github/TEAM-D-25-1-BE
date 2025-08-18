@@ -375,6 +375,21 @@ export class MypageTreeResponse {
   }
 }
 
+export class CheckFollowingStatusDto {
+  @ApiProperty({
+    description: '팔로우 신청이 있는지 여부를 나타냅니다.',
+    example: true,
+  })
+  hasRequestedFollow: boolean;
+
+  @ApiProperty({
+    description: '팔로우 신청의 상태를 나타냅니다.',
+    enum: FollowerStatus,
+    example: FollowerStatus.PENDING,
+  })
+  followRequestStatus: FollowerStatus;
+}
+
 export class MypageResponse {
   @ApiProperty({
     description: '유저 고유 ID',
@@ -494,19 +509,4 @@ export class MypageResponse {
     description: '팔로우 신청이 있는지 여부와 신청의 상태를 나타냅니다.',
   })
   followStatus: CheckFollowingStatusDto | null;
-}
-
-export class CheckFollowingStatusDto {
-  @ApiProperty({
-    description: '팔로우 신청이 있는지 여부를 나타냅니다.',
-    example: true,
-  })
-  hasRequestedFollow: boolean;
-
-  @ApiProperty({
-    description: '팔로우 신청의 상태를 나타냅니다.',
-    enum: FollowerStatus,
-    example: FollowerStatus.PENDING,
-  })
-  followRequestStatus: FollowerStatus;
 }
