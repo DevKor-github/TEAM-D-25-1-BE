@@ -50,7 +50,7 @@ export class TreeRepository {
   ): TreeDetail {
     const { user, restaurant, ...tree } = prismaRes;
     const { recommendedByUsers, treeType } = tree
-    
+
     let treeData = TREE_TYPES_MAP[treeType];
     if (!treeData) treeData = TREE_TYPES_MAP[0];
 
@@ -250,4 +250,18 @@ export class TreeRepository {
       where: { userId },
     });
   }
+
+  async getRecommendedByUsersByTreeId(
+    ownerId: string,
+    restaurantId: string
+  ): Promise<{ recommendedByUsers: string[] } | null> {
+    return this.prisma.savedRestaurant.findUnique({
+      where: {
+        userId_restaurantId: { userId: ownerId, restaurantId: restaurantId },
+      },
+      select: {
+        recommendedByUsers: true
+      }
+    })
+  } 
 }
