@@ -5,6 +5,7 @@ import {
   RestaurantListResponse,
   RestaurantResponse,
   MypageTreeResponse,
+  CheckFollowingStatusDto,
 } from './dto';
 import { Restaurant } from '@prisma/client';
 import { UserParam } from './params/user';
@@ -13,6 +14,7 @@ import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
 import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
 import { UserRepository } from './repositories/user';
 import { getBiggestTrees, getRecapDescription } from './tree.util';
+import { CheckFollowingStatusUseCase } from './usecases/checkFollowingStatus';
 
 @Injectable()
 export class UserService {
@@ -22,6 +24,7 @@ export class UserService {
     private readonly treeRepository: TreeRepository,
     private readonly getFollowerCount: GetFollowerCountUsecase,
     private readonly getFollowingCount: GetFollowingCountUsecase,
+    private readonly checkFollowingStatus: CheckFollowingStatusUseCase
   ) {}
 
   async getRestaurantList(
@@ -40,7 +43,7 @@ export class UserService {
     } satisfies RestaurantListResponse;
   }
 
-  async getMypage(user: UserParam): Promise<MypageResponse> {
+  async getMypage(user: UserParam, currentUser?: UserParam): Promise<MypageResponse> {
     const userTree = await this.treeRepository.getMyTrees(user.id) || [];
     const wateredTrees = await this.treeRepository.getWateredTrees(user.id) || [];
     const followerCount = await this.getFollowerCount.execute(user.id);
@@ -48,6 +51,9 @@ export class UserService {
     const treeCount = await this.treeRepository.getTreeCounts(user.id);
     const { recapMessage, recapImageUrl } = getRecapDescription(treeCount);
     const biggestTrees = getBiggestTrees(userTree)
+    const followStatus: CheckFollowingStatusDto | null = user === currentUser
+      ? null
+      : await this.checkFollowingStatus.execute(currentUser.id, user.id);
 
     return {
       userId: user.id,
@@ -60,6 +66,7 @@ export class UserService {
       followingCount,
       treeCount,
       recapMessage, recapImageUrl,
+      followStatus,
       biggestTrees: biggestTrees.length > 0
         ? biggestTrees.map((e) => new MypageTreeResponse(e))
         : null,

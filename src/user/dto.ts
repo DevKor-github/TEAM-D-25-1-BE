@@ -489,6 +489,11 @@ export class MypageResponse {
   @ValidateNested({ each: true })
   @Type(() => MypageTreeResponse)
   wateredTrees: MypageTreeResponse[];
+
+  @ApiProperty({
+    description: '팔로우 신청이 있는지 여부와 신청의 상태를 나타냅니다.',
+  })
+  followStatus: CheckFollowingStatusDto | null;
 }
 
 export class CheckFollowingStatusDto {
@@ -496,7 +501,7 @@ export class CheckFollowingStatusDto {
     description: '팔로우 신청이 있는지 여부를 나타냅니다.',
     example: true,
   })
-  isFollowing: boolean;
+  hasRequestedFollow: boolean;
 
   @ApiProperty({
     description: '팔로우 신청의 상태를 나타냅니다.',
