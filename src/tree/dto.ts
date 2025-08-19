@@ -44,7 +44,7 @@ export class WaterTreeDto {
 
 export class PlantTreeDto {
   @ApiProperty({
-    description: '나무 타입 / 0~4까지 숫자로 매핑',
+    description: '나무 타입 / 0~1까지 숫자로 매핑',
     example: 0,
   })
   @IsInt()
