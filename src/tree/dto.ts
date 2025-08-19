@@ -5,7 +5,6 @@ import {
   IsLatitude,
   IsLongitude,
   IsUUID,
-  IsNumber,
   IsString,
   IsArray,
   IsInt,
@@ -48,9 +47,9 @@ export class PlantTreeDto {
     description: '나무 타입 / 0~4까지 숫자로 매핑',
     example: 0,
   })
-  @IsNumber()
+  @IsInt()
   @Min(0)
-  @Max(4)
+  @Max(1)
   treeType: number;
 
   @ApiProperty({
