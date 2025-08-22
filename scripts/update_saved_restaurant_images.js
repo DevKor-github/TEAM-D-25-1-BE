@@ -32,6 +32,10 @@ async function main() {
 
       const restaurantId = restaurant.id;
 
+      const imagesToInsertReal = imagesToInsert.map(
+        (e) => `images/review/${e}`
+      )
+
       // Upsert the savedRestaurant entry
       const upsertedSavedRestaurant = await prisma.savedRestaurant.upsert({
         where: {
@@ -41,12 +45,12 @@ async function main() {
           },
         },
         update: {
-          images: imagesToInsert,
+          images: imagesToInsertReal,
         },
         create: {
           userId: userId,
           restaurantId: restaurantId,
-          images: imagesToInsert,
+          images: imagesToInsertReal,
           treeType: 0
         },
       });
