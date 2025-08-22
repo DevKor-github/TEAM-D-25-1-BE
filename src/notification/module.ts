@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { PrismaModule } from '@/prisma/prisma.module';
+import { NotificationController } from './controller';
 import { FCMService } from './infrastructure/fcm';
 import { NotificationRepository } from './repository';
 import { CreateWaterNotificationUseCase } from './usecases/createWaterNotification';
@@ -9,8 +11,8 @@ import { UserRepository } from '@/user/repositories/user';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
 
 @Module({
-  imports: [],
-  controllers: [],
+  imports: [PrismaModule],
+  controllers: [NotificationController],
   providers: [
     FCMService,
     NotificationRepository,
@@ -20,6 +22,8 @@ import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
     CreateFollowNotificationUseCase,
     CreateGrowNotificationUseCase,
     GetUserNotificationsUseCase,
+    UserRepository,
+    RestaurantRepository,
   ],
   exports: [
     FCMService,

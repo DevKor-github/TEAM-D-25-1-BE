@@ -16,6 +16,9 @@ import { GetMyProfileUseCase } from './usecases/getMyProfile';
 import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 import { UpdateProfileUseCase } from './usecases/updateProfile';
 import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
+import { CreateFollowNotificationUseCase } from '@/notification/usecases/createFollowNotification';
+import { NotificationRepository } from '@/notification/repository';
+import { FCMService } from '@/notification/infrastructure/fcm';
 
 import { TreeModule } from '@/tree/module';
 import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
@@ -45,6 +48,9 @@ import { CheckFollowingStatusUseCase } from './usecases/checkFollowingStatus';
     AccessTokenGuard,
     UpdateProfileUseCase,
     UpdateMbtiAndTagsUseCase,
+    CreateFollowNotificationUseCase,
+    NotificationRepository,
+    FCMService,
     GetFollowerCountUsecase,
     GetFollowingCountUsecase,
     GetUserProfileUseCase,

@@ -6,12 +6,14 @@ import {
 import { FollowerRepository } from '../repositories/follower';
 import { UserRepository } from '../repositories/user';
 import { FollowerStatus } from '@prisma/client';
+import { CreateFollowNotificationUseCase } from '@/notification/usecases/createFollowNotification';
 
 @Injectable()
 export class FollowUserUseCase {
   constructor(
     private readonly followerRepository: FollowerRepository,
     private readonly userRepository: UserRepository,
+    private readonly notificationUseCase: CreateFollowNotificationUseCase,
   ) {}
 
   async execute(followerId: string, userId: string): Promise<void> {
@@ -37,6 +39,11 @@ export class FollowUserUseCase {
       status: targetUser.isPrivate
         ? FollowerStatus.PENDING
         : FollowerStatus.ACCEPTED,
+    });
+
+    await this.notificationUseCase.execute({
+      followerId,
+      userId,
     });
   }
 }

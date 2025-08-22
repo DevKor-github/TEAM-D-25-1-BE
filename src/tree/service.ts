@@ -16,6 +16,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 import { TreeDetail } from './types';
 import { UserParam } from '@/user/params/user';
 import config from '@/config';
+import { CreateWaterNotificationUseCase } from '@/notification/usecases/createWaterNotification';
 import { UserResponse } from '@/user/dtos/user';
 
 const toTreeDetailResponse = (detail: TreeDetail): TreeDetailResponse => {
@@ -57,6 +58,7 @@ export class TreeService {
   constructor(
     private readonly treeRepository: TreeRepository,
     private readonly prisma: PrismaService,
+    private readonly waterNotificationUseCase: CreateWaterNotificationUseCase,
   ) {}
 
   async getFollowersTree(
@@ -165,6 +167,13 @@ export class TreeService {
       restaurantId,
       user.id,
     );
+
+    await this.waterNotificationUseCase.execute({
+      userId: ownerId,
+      treeType: result.tree.treeType,
+      restaurantId,
+    });
+
     return toTreeDetailResponse(result);
   }
 
