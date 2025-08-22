@@ -126,6 +126,7 @@ export class UserRepository {
       id: user.id,
       firebaseUid: user.firebaseUid,
       email: user.email,
+      description: user.description,
       username: user.username,
       nickname: user.nickname,
       password: user.password,

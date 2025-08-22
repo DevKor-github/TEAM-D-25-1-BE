@@ -4,8 +4,10 @@ import { Restaurant, SavedRestaurant, User } from '@prisma/client';
 import { Coordinate, PlantTreeDto } from './dto';
 import { TreeDetail } from './types';
 import { getTreeLevel, TREE_TYPES_MAP } from './constants';
+import { INSTRUCTION_USER } from '@/consts';
 
 const MIN_ZOOM_LEVEL = 11;
+const BLACKLIST_USER_IDS = [INSTRUCTION_USER];
 
 @Injectable()
 export class TreeRepository {
@@ -49,13 +51,13 @@ export class TreeRepository {
     prismaRes: SavedRestaurant & { user: User; restaurant: Restaurant },
   ): TreeDetail {
     const { user, restaurant, ...tree } = prismaRes;
-    const { recommendedByUsers, treeType } = tree
+    const { recommendedByUsers, treeType } = tree;
 
     let treeData = TREE_TYPES_MAP[treeType];
     if (!treeData) treeData = TREE_TYPES_MAP[0];
 
-    const height = recommendedByUsers?.length ?? 0
-    const treeLevelData = treeData.levels[getTreeLevel(height + 1) - 1]
+    const height = recommendedByUsers?.length ?? 0;
+    const treeLevelData = treeData.levels[getTreeLevel(height + 1) - 1];
 
     return {
       user,
@@ -64,8 +66,8 @@ export class TreeRepository {
         ...tree,
         level: treeLevelData.level,
         imageUrl: treeLevelData.imageUrl,
-        treeTypeName: treeData.name
-      }
+        treeTypeName: treeData.name,
+      },
     };
   }
 
@@ -86,7 +88,9 @@ export class TreeRepository {
         select: { userId: true },
       });
       const followingIds = following.map((e) => e.userId);
-      searchTargetIds = [...followingIds, userId];
+      searchTargetIds = [...followingIds, userId].filter(
+        (id) => !BLACKLIST_USER_IDS.includes(id),
+      );
     }
 
     const lat = parseFloat(location.lat);
@@ -253,15 +257,15 @@ export class TreeRepository {
 
   async getRecommendedByUsersByTreeId(
     ownerId: string,
-    restaurantId: string
+    restaurantId: string,
   ): Promise<{ recommendedByUsers: string[] } | null> {
     return this.prisma.savedRestaurant.findUnique({
       where: {
         userId_restaurantId: { userId: ownerId, restaurantId: restaurantId },
       },
       select: {
-        recommendedByUsers: true
-      }
-    })
-  } 
+        recommendedByUsers: true,
+      },
+    });
+  }
 }

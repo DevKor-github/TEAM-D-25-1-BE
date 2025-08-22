@@ -24,7 +24,7 @@ export class UserService {
     private readonly treeRepository: TreeRepository,
     private readonly getFollowerCount: GetFollowerCountUsecase,
     private readonly getFollowingCount: GetFollowingCountUsecase,
-    private readonly checkFollowingStatus: CheckFollowingStatusUseCase
+    private readonly checkFollowingStatus: CheckFollowingStatusUseCase,
   ) {}
 
   async getRestaurantList(
@@ -43,17 +43,24 @@ export class UserService {
     } satisfies RestaurantListResponse;
   }
 
-  async getMypage(user: UserParam, currentUser?: UserParam): Promise<MypageResponse> {
-    const userTree = await this.treeRepository.getMyTrees(user.id) || [];
-    const wateredTrees = await this.treeRepository.getWateredTrees(user.id) || [];
+  async getMypage(
+    user: UserParam,
+    currentUser?: UserParam,
+  ): Promise<MypageResponse> {
+    const userTree = (await this.treeRepository.getMyTrees(user.id)) || [];
+    const wateredTrees =
+      (await this.treeRepository.getWateredTrees(user.id)) || [];
     const followerCount = await this.getFollowerCount.execute(user.id);
     const followingCount = await this.getFollowingCount.execute(user.id);
     const treeCount = await this.treeRepository.getTreeCounts(user.id);
     const { recapMessage, recapImageUrl } = getRecapDescription(treeCount);
-    const biggestTrees = getBiggestTrees(userTree)
+    const biggestTrees = getBiggestTrees(userTree);
     let followStatus: CheckFollowingStatusDto | null = null;
     if (currentUser && currentUser.id !== user.id) {
-      followStatus = await this.checkFollowingStatus.execute(currentUser.id, user.id);
+      followStatus = await this.checkFollowingStatus.execute(
+        currentUser.id,
+        user.id,
+      );
     }
 
     return {
@@ -67,17 +74,21 @@ export class UserService {
       followerCount,
       followingCount,
       treeCount,
-      recapMessage, recapImageUrl,
+      recapMessage,
+      recapImageUrl,
       followStatus,
-      biggestTrees: biggestTrees.length > 0
-        ? biggestTrees.map((e) => new MypageTreeResponse(e))
-        : null,
-      myTrees: userTree.length > 0
-        ? userTree.map((e) => new MypageTreeResponse(e)) 
-        : null,
-      wateredTrees: wateredTrees.length > 0
-        ? wateredTrees.map((e) => new MypageTreeResponse(e))
-        : null,
+      biggestTrees:
+        biggestTrees.length > 0
+          ? biggestTrees.map((e) => new MypageTreeResponse(e))
+          : null,
+      myTrees:
+        userTree.length > 0
+          ? userTree.map((e) => new MypageTreeResponse(e))
+          : null,
+      wateredTrees:
+        wateredTrees.length > 0
+          ? wateredTrees.map((e) => new MypageTreeResponse(e))
+          : null,
     };
   }
 
