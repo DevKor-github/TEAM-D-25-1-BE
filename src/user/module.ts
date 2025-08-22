@@ -16,6 +16,9 @@ import { GetMyProfileUseCase } from './usecases/getMyProfile';
 import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 import { UpdateProfileUseCase } from './usecases/updateProfile';
 import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
+import { CreateFollowNotificationUseCase } from '@/notification/usecases/createFollowNotification';
+import { NotificationRepository } from '@/notification/repository';
+import { FCMService } from '@/notification/infrastructure/fcm';
 
 @Module({
   imports: [PrismaModule],
@@ -36,6 +39,9 @@ import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
     AccessTokenGuard,
     UpdateProfileUseCase,
     UpdateMbtiAndTagsUseCase,
+    CreateFollowNotificationUseCase,
+    NotificationRepository,
+    FCMService,
   ],
 })
 export class UserModule {}

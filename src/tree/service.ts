@@ -11,6 +11,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 import { TreeDetail } from './types';
 import { UserParam } from '@/user/params/user';
 import config from '@/config';
+import { CreateWaterNotificationUseCase } from '@/notification/usecases/createWaterNotification';
 
 const toTreeDetailResponse = (detail: TreeDetail): TreeDetailResponse => {
   if (!detail.tree || !detail.restaurant) return null;
@@ -40,6 +41,7 @@ export class TreeService {
   constructor(
     private readonly treeRepository: TreeRepository,
     private readonly prisma: PrismaService,
+    private readonly waterNotificationUseCase: CreateWaterNotificationUseCase,
   ) {}
 
   async getFollowersTree(
@@ -142,6 +144,13 @@ export class TreeService {
       restaurantId,
       user.id,
     );
+
+    await this.waterNotificationUseCase.execute({
+      userId: ownerId,
+      treeType: result.tree.treeType,
+      restaurantId,
+    });
+
     return toTreeDetailResponse(result);
   }
 
