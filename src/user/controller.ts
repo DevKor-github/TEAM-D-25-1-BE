@@ -240,7 +240,7 @@ export class UserController {
     return res.status(HttpStatus.OK).json(result); // TODO: Formatting
   }
 
-  @Patch('me/fcm-token')
+  @Post('me/fcm-token')
   @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 200,
