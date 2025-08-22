@@ -3,6 +3,7 @@ import { UserRepository } from '../repositories/user';
 import { UpdateProfileDto } from '../dtos/updateProfile.dto';
 import { UserParam, UpdateUserParam } from '../params/user';
 import { SearchUserTagRepository } from '@/search/repositories/searchUserTag';
+import { decomposeHangul } from '@/utils/search';
 
 @Injectable()
 export class UpdateProfileUseCase {
@@ -28,7 +29,7 @@ export class UpdateProfileUseCase {
       await this.searchUserTagRepository.deleteByUserId(userId);
       await this.searchUserTagRepository.create({
         userId,
-        name: dto.nickname,
+        name: decomposeHangul(dto.nickname),
       });
     }
 
