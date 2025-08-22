@@ -2,21 +2,18 @@ import { ApiProperty } from '@nestjs/swagger';
 import { SocialProvider } from '@prisma/client';
 import { UserParam } from '../params/user';
 
-export class MyProfileResponseDto {
+export class ProfileResponseDto {
   @ApiProperty()
   id: string;
-
-  @ApiProperty()
-  email: string;
-
-  @ApiProperty()
-  description?: string;
 
   @ApiProperty()
   username: string;
 
   @ApiProperty()
   nickname: string;
+
+  @ApiProperty()
+  description: string;
 
   @ApiProperty()
   socialProvider: SocialProvider;
@@ -33,14 +30,17 @@ export class MyProfileResponseDto {
   @ApiProperty()
   treeCount: number;
 
-  static from(user: UserParam, cloudfrontUrl: string, treeCount: number): MyProfileResponseDto {
+  static from(
+    user: UserParam,
+    cloudfrontUrl: string,
+    treeCount: number,
+  ): ProfileResponseDto {
     return {
       id: user.id,
-      description: user.description,
-      email: user.email,
       treeCount,
       username: user.username,
       nickname: user.nickname,
+      description: user.description,
       socialProvider: user.socialProvider,
       isPrivate: user.isPrivate,
       createdAt: user.createdAt,

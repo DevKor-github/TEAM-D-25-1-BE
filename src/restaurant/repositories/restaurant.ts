@@ -60,7 +60,7 @@ export class RestaurantRepository {
   }
 
   async findById(id: string): Promise<RestaurantEntity | null> {
-    const restaurant = await this.prisma.restaurant.findUnique({
+    const restaurant = await this.prisma.restaurant.findFirst({
       where: { id },
     });
     return restaurant ? this.mapToRestaurantEntity(restaurant) : null;

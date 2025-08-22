@@ -16,6 +16,8 @@ import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
   providers: [
     FCMService,
     NotificationRepository,
+    UserRepository,
+    RestaurantRepository,
     CreateWaterNotificationUseCase,
     CreateFollowNotificationUseCase,
     CreateGrowNotificationUseCase,

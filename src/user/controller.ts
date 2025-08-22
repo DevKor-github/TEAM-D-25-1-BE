@@ -16,10 +16,12 @@ import { Response } from 'express';
 import { UserService } from './service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
+  CheckFollowingStatusDto,
   FollowerListResponse,
   FollowerResponse,
   FollowingListResponse,
   HandleFollowRequest,
+  MypageResponse,
   RestaurantListResponse,
 } from './dto';
 import { GetFollowingListUseCase } from './usecases/getFollowingList';
@@ -43,6 +45,8 @@ import {
 } from './dtos/updateProfile.dto';
 import { UpdateProfileUseCase } from './usecases/updateProfile';
 import { UpdateMbtiAndTagsUseCase } from './usecases/updateMbtiAndTags';
+import { UnfollowUserUseCase } from './usecases/unfollowUser';
+import { CheckFollowingStatusUseCase } from './usecases/checkFollowingStatus';
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -60,6 +64,8 @@ export class UserController {
     private readonly getMyProfileUseCase: GetMyProfileUseCase,
     private readonly updateProfileUseCase: UpdateProfileUseCase,
     private readonly updateMbtiAndTagsUseCase: UpdateMbtiAndTagsUseCase,
+    private readonly unfollowUserUseCase: UnfollowUserUseCase,
+    private readonly checkFollowingStatusUsecase: CheckFollowingStatusUseCase,
   ) {}
 
   @Get('me')
@@ -71,6 +77,35 @@ export class UserController {
   })
   async getMyProfile(@User('id') userId: string, @Res() res: Response) {
     const result = await this.getMyProfileUseCase.execute(userId);
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Get('profile/:userId')
+  @UseGuards(AccessTokenGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'Get user profile',
+    type: MypageResponse,
+  })
+  async getUserProfile(
+    @User() user: UserParam,
+    @Param('userId') userId: string,
+    @Res() res: Response,
+  ) {
+    const targetUser = await this.userService.getUser(userId);
+    const result = await this.userService.getMypage(targetUser, user);
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Get('me/mypage')
+  @UseGuards(AccessTokenGuard)
+  @ApiResponse({
+    status: 200,
+    description: '마이페이지 불러오기',
+    type: MypageResponse,
+  })
+  async getMypage(@User() user: UserParam, @Res() res: Response) {
+    const result = await this.userService.getMypage(user);
     return res.status(HttpStatus.OK).json(result);
   }
 
@@ -146,6 +181,22 @@ export class UserController {
     return res.status(HttpStatus.CREATED).json(result); // TODO: into FollowerResponse
   }
 
+  @Post(':userId/unfollow')
+  @UseGuards(AccessTokenGuard) // TODO: fix to jwt guard
+  @ApiResponse({
+    status: 200,
+    description: 'Unfollow User',
+    type: FollowerResponse,
+  })
+  async handleUnfollowUser(
+    @Param('userId') userId: string,
+    @User() user: any,
+    @Res() res: Response,
+  ) {
+    await this.unfollowUserUseCase.execute(user.id, userId);
+    return res.status(HttpStatus.NO_CONTENT).json({}); // TODO: into FollowerResponse
+  }
+
   @Get('me/followers/pending')
   @UseGuards(AccessTokenGuard) // TODO: fix to jwt guard
   @ApiResponse({
@@ -189,7 +240,7 @@ export class UserController {
     return res.status(HttpStatus.OK).json(result); // TODO: Formatting
   }
 
-  @Patch('me/fcm-token')
+  @Post('me/fcm-token')
   @UseGuards(AccessTokenGuard)
   @ApiResponse({
     status: 200,
@@ -250,6 +301,25 @@ export class UserController {
     @Res() res: Response,
   ) {
     const result = await this.updateMbtiAndTagsUseCase.execute(userId, body);
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Get(':userId/follow-status/')
+  @UseGuards(AccessTokenGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'userId에 따라 FollowingStatus 반환',
+    type: CheckFollowingStatusDto,
+  })
+  async checkFollowingStatus(
+    @User('id') userId: string,
+    @Param('userId') targetUserId: string,
+    @Res() res: Response,
+  ) {
+    const result = await this.checkFollowingStatusUsecase.execute(
+      userId,
+      targetUserId,
+    );
     return res.status(HttpStatus.OK).json(result);
   }
 }

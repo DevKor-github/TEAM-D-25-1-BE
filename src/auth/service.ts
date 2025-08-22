@@ -51,8 +51,8 @@ export class AuthService {
     // force follow instruction user
     await this.prismaService.follower.create({
       data: {
-        userId: user.id,
-        followerId: INSTRUCTION_USER,
+        userId: INSTRUCTION_USER,
+        followerId: user.id,
         status: FollowerStatus.ACCEPTED,
       },
     });

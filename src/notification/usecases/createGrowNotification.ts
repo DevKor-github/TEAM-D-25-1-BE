@@ -6,7 +6,7 @@ import {
   CreateNotificationParam,
   CreateGrowNotificationParam,
 } from '../params';
-import { TREE_TYPE_MAP } from '@/tree/constants';
+import { TREE_TYPES_MAP } from '@/tree/constants';
 import { stripHtmlTags } from '../libs/handleTag';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
 
@@ -27,7 +27,7 @@ export class CreateGrowNotificationUseCase {
     );
     if (!restaurant) return;
 
-    const treeTypeName = TREE_TYPE_MAP[param.treeType];
+    const treeTypeName = TREE_TYPES_MAP[param.treeType];
     const displayContent = `${restaurant.name}의 <b>${treeTypeName}</b> 나무가 ${param.treeLevel}단계가 되었어요.`;
     const deeplink = `groo://restaurant/${param.restaurantId}`;
     const notificationParam: CreateNotificationParam = {

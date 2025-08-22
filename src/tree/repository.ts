@@ -3,8 +3,11 @@ import { PrismaService } from '../prisma/prisma.service';
 import { Restaurant, SavedRestaurant, User } from '@prisma/client';
 import { Coordinate, PlantTreeDto } from './dto';
 import { TreeDetail } from './types';
+import { getTreeLevel, TREE_TYPES_MAP } from './constants';
+import { INSTRUCTION_USER } from '@/consts';
 
 const MIN_ZOOM_LEVEL = 11;
+const BLACKLIST_USER_IDS = [INSTRUCTION_USER];
 
 @Injectable()
 export class TreeRepository {
@@ -48,10 +51,23 @@ export class TreeRepository {
     prismaRes: SavedRestaurant & { user: User; restaurant: Restaurant },
   ): TreeDetail {
     const { user, restaurant, ...tree } = prismaRes;
+    const { recommendedByUsers, treeType } = tree;
+
+    let treeData = TREE_TYPES_MAP[treeType];
+    if (!treeData) treeData = TREE_TYPES_MAP[0];
+
+    const height = recommendedByUsers?.length ?? 0;
+    const treeLevelData = treeData.levels[getTreeLevel(height + 1) - 1];
+
     return {
       user,
       restaurant,
-      tree,
+      tree: {
+        ...tree,
+        level: treeLevelData.level,
+        imageUrl: treeLevelData.imageUrl,
+        treeTypeName: treeData.name,
+      },
     };
   }
 
@@ -72,7 +88,9 @@ export class TreeRepository {
         select: { userId: true },
       });
       const followingIds = following.map((e) => e.userId);
-      searchTargetIds = [...followingIds, userId];
+      searchTargetIds = [...followingIds, userId].filter(
+        (id) => !BLACKLIST_USER_IDS.includes(id),
+      );
     }
 
     const lat = parseFloat(location.lat);
@@ -179,6 +197,7 @@ export class TreeRepository {
         review,
         tag: tags,
         images,
+        recommendedByUsers: [],
       },
     });
   }
@@ -207,5 +226,46 @@ export class TreeRepository {
       include: { user: true, restaurant: true },
     });
     return followerTreeData.map((e) => this.toTreeDetail(e));
+  }
+
+  async getMyTrees(
+    userId: string,
+  ): Promise<(SavedRestaurant & { restaurant: Restaurant })[]> {
+    const res = await this.prisma.savedRestaurant.findMany({
+      where: { userId },
+      include: { restaurant: true },
+    });
+    return res;
+  }
+
+  // TODO: Relation 추가
+  async getWateredTrees(
+    userId: string,
+  ): Promise<(SavedRestaurant & { restaurant: Restaurant })[]> {
+    const res = await this.prisma.savedRestaurant.findMany({
+      where: { recommendedByUsers: { has: userId } },
+      include: { restaurant: true },
+    });
+    return res;
+  }
+
+  async getTreeCounts(userId: string): Promise<number> {
+    return await this.prisma.savedRestaurant.count({
+      where: { userId },
+    });
+  }
+
+  async getRecommendedByUsersByTreeId(
+    ownerId: string,
+    restaurantId: string,
+  ): Promise<{ recommendedByUsers: string[] } | null> {
+    return this.prisma.savedRestaurant.findUnique({
+      where: {
+        userId_restaurantId: { userId: ownerId, restaurantId: restaurantId },
+      },
+      select: {
+        recommendedByUsers: true,
+      },
+    });
   }
 }

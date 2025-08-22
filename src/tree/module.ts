@@ -25,5 +25,6 @@ import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
     CreateWaterNotificationUseCase,
     RestaurantRepository,
   ],
+  exports: [TreeRepository],
 })
 export class TreeModule {}

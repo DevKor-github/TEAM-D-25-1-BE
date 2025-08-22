@@ -6,6 +6,17 @@ export interface Tag {
   value: string;
 }
 
+export interface TreeLevel {
+  level: number;
+  imageUrl: string
+}
+
+export interface TreeType {
+  key: number;
+  name: string;
+  levels: TreeLevel[];
+}
+
 export interface AppSettings {
   maintenance: boolean;
   minimalVersion: string;
@@ -13,6 +24,7 @@ export interface AppSettings {
   styleTags: Tag[];
   tags: Tag[];
   mbti: Mbti[];
+  treeType: TreeType[]
 }
 
 export class GetSettingsResponse {
@@ -130,6 +142,51 @@ export class UpdateSettingsRequest {
     required: false,
   })
   mbti?: Mbti[];
+
+  @ApiProperty({
+    description: '나무 타입 목록 (레벨별 이미지 포함)',
+    type: 'array',
+    required: false,
+    items: {
+      type: 'object',
+      properties: {
+        key: { type: 'number', example: 0 },
+        name: { type: 'string', example: '참나무' },
+        levels: {
+          type: 'array',
+          description: '레벨 1, 2, 3에 해당하는 이미지 URL 배열',
+          items: {
+            type: 'object',
+            properties: {
+              level: { type: 'number', example: 1, description: '나무 레벨 (1~3)' },
+              imageUrl: { type: 'string', example: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chamnamu_1.png' },
+            },
+          },
+        },
+      },
+    },
+    example: [
+      {
+        key: 0,
+        name: '참나무',
+        levels: [
+          { level: 1, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chamnamu_1.png' },
+          { level: 2, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chamnamu_2.png' },
+          { level: 3, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chamnamu_3.png' },
+        ],
+      },
+      {
+        key: 1,
+        name: '침엽수',
+        levels: [
+          { level: 1, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chimyeopsu_1.png' },
+          { level: 2, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chimyeopsu_1.png' },
+          { level: 3, imageUrl: 'https://groo-static.s3.ap-northeast-2.amazonaws.com/images/tree/chimyeopsu_1.png' },
+        ],
+      },
+    ],
+  })
+  treeType?: TreeType[];
 }
 
 export class UpdateSettingsResponse {

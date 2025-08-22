@@ -20,13 +20,22 @@ import { CreateFollowNotificationUseCase } from '@/notification/usecases/createF
 import { NotificationRepository } from '@/notification/repository';
 import { FCMService } from '@/notification/infrastructure/fcm';
 
+import { TreeModule } from '@/tree/module';
+import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
+import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
+import { SearchUserTagRepository } from '@/search/repositories/searchUserTag';
+import { GetUserProfileUseCase } from './usecases/getUserProfile';
+import { UnfollowUserUseCase } from './usecases/unfollowUser';
+import { CheckFollowingStatusUseCase } from './usecases/checkFollowingStatus';
+
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, TreeModule],
   controllers: [UserController],
   providers: [
     UserService,
     UserRepository,
     FollowerRepository,
+    SearchUserTagRepository,
     FollowUserUseCase,
     GetFollowingListUseCase,
     GetPendingFollowListUseCase,
@@ -42,6 +51,11 @@ import { FCMService } from '@/notification/infrastructure/fcm';
     CreateFollowNotificationUseCase,
     NotificationRepository,
     FCMService,
+    GetFollowerCountUsecase,
+    GetFollowingCountUsecase,
+    GetUserProfileUseCase,
+    UnfollowUserUseCase,
+    CheckFollowingStatusUseCase,
   ],
 })
 export class UserModule {}

@@ -1,4 +1,6 @@
-import { Tag } from '@prisma/client';
+import { TreeType } from "@/settings/dto";
+import { Tag } from "@prisma/client";
+import config from '@/config';
 
 export const TAG_KOREAN_MAP: { [key in Tag]: string } = {
   DRINKER: '애주가',
@@ -87,10 +89,33 @@ export const FOOD_TAGS: Tag[] = [
 export const STYLE_TAG_KOREAN_MAP: Partial<{ [key in Tag]: string }> =
   Object.fromEntries(STYLE_TAGS.map((tag) => [tag, TAG_KOREAN_MAP[tag]]));
 
-export const FOOD_TAG_KOREAN_MAP: Partial<{ [key in Tag]: string }> =
-  Object.fromEntries(FOOD_TAGS.map((tag) => [tag, TAG_KOREAN_MAP[tag]]));
+export const FOOD_TAG_KOREAN_MAP: Partial<{ [key in Tag]: string }> = Object.fromEntries(
+  FOOD_TAGS.map(tag => [tag, TAG_KOREAN_MAP[tag]])
+);
 
-export const TREE_TYPE_MAP: { [key in number]: string } = {
-  0: '참나무',
-  1: '침엽수',
-};
+export const TREE_TYPES_MAP: TreeType[] = [
+  {
+    key: 0,
+    name: '참나무',
+    levels: [
+      { level: 1, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chamnamu_1.png` },
+      { level: 2, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chamnamu_2.png` },
+      { level: 3, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chamnamu_3.png` },
+    ],
+  },
+  {
+    key: 1,
+    name: '침엽수',
+    levels: [
+      { level: 1, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chimyeopsu_1.png` },
+      { level: 2, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chimyeopsu_2.png` },
+      { level: 3, imageUrl: `https://${config().s3.cloudfrontUrl}/images/tree/chimyeopsu_3.png` },
+    ],
+  },
+];
+
+export function getTreeLevel(recommendationCount: number): number{
+  if (recommendationCount <= 10) return 1
+  if (recommendationCount <= 20) return 2
+  else return 3
+}

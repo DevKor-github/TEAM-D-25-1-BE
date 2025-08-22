@@ -1,5 +1,6 @@
 import { SocialProvider, Mbti, Tag } from '@prisma/client';
 import {
+  IsArray,
   IsBoolean,
   IsDate,
   IsEmail,
@@ -112,6 +113,10 @@ export class UserParam {
 
   @IsString()
   firebaseUid: string;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
 
   @IsEmail()
   email: string;

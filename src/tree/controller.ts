@@ -14,7 +14,10 @@ import { Response } from 'express';
 import {
   Coordinate,
   PlantTreeDto,
+  TreeDetailListResponse,
   TreeDetailResponse,
+  TreeDetailWithUserListResponse,
+  TreeDetailWithUserResponse,
   TreeListResponse,
 } from './dto';
 import { User } from '../decorators/user.decorator';
@@ -95,7 +98,7 @@ export class TreeController {
     return res.status(HttpStatus.OK).json(result);
   }
 
-  @Get(':restaurantId')
+  @Get('restaurants/:restaurantId')
   @ApiOperation({ summary: '식당에 대한 나무 목록 반환' })
   @ApiParam({
     name: 'restaurantId',
@@ -106,7 +109,7 @@ export class TreeController {
   @ApiResponse({
     status: 200,
     description: '나무들 상세 정보 반환',
-    type: TreeDetailResponse,
+    type: TreeDetailListResponse,
   })
   async getTreeByRestaurantId(
     @Param('restaurantId') restaurantId: string,
@@ -114,7 +117,9 @@ export class TreeController {
     @Res() res: Response,
   ) {
     const result = await this.tree.getTreesByRestaurantId(restaurantId, user);
-    return res.status(HttpStatus.OK).json(result);
+    return res
+      .status(HttpStatus.OK)
+      .json(TreeDetailWithUserListResponse.from(result));
   }
 
   @Post(':treeId/water')
