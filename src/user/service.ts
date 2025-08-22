@@ -12,6 +12,7 @@ import { UserParam } from './params/user';
 import { TreeRepository } from '@/tree/repository';
 import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
 import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
+import { FOOD_TAGS, STYLE_TAGS } from '@/tree/constants';
 import { UserRepository } from './repositories/user';
 import { getBiggestTrees, getRecapDescription } from './tree.util';
 import { CheckFollowingStatusUseCase } from './usecases/checkFollowingStatus';
@@ -63,13 +64,17 @@ export class UserService {
       );
     }
 
+    const styleTags = user.tag.filter((tag) => STYLE_TAGS.includes(tag as any));
+    const foodTags = user.tag.filter((tag) => FOOD_TAGS.includes(tag as any));
+
     return {
       userId: user.id,
       username: user.username,
       nickname: user.nickname,
       description: user.description,
       profileImage: user.profileImageUrl,
-      tags: user.tag,
+      styleTags,
+      foodTags,
       mbti: user.mbti,
       followerCount,
       followingCount,

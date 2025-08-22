@@ -492,13 +492,24 @@ export class MypageResponse {
   profileImage: string;
 
   @ApiProperty({
-    description: '태그 목록',
-    enum: [Tag],
+    description: '스타일 태그 목록',
+    isArray: true,
+    enum: Tag,
   })
   @IsArray()
   @IsOptional()
-  @ValidateNested({ each: true })
-  tags: Tag[];
+  @IsEnum(Tag, { each: true })
+  styleTags: Tag[];
+
+  @ApiProperty({
+    description: '음식 태그 목록',
+    isArray: true,
+    enum: Tag,
+  })
+  @IsArray()
+  @IsOptional()
+  @IsEnum(Tag, { each: true })
+  foodTags: Tag[];
 
   @ApiProperty({
     description: 'MBTI',
@@ -524,9 +535,11 @@ export class MypageResponse {
 
   @ApiProperty({
     description: '가장 큰 트리',
-    type: MypageTreeResponse,
+    type: [MypageTreeResponse],
   })
-  @IsNotEmpty()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => MypageTreeResponse)
   biggestTrees: MypageTreeResponse[];
 
   @ApiProperty({
