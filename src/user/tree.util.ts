@@ -1,7 +1,7 @@
 import { Restaurant, SavedRestaurant } from '@prisma/client';
 import config from '@/config';
 
-type UserTreeType = SavedRestaurant & { restaurant: Restaurant };
+export type UserTreeType = SavedRestaurant & { restaurant: Restaurant };
 
 export interface TreeDescriptionResult {
   recapMessage: string;
