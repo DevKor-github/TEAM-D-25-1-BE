@@ -13,8 +13,9 @@ import { TreeRepository } from '@/tree/repository';
 import { GetFollowerCountUsecase } from './usecases/getFollowerCount';
 import { GetFollowingCountUsecase } from './usecases/getFollowingCount';
 import { UserRepository } from './repositories/user';
-import { getBiggestTrees, getRecapDescription } from './tree.util';
+import { getBiggestTrees, getRecapDescription, UserTreeType } from './tree.util';
 import { CheckFollowingStatusUseCase } from './usecases/checkFollowingStatus';
+import config from '@/config';
 
 @Injectable()
 export class UserService {
@@ -61,23 +62,18 @@ export class UserService {
       username: user.username,
       nickname: user.nickname,
       description: user.description,
-      profileImage: user.profileImageUrl,
+      profileImage: `https://${config().s3.cloudfrontUrl}${user.profileImageUrl}`,
       tags: user.tag,
       mbti: user.mbti,
       followerCount,
       followingCount,
       treeCount,
-      recapMessage, recapImageUrl,
+      recapMessage,
+      recapImageUrl,
       followStatus,
-      biggestTrees: biggestTrees.length > 0
-        ? biggestTrees.map((e) => new MypageTreeResponse(e))
-        : null,
-      myTrees: userTree.length > 0
-        ? userTree.map((e) => new MypageTreeResponse(e)) 
-        : null,
-      wateredTrees: wateredTrees.length > 0
-        ? wateredTrees.map((e) => new MypageTreeResponse(e))
-        : null,
+      biggestTrees: this.toMypageTreeResponse(biggestTrees),
+      myTrees: this.toMypageTreeResponse(userTree),
+      wateredTrees: this.toMypageTreeResponse(wateredTrees),
     };
   }
 
@@ -87,5 +83,12 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
     return user;
+  }
+
+  private toMypageTreeResponse(trees: UserTreeType[]): MypageTreeResponse[] | null {
+    if (!trees || trees.length === 0) {
+      return null;
+    }
+    return trees.map((e) => new MypageTreeResponse(e));
   }
 }
