@@ -403,6 +403,7 @@ export class MypageTreeResponse {
   recapImageUrl: string | null;
 
   constructor(savedRestaurant: SavedRestaurant & { restaurant: Restaurant }) {
+    this.treeId = `${savedRestaurant.userId}_${savedRestaurant.restaurantId}`
     this.restaurantId = savedRestaurant.restaurant.id;
     this.restaurantName = savedRestaurant.restaurant.name;
     this.recommendationCount = savedRestaurant.recommendedByUsers.length + 1;
