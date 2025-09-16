@@ -386,22 +386,6 @@ export class MypageTreeResponse {
   @IsNotEmpty()
   location: string;
 
-  @ApiProperty({
-    description: '사용자가 보유한 전체 나무 개수에 따른 종합 요약 메시지',
-    example: '뒷산이 부럽지 않을 만큼 풍성해졌어요',
-  })
-  @IsString()
-  @IsNotEmpty()
-  recapMessage: string;
-
-  @ApiProperty({
-    description: '사용자가 보유한 전체 트리 개수에 따른 종합 요약 이미지 URL',
-    example: 'https://example.com/images/level_2.png',
-  })
-  @IsString()
-  @IsNotEmpty()
-  recapImageUrl: string | null;
-
   constructor(savedRestaurant: SavedRestaurant & { restaurant: Restaurant }) {
     this.treeId = `${savedRestaurant.userId}_${savedRestaurant.restaurantId}`
     this.restaurantId = savedRestaurant.restaurant.id;
