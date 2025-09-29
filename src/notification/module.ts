@@ -22,8 +22,6 @@ import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
     CreateFollowNotificationUseCase,
     CreateGrowNotificationUseCase,
     GetUserNotificationsUseCase,
-    UserRepository,
-    RestaurantRepository,
   ],
   exports: [
     FCMService,

@@ -20,12 +20,14 @@ export interface NotificationParam {
   thumbnailUrl?: string;
   type: NotificationType;
   displayContent: string;
+  deeplink?: string;
   createdAt: Date;
 }
 
 // Create Water Notification
 export interface CreateWaterNotificationParam {
   userId: string;
+  actorId: string;
   treeType: number;
   restaurantId: string;
 }
