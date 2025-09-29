@@ -3,10 +3,40 @@ import { FCMService, FCMMessage } from './fcm';
 
 describe('FCMService', () => {
   let service: FCMService;
+  const messagingMock = {
+    send: jest.fn().mockResolvedValue('mock-message-id'),
+    sendEachForMulticast: jest.fn().mockResolvedValue({
+      successCount: 0,
+      failureCount: 0,
+      responses: [],
+    }),
+    sendToTopic: jest.fn().mockResolvedValue('mock-topic-id'),
+    subscribeToTopic: jest.fn().mockResolvedValue({
+      successCount: 0,
+      failureCount: 0,
+      errors: [],
+    }),
+    unsubscribeFromTopic: jest.fn().mockResolvedValue({
+      successCount: 0,
+      failureCount: 0,
+      errors: [],
+    }),
+  };
+
+  const firebaseAppMock = {
+    messaging: () => messagingMock,
+  } as any;
 
   beforeEach(async () => {
+    jest.clearAllMocks();
     const module: TestingModule = await Test.createTestingModule({
-      providers: [FCMService],
+      providers: [
+        FCMService,
+        {
+          provide: 'FIREBASE_ADMIN',
+          useValue: firebaseAppMock,
+        },
+      ],
     }).compile();
 
     service = module.get<FCMService>(FCMService);
