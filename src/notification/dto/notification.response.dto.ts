@@ -33,6 +33,13 @@ export class NotificationResponseDto {
   displayContent: string;
 
   @ApiProperty({
+    description: '클라이언트 이동용 딥링크',
+    example: 'groo://profile/12345',
+    required: false,
+  })
+  deeplink?: string;
+
+  @ApiProperty({
     description: '생성 시간',
     example: '2024-01-01T00:00:00.000Z',
   })
