@@ -9,6 +9,7 @@ import {
 import { stripHtmlTags } from '../libs/handleTag';
 import { TREE_TYPES_MAP } from '@/tree/constants';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
+import { UserParam } from '@/user/params/user';
 
 @Injectable()
 export class CreateWaterNotificationUseCase {
@@ -22,20 +23,25 @@ export class CreateWaterNotificationUseCase {
   ) {}
 
   async execute(param: CreateWaterNotificationParam) {
-    const user = await this.userRepository.findById(param.userId);
-    if (!user) return;
+    const recipient = await this.userRepository.findById(param.userId);
+    if (!recipient) return;
+
+    const actor = await this.userRepository.findById(param.actorId);
+    if (!actor) return;
 
     const restaurant = await this.restaurantRepository.findById(
       param.restaurantId,
     );
     if (!restaurant) return;
 
-    const treeTypeName = TREE_TYPES_MAP[param.treeType];
-    const displayContent = `<b>${user.nickname}</b>님이 ${param.restaurantId}의 <b>${treeTypeName}</b> 물주기를 했습니다.`;
+    const treeType = TREE_TYPES_MAP[param.treeType];
+    const treeTypeName = treeType?.name ?? '나무';
+    const actorNickname = actor.nickname ?? '누군가';
+    const displayContent = `<b>${actorNickname}</b>님이 ${restaurant.name}의 <b>${treeTypeName}</b> 나무에 물을 줬어요.`;
     const deeplink = `groo://restaurant/${param.restaurantId}`;
     const notificationParam: CreateNotificationParam = {
-      userId: user.id,
-      thumbnailUrl: user.profileImageUrl,
+      userId: recipient.id,
+      thumbnailUrl: actor.profileImageUrl ?? '',
       type: 'WATER',
       displayContent,
       deeplink,
@@ -46,52 +52,49 @@ export class CreateWaterNotificationUseCase {
       await this.notificationRepository.create(notificationParam);
 
     // FCM 메시지 전송 (비동기, 실패해도 useCase는 성공)
-    this.sendFCMNotificationAsync(param.userId, displayContent, deeplink);
+    this.sendFCMNotificationAsync(recipient, stripHtmlTags(displayContent), {
+      type: 'WATER',
+      userId: recipient.id,
+      actorId: param.actorId,
+      actorNickname,
+      restaurantId: param.restaurantId,
+      treeType: String(param.treeType),
+      deeplink,
+    });
 
     return notification;
   }
 
   private sendFCMNotificationAsync(
-    userId: string,
-    displayContent: string,
-    deeplink: string,
+    recipient: UserParam,
+    body: string,
+    data: Record<string, string>,
   ) {
-    this.sendFCMNotification(userId, displayContent, deeplink).catch(
-      (error) => {
-        this.logger.error(
-          `FCM 전송 실패 (WATER): ${error.message}`,
-          error.stack,
-        );
-      },
-    );
+    this.sendFCMNotification(recipient, body, data).catch((error) => {
+      this.logger.error(`FCM 전송 실패 (WATER): ${error.message}`, error.stack);
+    });
   }
 
   private async sendFCMNotification(
-    userId: string,
-    displayContent: string,
-    deeplink: string,
+    recipient: UserParam,
+    body: string,
+    data: Record<string, string>,
   ) {
     try {
-      // 사용자 FCM 토큰 조회
-      const user = await this.userRepository.findById(userId);
-      if (!user?.fcmToken) {
-        this.logger.log(`FCM 토큰이 없음: ${userId}`);
+      if (!recipient?.fcmToken) {
+        this.logger.log(`FCM 토큰이 없음: ${recipient?.id}`);
         return;
       }
 
       // FCM 메시지 생성 및 전송
       const message = this.fcmService.createNotificationMessage(
         '누가 나무에 물을 줬어요',
-        stripHtmlTags(displayContent),
-        {
-          type: 'WATER',
-          userId,
-          deeplink,
-        },
+        body,
+        data,
       );
 
-      await this.fcmService.sendToUser(user.fcmToken, message);
-      this.logger.log(`FCM 메시지 전송 성공 (WATER): ${userId}`);
+      await this.fcmService.sendToUser(recipient.fcmToken, message);
+      this.logger.log(`FCM 메시지 전송 성공 (WATER): ${recipient.id}`);
     } catch (error) {
       this.logger.error(
         `FCM 전송 중 오류 (WATER): ${error.message}`,
