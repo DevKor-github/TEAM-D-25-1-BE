@@ -159,6 +159,7 @@ export class NotificationRepository {
       thumbnailUrl: notification.thumbnailUrl,
       type: notification.type,
       displayContent: notification.displayContent,
+      deeplink: notification.deeplink ?? undefined,
       createdAt: notification.createdAt,
     };
   }
