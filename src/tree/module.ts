@@ -9,6 +9,7 @@ import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 import { NotificationRepository } from '@/notification/repository';
 import { FCMService } from '@/notification/infrastructure/fcm';
 import { CreateWaterNotificationUseCase } from '@/notification/usecases/createWaterNotification';
+import { CreateGrowNotificationUseCase } from '@/notification/usecases/createGrowNotification';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
 
 @Module({
@@ -23,6 +24,7 @@ import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
     NotificationRepository,
     FCMService,
     CreateWaterNotificationUseCase,
+    CreateGrowNotificationUseCase,
     RestaurantRepository,
   ],
   exports: [TreeRepository],

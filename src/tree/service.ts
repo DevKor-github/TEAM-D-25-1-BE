@@ -17,7 +17,9 @@ import { TreeDetail } from './types';
 import { UserParam } from '@/user/params/user';
 import config from '@/config';
 import { CreateWaterNotificationUseCase } from '@/notification/usecases/createWaterNotification';
+import { CreateGrowNotificationUseCase } from '@/notification/usecases/createGrowNotification';
 import { UserResponse } from '@/user/dtos/user';
+import { getTreeLevel } from './constants';
 
 const toTreeDetailResponse = (detail: TreeDetail): TreeDetailResponse => {
   if (!detail.tree || !detail.restaurant) return null;
@@ -59,6 +61,7 @@ export class TreeService {
     private readonly treeRepository: TreeRepository,
     private readonly prisma: PrismaService,
     private readonly waterNotificationUseCase: CreateWaterNotificationUseCase,
+    private readonly growNotificationUseCase: CreateGrowNotificationUseCase,
   ) {}
 
   async getFollowersTree(
@@ -162,17 +165,32 @@ export class TreeService {
     if (!recommendationData) throw new NotFoundException('해당하는 나무를 찾을 수 없습니다.');
     if (recommendationData.recommendedByUsers.includes(user.id)) throw new ConflictException('이미 물을 준 나무입니다.')
 
-    const result = await this.treeRepository.waterTree(
-      ownerId,
-      restaurantId,
-      user.id,
-    );
+    const previousRecommendationsCount = recommendationData.recommendedByUsers.length;
+    const previousLevel = getTreeLevel(previousRecommendationsCount + 1);
+
+    const result = await this.treeRepository.waterTree(ownerId, restaurantId, user.id)
+
+    if (!result)
+      throw new NotFoundException('해당하는 나무를 찾을 수 없습니다.');
 
     await this.waterNotificationUseCase.execute({
       userId: ownerId,
+      actorId: user.id,
       treeType: result.tree.treeType,
       restaurantId,
     });
+
+    const newRecommendationsCount = previousRecommendationsCount + 1;
+    const newLevel = getTreeLevel(newRecommendationsCount + 1);
+
+    if (newLevel > previousLevel) {
+      await this.growNotificationUseCase.execute({
+        userId: ownerId,
+        treeType: result.tree.treeType,
+        treeLevel: newLevel,
+        restaurantId,
+      });
+    }
 
     return toTreeDetailResponse(result);
   }
