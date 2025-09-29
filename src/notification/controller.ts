@@ -14,6 +14,7 @@ import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 import { User } from '@/decorators/user.decorator';
 import { GetUserNotificationsUseCase } from './usecases/getUserNotifications';
 import { GetUserNotificationsResult } from './params';
+import { NotificationListResponseDto } from './dto';
 
 @ApiTags('Notification')
 @ApiBearerAuth()
@@ -29,7 +30,7 @@ export class NotificationController {
   @ApiResponse({
     status: 200,
     description: 'Get my notifications (recent first) with pagination',
-    type: Object,
+    type: NotificationListResponseDto,
   })
   async getMyNotifications(
     @User('id') userId: string,
@@ -44,6 +45,11 @@ export class NotificationController {
         limit: perPage,
       });
 
-    return res.status(HttpStatus.OK).json(result);
+    return res.status(HttpStatus.OK).json({
+      notifications: result.notifications,
+      totalCount: result.total,
+      currentPage: page,
+      perPage,
+    });
   }
 }
