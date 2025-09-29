@@ -22,15 +22,16 @@ export class CreateFollowNotificationUseCase {
     const follower = await this.userRepository.findById(param.followerId);
     if (!follower) return;
 
-    const displayContent = `<b>${follower.nickname}</b>님이 회원님을 팔로우했습니다.`;
-    const deepLink = `groo://profile/${follower.id}`;
+    const followerNickname = follower.nickname ?? '새 친구';
+    const displayContent = `<b>${followerNickname}</b>님이 회원님을 팔로우했습니다.`;
+    const deeplink = `groo://profile/${follower.id}`;
 
     const notificationParam: CreateNotificationParam = {
       userId: param.userId,
       thumbnailUrl: follower.profileImageUrl,
       type: 'FOLLOW',
       displayContent,
-      deeplink: deepLink,
+      deeplink,
     };
 
     // 알림 생성
@@ -40,8 +41,10 @@ export class CreateFollowNotificationUseCase {
     // FCM 메시지 전송 (비동기, 실패해도 useCase는 성공)
     this.sendFCMNotificationAsync(
       param.userId,
-      displayContent,
+      stripHtmlTags(displayContent),
       param.followerId,
+      followerNickname,
+      deeplink,
     );
 
     return notification;
@@ -49,23 +52,31 @@ export class CreateFollowNotificationUseCase {
 
   private sendFCMNotificationAsync(
     userId: string,
-    displayContent: string,
+    body: string,
     followerId: string,
+    followerNickname: string,
+    deeplink: string,
   ) {
-    this.sendFCMNotification(userId, displayContent, followerId).catch(
-      (error) => {
-        this.logger.error(
-          `FCM 전송 실패 (FOLLOW): ${error.message}`,
-          error.stack,
-        );
-      },
-    );
+    this.sendFCMNotification(
+      userId,
+      body,
+      followerId,
+      followerNickname,
+      deeplink,
+    ).catch((error) => {
+      this.logger.error(
+        `FCM 전송 실패 (FOLLOW): ${error.message}`,
+        error.stack,
+      );
+    });
   }
 
   private async sendFCMNotification(
     userId: string,
-    displayContent: string,
+    body: string,
     followerId: string,
+    followerNickname: string,
+    deeplink: string,
   ) {
     try {
       // 사용자 FCM 토큰 조회
@@ -78,11 +89,13 @@ export class CreateFollowNotificationUseCase {
       // FCM 메시지 생성 및 전송
       const message = this.fcmService.createNotificationMessage(
         '새로운 팔로워',
-        stripHtmlTags(displayContent),
+        body,
         {
           type: 'FOLLOW',
           userId,
           followerId,
+          followerNickname,
+          deeplink,
         },
       );
 

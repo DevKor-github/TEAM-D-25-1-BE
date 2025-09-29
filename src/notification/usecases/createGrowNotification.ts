@@ -27,11 +27,15 @@ export class CreateGrowNotificationUseCase {
     );
     if (!restaurant) return;
 
-    const treeTypeName = TREE_TYPES_MAP[param.treeType];
-    const displayContent = `${restaurant.name}의 <b>${treeTypeName}</b> 나무가 ${param.treeLevel}단계가 되었어요.`;
+    const treeType = TREE_TYPES_MAP[param.treeType];
+    const treeTypeName = treeType?.name ?? '나무';
+    const treeLevelIndex = Math.max(1, Math.min(param.treeLevel, treeType?.levels?.length ?? 1)) - 1;
+    const treeThumbnailUrl = treeType?.levels?.[treeLevelIndex]?.imageUrl;
+    const displayContent = `${restaurant.name ?? '레스토랑'}의 <b>${treeTypeName}</b> 나무가 ${param.treeLevel}단계가 되었어요.`;
     const deeplink = `groo://restaurant/${param.restaurantId}`;
     const notificationParam: CreateNotificationParam = {
       userId: param.userId,
+      thumbnailUrl: treeThumbnailUrl,
       type: 'GROW',
       displayContent: displayContent,
       deeplink,
@@ -42,29 +46,34 @@ export class CreateGrowNotificationUseCase {
       await this.notificationRepository.create(notificationParam);
 
     // FCM 메시지 전송 (비동기, 실패해도 useCase는 성공)
-    this.sendFCMNotificationAsync(param.userId, displayContent, deeplink);
+    this.sendFCMNotificationAsync(param.userId, stripHtmlTags(displayContent), {
+      type: 'GROW',
+      userId: param.userId,
+      restaurantId: param.restaurantId,
+      treeType: String(param.treeType),
+      treeLevel: String(param.treeLevel),
+      deeplink,
+    });
     return notification;
   }
 
   private sendFCMNotificationAsync(
     userId: string,
-    displayContent: string,
-    deepLink: string,
+    body: string,
+    data: Record<string, string>,
   ) {
-    this.sendFCMNotification(userId, displayContent, deepLink).catch(
-      (error) => {
-        this.logger.error(
-          `FCM 전송 실패 (GROW): ${error.message}`,
-          error.stack,
-        );
-      },
-    );
+    this.sendFCMNotification(userId, body, data).catch((error) => {
+      this.logger.error(
+        `FCM 전송 실패 (GROW): ${error.message}`,
+        error.stack,
+      );
+    });
   }
 
   private async sendFCMNotification(
     userId: string,
-    displayContent: string,
-    deepLink: string,
+    body: string,
+    data: Record<string, string>,
   ) {
     try {
       // 사용자 FCM 토큰 조회
@@ -77,12 +86,8 @@ export class CreateGrowNotificationUseCase {
       // FCM 메시지 생성 및 전송
       const message = this.fcmService.createNotificationMessage(
         '나무가 성장했어요',
-        stripHtmlTags(displayContent),
-        {
-          type: 'GROW',
-          userId,
-          deepLink,
-        },
+        body,
+        data,
       );
 
       await this.fcmService.sendToUser(user.fcmToken, message);
