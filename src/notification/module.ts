@@ -9,6 +9,7 @@ import { CreateGrowNotificationUseCase } from './usecases/createGrowNotification
 import { GetUserNotificationsUseCase } from './usecases/getUserNotifications';
 import { UserRepository } from '@/user/repositories/user';
 import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
+import { NotificationService } from './service';
 
 @Module({
   imports: [PrismaModule],
@@ -22,6 +23,7 @@ import { RestaurantRepository } from '@/restaurant/repositories/restaurant';
     CreateFollowNotificationUseCase,
     CreateGrowNotificationUseCase,
     GetUserNotificationsUseCase,
+    NotificationService,
   ],
   exports: [
     FCMService,
