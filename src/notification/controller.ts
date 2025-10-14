@@ -5,14 +5,18 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   Res,
-  UseGuards,
   HttpStatus,
+  UseGuards,
+  Post,
+  Body,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AccessTokenGuard } from '@/auth/guards/access-token.guard';
 import { User } from '@/decorators/user.decorator';
 import { GetUserNotificationsUseCase } from './usecases/getUserNotifications';
+import { NotificationService } from './service';
+import { UpdateFcmTokenDto } from '@/user/dtos/updateFcmToken.dto';
 import { GetUserNotificationsResult } from './params';
 import { NotificationListResponseDto } from './dto';
 
@@ -22,6 +26,7 @@ import { NotificationListResponseDto } from './dto';
 export class NotificationController {
   constructor(
     private readonly getUserNotificationsUseCase: GetUserNotificationsUseCase,
+    private readonly notificationService: NotificationService,
   ) {}
 
   // 내 푸시 알림 히스토리를 최근순으로 조회합니다.
@@ -51,5 +56,20 @@ export class NotificationController {
       currentPage: page,
       perPage,
     });
+  }
+
+  @Post('fcm-token')
+  @UseGuards(AccessTokenGuard)
+  @ApiOperation({
+    summary: 'Update FCM token',
+    description: 'Update user FCM token',
+  })
+  async updateFcmToken(
+    @User('id') userId: string,
+    @Body() body: UpdateFcmTokenDto,
+    @Res() res: Response,
+  ) {
+    await this.notificationService.updateFcmToken(userId, body.fcmToken);
+    return res.status(HttpStatus.OK).send();
   }
 }
