@@ -29,7 +29,7 @@ export class CreateGrowNotificationUseCase {
 
     const treeType = TREE_TYPES_MAP[param.treeType];
     const treeTypeName = treeType?.name ?? '나무';
-    const treeLevelIndex = Math.max(1, Math.min(param.treeLevel, treeType?.levels?.length ?? 1)) - 1;
+    const treeLevelIndex = Math.max(0, Math.min(param.treeLevel - 1, (treeType?.levels?.length ?? 1) - 1));
     const treeThumbnailUrl = treeType?.levels?.[treeLevelIndex]?.imageUrl;
     const displayContent = `${restaurant.name ?? '레스토랑'}의 <b>${treeTypeName}</b> 나무가 ${param.treeLevel}단계가 되었어요.`;
     const deeplink = `groo://restaurant/${param.restaurantId}`;
