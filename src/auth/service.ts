@@ -155,6 +155,15 @@ export class AuthService {
         const displayName = fbUser.displayName;
         if (!email)
           throw new UnauthorizedException('이메일이 없는 계정입니다.');
+
+        // Email이 중복되었을수도 있으므로 있는지 체크.
+        const existingUser = await this.prismaService.user.findUnique({
+          where: { email },
+        });
+        if (existingUser)
+          throw new UnauthorizedException('이미 가입된 이메일입니다.');
+        // 기존 유저가 있으면 firebaseUid만 업데이트
+
         user = await this.createUserFromFirebase(
           firebaseUid,
           email,
