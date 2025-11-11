@@ -240,6 +240,26 @@ export class UserController {
     return res.status(HttpStatus.OK).json(result); // TODO: Formatting
   }
 
+  @Get(':userId/followers')
+  @ApiResponse({
+    status: 200,
+    description: 'Get follower list by userId',
+    type: FollowerListResponse,
+  })
+  async getFollowerListByUserId(
+    @Param('userId') userId: string,
+    @Query('per_page', new DefaultValuePipe(10), ParseIntPipe) perPage: number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Res() res: Response,
+  ) {
+    const result = await this.getFollowerListUseCase.execute(
+      userId,
+      perPage,
+      page,
+    );
+    return res.status(HttpStatus.OK).json(result);
+  }
+
   @Post('me/fcm-token')
   @UseGuards(AccessTokenGuard)
   @ApiResponse({
