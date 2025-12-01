@@ -69,7 +69,6 @@ enum Tag {
   SOLO_DINER
   SEAFOOD_LOVER
   HEARTY_EATER
-
   // FoodTag
   STEAK
   BREAD
